@@ -1,13 +1,9 @@
-import Navbar from "./_components/Navbar";
-import SideNavigation from "./_components/SideNavigation";
+import Character from "./_components/Character";
 
 export default function Home() {
   return (
-    <>
-      <Navbar />
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <SideNavigation />
-      </main>
-    </>
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Character />
+    </div>
   );
 }
