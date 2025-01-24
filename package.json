@@ -1,5 +1,5 @@
 {
-  "name": "rp-tools",
+  "name": "RP-tools (beta)",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
-    "next": "^14.2.14",
+    "next": "^15.1.5",
+    "next-auth": "^4.24.11",
     "react": "^18",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18",

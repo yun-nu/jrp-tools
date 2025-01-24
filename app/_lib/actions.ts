@@ -1,5 +1,8 @@
 "use server";
 
-export async function signOutAction() {
-  //await signOut({ redirectTo: "/" });
-}
+import { signIn } from "next-auth/react";
+import { supabase } from "./supabase-client";
+
+// Create
+
+// Auth
