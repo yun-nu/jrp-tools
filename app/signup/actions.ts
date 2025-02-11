@@ -1,10 +1,9 @@
 "use server";
 
-import { signIn } from "next-auth/react";
-import { supabase } from "../_lib/supabase-client";
+import { createClient } from "../_lib/supabase-server";
 
-// Create acc
 export async function signUpOTPAction(formData: FormData) {
+  const supabase = await createClient();
   const email = String(formData.get("email"));
   const emailConfirmation = String(formData.get("emailConfirmation"));
 

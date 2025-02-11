@@ -1,11 +1,24 @@
 import { revalidatePath } from "next/cache";
 import { supabase } from "./supabase-client";
+import { createClient } from "./supabase-server";
 
-export async function getCharacters() {
+export async function getUserId() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) return error;
+
+  return user?.id;
+}
+
+export async function getCharacters(userId: string) {
   const { data: characters, error } = await supabase
     .from("characters")
-    .select("*");
-
+    .select("*")
+    .eq("user_id", userId);
   // revalidatePath("/dashboard");
   return characters as Character[];
 }
@@ -15,7 +28,6 @@ export async function getThreads(characterId: number) {
     .from("threads")
     .select("*")
     .eq("characterId", characterId);
-  console.log(threads);
   return threads as Threads[];
 }
 

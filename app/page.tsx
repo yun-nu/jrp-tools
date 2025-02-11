@@ -5,7 +5,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1>Text-based roleplay thread tracking made easy.</h1>
       <p>
-        Store and share your threads with ease. Add, edit and delete your data
+        Store and share your threads with ease. Add, edit or delete your data
         anytime.
       </p>
       <Footer />

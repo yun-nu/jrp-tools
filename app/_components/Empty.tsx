@@ -1,8 +1,8 @@
-interface Props {
+interface IEmpty {
   resourceName: string;
 }
 
-function Empty({ resourceName }: Props) {
+function Empty({ resourceName }: IEmpty) {
   return <p>No {resourceName} could be found.</p>;
 }
 

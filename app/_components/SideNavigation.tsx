@@ -1,28 +1,12 @@
 import Link from "next/link";
-import { BiSolidHome } from "react-icons/bi";
 import { BsFillPersonPlusFill } from "react-icons/bs";
-import { PiSignOutBold } from "react-icons/pi";
-import SignOutButton from "./SignOutButton";
-import { getCharacters } from "../_lib/data-service";
-
-// dummy:
-// const characters = [
-//   {
-//     name: "Dummy",
-//     game: "Game 1",
-//     icon: "",
-//     href: "",
-//   },
-//   {
-//     name: "Longer dummy name",
-//     game: "Game 2",
-//     icon: "",
-//     href: "",
-//   },
-// ];
+import { getCharacters, getUserId } from "../_lib/data-service";
+import { createClient } from "../_lib/supabase-server";
 
 async function SideNavigation() {
-  const characters = await getCharacters();
+  const id = await getUserId();
+
+  const characters = await getCharacters(id);
 
   return (
     <nav className="border-r border-primary-900">

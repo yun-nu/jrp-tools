@@ -1,4 +1,3 @@
-import Character from "../_components/Character";
 import CreateNewCharacter from "../_components/CreateNewCharacter";
 
 export const revalidate = 30;
@@ -6,9 +5,8 @@ export const revalidate = 30;
 export default async function Page() {
   return (
     <div>
-      <h2 className="">
-        <CreateNewCharacter />
-      </h2>
+      <h2 className=""></h2>
+      <CreateNewCharacter />
     </div>
   );
 }

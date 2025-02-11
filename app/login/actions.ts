@@ -2,9 +2,14 @@
 
 import { signIn } from "next-auth/react";
 import { supabase } from "../_lib/supabase-client";
+import { createClient } from "../_lib/supabase-server";
+import { redirect } from "next/navigation";
 
 export async function signInOTPAction(formData: FormData) {
-  const email = String(formData.get("email"));
+  const supabase = await createClient();
+
+  // *! in practice, you should validate your inputs
+  const email = formData.get("email") as string;
 
   const { data, error } = await supabase.auth.signInWithOtp({
     email: email,
@@ -21,18 +26,32 @@ export async function signInOTPAction(formData: FormData) {
   return data;
 }
 
-export async function verifyOTPLogin() {
+export async function verifyOTPLoginAction(formData: FormData) {
+  const supabase = await createClient();
+  const email = formData.get("email") as string;
+  const OTPcode = formData.get("OTPCode") as string;
+
   const {
     data: { session },
     error,
   } = await supabase.auth.verifyOtp({
-    email: "yunnu@live.com",
-    token: "330335",
+    email: email,
+    token: OTPcode,
     type: "email",
   });
-  console.log(session);
+
+  if (error) console.log(error);
+
+  redirect("/dashboard");
 }
 
 export async function signInGoogleAction() {
   await signIn("google", { redirectTo: "/dashboard" });
+}
+
+export async function signOutAction() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signOut();
+  if (error) console.log(error);
+  redirect("/login");
 }

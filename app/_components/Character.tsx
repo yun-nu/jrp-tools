@@ -1,6 +1,3 @@
-import { BsFillPersonDashFill } from "react-icons/bs";
-import { getCharacters, getThreads } from "../_lib/data-service";
-import Table from "./Table";
 import Link from "next/link";
 import { MdOutlineOpenInNew } from "react-icons/md";
 
@@ -27,12 +24,6 @@ export default function Character({ character }: { character: Character }) {
           )}
         </div>
       </div>
-
-      <button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
-        <BsFillPersonDashFill />
-        <span>Delete this character</span>
-        {/* // Are you sure you want to delete this character? This action cannot be undone! */}
-      </button>
     </div>
   );
 }

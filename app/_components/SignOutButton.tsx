@@ -1,5 +1,5 @@
 import { PiSignOutBold } from "react-icons/pi";
-import { signOutAction } from "../_lib/actions";
+import { signOutAction } from "../login/actions";
 
 export default function SignOutButton() {
   return (

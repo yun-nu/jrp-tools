@@ -1,4 +1,4 @@
-import { verifyOTPLogin } from "../login/actions";
+import { verifyOTPLoginAction } from "../login/actions";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
 
@@ -11,7 +11,7 @@ export default function VerifyOTPCode() {
         id="OTPCode"
         label="Enter your OTP code here"
       />
-      <SubmitButton action={verifyOTPLogin}>Verify</SubmitButton>
+      <SubmitButton action={verifyOTPLoginAction}>Verify</SubmitButton>
     </>
   );
 }

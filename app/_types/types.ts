@@ -18,4 +18,5 @@ interface Threads {
   type: string;
   blurb: string;
   arePublic: boolean;
+  isFinished: boolean;
 }

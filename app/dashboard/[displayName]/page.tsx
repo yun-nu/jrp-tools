@@ -1,6 +1,12 @@
 import Character from "@/app/_components/Character";
-import Table from "@/app/_components/Table";
-import { getCharacterData, getThreads } from "@/app/_lib/data-service";
+import DataTable from "@/app/_components/DataTable";
+import {
+  getCharacterData,
+  getThreads,
+  getUserId,
+} from "@/app/_lib/data-service";
+import { threadsCols } from "@/app/_components/Columns";
+import DeleteCharacter from "@/app/_components/DeleteCharacter";
 
 interface Props {
   params: { displayName: string };
@@ -12,26 +18,38 @@ interface Props {
 //   return { title: `${character.name} @ ${character.game}` };
 // }
 
+export type Person = {
+  firstName: string;
+  lastName: string;
+  age: number;
+  visits: number;
+  status: string;
+  progress: number;
+};
+
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
+  const userId = await getUserId();
   const character = await getCharacterData(displayName);
-  const threads = await getThreads(character.id);
+
+  if (userId !== character.user_id)
+    throw new Error("You must be logged in to perform this action");
+
+  const ongoingThreads = (await getThreads(character.id)).filter(
+    (thread) => !thread.isFinished
+  );
+  const finishedThreads = (await getThreads(character.id)).filter(
+    (thread) => thread.isFinished
+  );
 
   return (
     <section>
       <Character character={character} />
-      <ul>
-        {threads?.map((thread) => (
-          <>
-            <li>{thread.type}</li>
-            <li>{thread.date}</li>
-          </>
-        ))}
-      </ul>
-      {/* <Table columns={threads}>
-        <Table.Body data={threads}></Table.Body>
-      </Table> */}
-      <div></div>
+      <h2>Ongoing</h2>
+      <DataTable columns={threadsCols} data={ongoingThreads} />
+      <h2>Finished</h2>
+      <DataTable columns={threadsCols} data={finishedThreads} />
+      <DeleteCharacter />
     </section>
   );
 }

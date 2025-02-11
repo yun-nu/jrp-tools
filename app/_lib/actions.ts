@@ -1,7 +1,5 @@
 "use server";
-
-import { signIn } from "next-auth/react";
-import { supabase } from "./supabase-client";
+import { createClient } from "./supabase-server";
 
 // Create
 
