@@ -11,7 +11,7 @@ export default function VerifyOTPCode() {
         id="OTPCode"
         label="Enter your OTP code here"
       />
-      <SubmitButton action={verifyOTPLoginAction}>Verify</SubmitButton>
+      <SubmitButton action={verifyOTPLoginAction} content="Verify" />
     </>
   );
 }

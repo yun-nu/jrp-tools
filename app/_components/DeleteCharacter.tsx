@@ -9,7 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { Input } from "postcss";
 
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
@@ -40,9 +39,3 @@ export default function DeleteCharacter() {
     </Dialog>
   );
 }
-
-// <button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
-//   <BsFillPersonDashFill />
-//   <span>Delete this character</span>
-//   {/* // Are you sure you want to delete this character? This action cannot be undone! */}
-// </button>

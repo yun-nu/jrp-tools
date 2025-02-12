@@ -1,15 +1,27 @@
-interface SubmitButtonProps {
-  children: string;
+interface ISubmitButtonProps {
+  content: string;
   action?: () => void;
+  onClick?: () => void;
+  type: "button" | "reset" | "submit";
+  icon?: React.ReactNode;
 }
 
-export default function SubmitButton({ children, action }: SubmitButtonProps) {
+export default function SubmitButton({
+  content,
+  icon,
+  type,
+  action,
+  onClick,
+}: ISubmitButtonProps) {
   return (
     <button
       className="py-3 rounded-md px-5 bg-slate-800 hover:bg-slate-900 hover:text-zinc-100 transition-colors flex justify-center items-center gap-4 font-semibold text-zinc-200 m-auto w-[320px]"
-      onClick={action}
+      formAction={action}
+      type={type}
+      onClick={onClick}
     >
-      {children}
+      {icon}
+      {content}
     </button>
   );
 }

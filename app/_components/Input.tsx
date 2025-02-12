@@ -6,10 +6,13 @@ interface InputProps {
   required?: boolean;
   pattern?: string;
   type: string;
+  value: string;
   minLength?: number;
   min?: number;
   max?: number;
   errorMsg?: string;
+  autoFocus?: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function Input({
@@ -20,10 +23,13 @@ export default function Input({
   required,
   pattern,
   type,
+  value,
   minLength,
   min,
   max,
   errorMsg,
+  autoFocus,
+  onChange,
 }: InputProps) {
   return (
     <div className="space-y-2">
@@ -41,6 +47,7 @@ export default function Input({
         }`}
         name={id}
         type={type}
+        value={value}
         id={id}
         required={required}
         pattern={pattern}
@@ -48,6 +55,8 @@ export default function Input({
         max={max}
         min={min}
         placeholder={placeholder}
+        autoFocus={autoFocus}
+        onChange={onChange}
       />
       {errorMsg && <p className="text-sm text-red-500">{errorMsg}</p>}
       {type === "checkbox" && (

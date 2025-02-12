@@ -2,7 +2,8 @@ import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 import { getUserId } from "../_lib/data-service";
 import { createClient } from "../_lib/supabase-server";
-import SignInButton from "./SignInButton";
+import LinkButton from "./LinkButton";
+import { PiSignInBold } from "react-icons/pi";
 
 export default async function Navigation() {
   const supabase = await createClient();
@@ -15,7 +16,12 @@ export default async function Navigation() {
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
         {!session ? (
-          <SignInButton />
+          <LinkButton
+            size="large"
+            icon={<PiSignInBold />}
+            href="/login"
+            content="Log in"
+          />
         ) : (
           <>
             <li>

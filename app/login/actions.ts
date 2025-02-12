@@ -1,15 +1,16 @@
 "use server";
 
 import { signIn } from "next-auth/react";
-import { supabase } from "../_lib/supabase-client";
 import { createClient } from "../_lib/supabase-server";
 import { redirect } from "next/navigation";
+import { LoginDataProps } from "../_components/SignInOTP";
 
-export async function signInOTPAction(formData: FormData) {
+export async function signInOTPAction(email: string) {
   const supabase = await createClient();
 
   // *! in practice, you should validate your inputs
-  const email = formData.get("email") as string;
+  console.log(email);
+  //const email = formData.get("email") as string;
 
   const { data, error } = await supabase.auth.signInWithOtp({
     email: email,
@@ -26,17 +27,17 @@ export async function signInOTPAction(formData: FormData) {
   return data;
 }
 
-export async function verifyOTPLoginAction(formData: FormData) {
+export async function verifyOTPLoginAction({ email, OTPCode }: LoginDataProps) {
   const supabase = await createClient();
-  const email = formData.get("email") as string;
-  const OTPcode = formData.get("OTPCode") as string;
+  // const email = formData.get("email") as string;
+  // const OTPcode = formData.get("OTPCode") as string;
 
   const {
     data: { session },
     error,
   } = await supabase.auth.verifyOtp({
     email: email,
-    token: OTPcode,
+    token: OTPCode,
     type: "email",
   });
 
@@ -53,5 +54,5 @@ export async function signOutAction() {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
   if (error) console.log(error);
-  redirect("/login");
+  redirect("/");
 }

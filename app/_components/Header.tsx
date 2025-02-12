@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Navigation from "./Navigation";
-import SignInButton from "./SignInButton";
-import SignOutButton from "./SignOutButton";
 
 export default function Header() {
   return (

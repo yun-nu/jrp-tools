@@ -1,16 +1,16 @@
-"use client";
 import {
   Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
   DialogClose,
-} from "@radix-ui/react-dialog";
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/Dialog";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
-import { DialogHeader, DialogFooter } from "./ui/Dialog";
 
 export default function CreateNewCharacter() {
   const linkPattern =
@@ -29,58 +29,56 @@ export default function CreateNewCharacter() {
         <DialogHeader>
           <DialogTitle>Add new Character</DialogTitle>
           <DialogDescription>
-            <div>
-              <form className="py-8 px-12 text-base flex gap-6 flex-col">
-                <Input
-                  id="displayName"
-                  label="Display Name"
-                  type="text"
-                  description="Each display name is unique. This is the username for your character page."
-                  required
-                />
+            <form className="py-8 px-12 text-base flex gap-6 flex-col">
+              <Input
+                id="displayName"
+                label="Display Name"
+                type="text"
+                description="Each display name is unique. This is the username for your character page."
+                required
+              />
 
-                <Input
-                  id="characterName"
-                  label="Character Name"
-                  type="text"
-                  required
-                />
+              <Input
+                id="characterName"
+                label="Character Name"
+                type="text"
+                required
+              />
 
-                <Input id="journalName" label="Journal Name" type="text" />
+              <Input id="journalName" label="Journal Name" type="text" />
 
-                <Input
-                  id="journalLink"
-                  label="Journal Link"
-                  type="text"
-                  pattern={linkPattern}
-                  description="Must start with http:// or https://"
-                  placeholder="https://journal-name.platform.com/"
-                />
+              <Input
+                id="journalLink"
+                label="Journal Link"
+                type="text"
+                pattern={linkPattern}
+                description="Must start with http:// or https://"
+                placeholder="https://journal-name.platform.com/"
+              />
 
-                <Input id="game" label="Game Name" type="text" />
+              <Input id="game" label="Game Name" type="text" />
 
-                <Input
-                  id="acLink"
-                  label="AC Link"
-                  type="text"
-                  pattern={linkPattern}
-                  description="Must start with http:// or https://"
-                  placeholder="https://game.platform.com/thread"
-                />
+              <Input
+                id="acLink"
+                label="AC Link"
+                type="text"
+                pattern={linkPattern}
+                description="Must start with http:// or https://"
+                placeholder="https://game.platform.com/thread"
+              />
 
-                <Input
-                  id="isPublic"
-                  label="Make character profile public?"
-                  type="checkbox"
-                  description="Character profiles are private
+              <Input
+                id="isPublic"
+                label="Make character profile public?"
+                type="checkbox"
+                description="Character profiles are private
             by default. If you'd like to share your character page, check this option."
-                />
+              />
 
-                <div className="mt-4">
-                  <SubmitButton>Add Character</SubmitButton>
-                </div>
-              </form>
-            </div>
+              <div className="mt-4">
+                <SubmitButton>Add Character</SubmitButton>
+              </div>
+            </form>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
