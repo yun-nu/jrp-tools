@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { emailRegex } from "../utils/consts";
+import { signInOTPAction, verifyOTPLoginAction } from "../login/actions";
+import { isActionError } from "../utils/error";
 import { useMultiStepForm } from "../utils/useMultistepForm";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
-import { signInOTPAction, verifyOTPLoginAction } from "../login/actions";
-import Link from "next/link";
 
 export type LoginDataProps = {
   email: string;
@@ -27,24 +27,25 @@ export default function SignInOTP() {
     <SignInOTPStep2 {...data} updateFields={updateFields} key={2} />,
   ]);
 
+  const handleOnSubmit = async () => {
+    if (!isLastStep) {
+      const res = await signInOTPAction(data.email);
+      if (isActionError(res)) throw new Error(res.error);
+      return next();
+    }
+    const res = await verifyOTPLoginAction(data);
+    if (isActionError(res)) throw new Error(res.error);
+    return;
+  };
+
   function updateFields(fields: Partial<LoginDataProps>) {
     setData((prev) => {
       return { ...prev, ...fields };
     });
   }
 
-  const handleOnSubmit = () => {
-    if (!isLastStep) {
-      signInOTPAction(data.email);
-      return next();
-    }
-    verifyOTPLoginAction(data);
-  };
-
   return (
     <>
-      <h1>Welcome back</h1>
-      <p>Enter your email to receive your login code.</p>
       <form action={handleOnSubmit}>
         {step}
 
@@ -53,7 +54,7 @@ export default function SignInOTP() {
       <p>Or login with your Google account</p>
 
       <p>
-        Don't have an account? <Link href="/signup">Sign up</Link>
+        Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
     </>
   );
@@ -61,29 +62,37 @@ export default function SignInOTP() {
 
 function SignInOTPStep1({ email, updateFields }: LoginStepsProps) {
   return (
-    <Input
-      id="email"
-      type="text"
-      label="Email"
-      required
-      pattern={emailRegex}
-      autoFocus
-      value={email}
-      onChange={(e) => updateFields({ email: e.target.value })}
-    />
+    <>
+      <h2>Welcome back</h2>
+      <p>Enter your email to receive your login code.</p>
+      <Input
+        id="email"
+        type="email"
+        label="Email"
+        required
+        autoFocus
+        value={email}
+        onChange={(e) => updateFields({ email: e.target.value })}
+      />
+    </>
   );
 }
 
-function SignInOTPStep2({ OTPCode, updateFields }: LoginStepsProps) {
+function SignInOTPStep2({ OTPCode, email, updateFields }: LoginStepsProps) {
   return (
-    <Input
-      type="text"
-      max={6}
-      id="OTPCode"
-      label="OTP Code"
-      value={OTPCode}
-      onChange={(e) => updateFields({ OTPCode: e.target.value })}
-      required
-    />
+    <>
+      <p>
+        Check your email address ({email}) and enter the 6-digit code below.
+      </p>
+      <Input
+        type="text"
+        max={6}
+        id="OTPCode"
+        label="OTP Code"
+        value={OTPCode}
+        onChange={(e) => updateFields({ OTPCode: e.target.value })}
+        required
+      />
+    </>
   );
 }

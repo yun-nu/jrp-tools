@@ -6,13 +6,14 @@ interface InputProps {
   required?: boolean;
   pattern?: string;
   type: string;
-  value: string;
+  value?: string;
   minLength?: number;
   min?: number;
   max?: number;
   errorMsg?: string;
   autoFocus?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
 }
 
 export default function Input({
@@ -30,6 +31,7 @@ export default function Input({
   errorMsg,
   autoFocus,
   onChange,
+  onBlur,
 }: InputProps) {
   return (
     <div className="space-y-2">
@@ -57,6 +59,7 @@ export default function Input({
         placeholder={placeholder}
         autoFocus={autoFocus}
         onChange={onChange}
+        onBlur={onBlur}
       />
       {errorMsg && <p className="text-sm text-red-500">{errorMsg}</p>}
       {type === "checkbox" && (

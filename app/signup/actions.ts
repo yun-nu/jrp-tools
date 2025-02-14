@@ -2,10 +2,13 @@
 
 import { createClient } from "../_lib/supabase-server";
 
-export async function signUpOTPAction(formData: FormData) {
+export async function signUpOTPAction(
+  _previousState: unknown,
+  formData: FormData
+) {
   const supabase = await createClient();
-  const email = String(formData.get("email"));
-  const emailConfirmation = String(formData.get("emailConfirmation"));
+  const email = formData.get("email") as string;
+  const emailConfirmation = formData.get("emailConfirmation") as string;
 
   if (email === emailConfirmation) {
     const { data, error } = await supabase.auth.signInWithOtp({
@@ -13,8 +16,8 @@ export async function signUpOTPAction(formData: FormData) {
     });
     if (error) throw new Error(error.message);
 
-    console.log(data);
     return data;
   }
-  throw new Error("Entered email addresses don't match!");
+
+  return { message: "Entered email addresses don't match!" };
 }

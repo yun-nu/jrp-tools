@@ -1,3 +1,4 @@
+"use client";
 import { BsFillPersonDashFill } from "react-icons/bs";
 import {
   Dialog,
@@ -9,11 +10,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
+import SubmitButton from "./SubmitButton";
+import { deleteCharacterAction } from "../dashboard/actions";
 
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 
-export default function DeleteCharacter() {
+export default function DeleteCharacter({
+  character,
+}: {
+  character: Character;
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -33,7 +40,11 @@ export default function DeleteCharacter() {
         </DialogHeader>
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
-          <button type="submit">Delete</button>
+          <SubmitButton
+            type="button"
+            onClick={() => deleteCharacterAction(character)}
+            content="Delete character"
+          ></SubmitButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

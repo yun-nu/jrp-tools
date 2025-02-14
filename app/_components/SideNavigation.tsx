@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { BsFillPersonPlusFill } from "react-icons/bs";
 import { getCharacters, getUserId } from "../_lib/data-service";
-import { createClient } from "../_lib/supabase-server";
+import CreateNewCharacter from "./CreateNewCharacter";
 
 async function SideNavigation() {
   const id = await getUserId();
@@ -24,10 +23,7 @@ async function SideNavigation() {
         ))}
       </ul>
 
-      <button className="flex items-center">
-        <BsFillPersonPlusFill />
-        <span>Add new character</span>
-      </button>
+      <CreateNewCharacter />
     </nav>
   );
 }

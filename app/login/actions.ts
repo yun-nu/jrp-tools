@@ -19,11 +19,11 @@ export async function signInOTPAction(email: string) {
     },
   });
 
-  if (error?.status === 422) throw new Error("User not found!");
+  if (error?.status === 422) return { error: "User not found." };
   if (error?.status === 429)
-    throw new Error("Please wait a minute before attempting to login again.");
+    return { error: "Please wait a minute before attempting to login again." };
   if (error) throw new Error("A server error occurred: ", error);
-  console.log(data);
+
   return data;
 }
 
@@ -32,16 +32,13 @@ export async function verifyOTPLoginAction({ email, OTPCode }: LoginDataProps) {
   // const email = formData.get("email") as string;
   // const OTPcode = formData.get("OTPCode") as string;
 
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.verifyOtp({
+  const { error } = await supabase.auth.verifyOtp({
     email: email,
     token: OTPCode,
     type: "email",
   });
 
-  if (error) console.log(error);
+  if (error?.status === 403) return { error: "Expired or invalid code." };
 
   redirect("/dashboard");
 }

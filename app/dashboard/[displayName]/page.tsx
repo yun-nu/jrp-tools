@@ -49,7 +49,7 @@ export default async function Page({ params }: Props) {
       <DataTable columns={threadsCols} data={ongoingThreads} />
       <h2>Finished</h2>
       <DataTable columns={threadsCols} data={finishedThreads} />
-      <DeleteCharacter />
+      <DeleteCharacter character={character} />
     </section>
   );
 }
