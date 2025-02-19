@@ -1,5 +1,12 @@
 "use client";
 
+import { startTransition, useActionState, useState } from "react";
+import { BsFillPersonPlusFill } from "react-icons/bs";
+import {
+  addCharacterAction,
+  verifyDisplayNameAvailability,
+} from "../dashboard/actions";
+import SubmitButton from "./SubmitButton";
 import {
   Dialog,
   DialogClose,
@@ -10,14 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { BsFillPersonPlusFill } from "react-icons/bs";
-import Input from "./Input";
-import SubmitButton from "./SubmitButton";
-import {
-  addCharacterAction,
-  verifyDisplayNameAvailability,
-} from "../dashboard/actions";
-import { startTransition, useActionState, useState } from "react";
+import { Input } from "./ui/Input";
 
 export default function CreateNewCharacter() {
   const linkPattern =
@@ -29,6 +29,12 @@ export default function CreateNewCharacter() {
     verifyDisplayNameAvailability,
     undefined
   );
+
+  const handleVerifyAvailability = () => {
+    startTransition(() => {
+      actionFunction(displayName);
+    });
+  };
 
   return (
     <Dialog>
@@ -54,12 +60,7 @@ export default function CreateNewCharacter() {
             description="Each display name is unique. This is the username for your character page."
             required
             onChange={(e) => setDisplayName(e.target.value)}
-          />
-
-          <SubmitButton
-            content="Check availability"
-            type="button"
-            onClick={() => startTransition(() => actionFunction(displayName))}
+            onBlur={handleVerifyAvailability}
           />
 
           <p className={state?.taken ? "text-red-500" : "text-green-500"}>

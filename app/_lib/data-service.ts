@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { supabase } from "./supabase-client";
 import { createClient } from "./supabase-server";
+import { Character } from "../_schemas/Character";
 
 export async function getUserId() {
   const supabase = await createClient();

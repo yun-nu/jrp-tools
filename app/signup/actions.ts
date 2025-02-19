@@ -1,23 +1,29 @@
 "use server";
 
 import { createClient } from "../_lib/supabase-server";
+import { SignUpOTP, signUpOTPSchema } from "../_schemas/Auth";
 
-export async function signUpOTPAction(
-  _previousState: unknown,
-  formData: FormData
-) {
-  const supabase = await createClient();
-  const email = formData.get("email") as string;
-  const emailConfirmation = formData.get("emailConfirmation") as string;
+export async function signUpOTPAction(input: SignUpOTP) {
+  const email = input.email;
 
-  if (email === emailConfirmation) {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email: email,
-    });
-    if (error) throw new Error(error.message);
+  const parsed = signUpOTPSchema.safeParse(input);
 
-    return data;
+  if (!parsed.success) {
+    return {
+      message: "Submission Failed",
+      errors: parsed.error.flatten().fieldErrors,
+    };
   }
 
-  return { message: "Entered email addresses don't match!" };
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithOtp({
+    email: email,
+  });
+
+  if (error) return { message: "Could not sign up" };
+
+  return {
+    message:
+      "Follow the instructions sent to your email to activate your account.",
+  };
 }

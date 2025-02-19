@@ -1,58 +1,56 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { useMultiStepForm } from "../_hooks/useMultistepForm";
+import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
 import { signInOTPAction, verifyOTPLoginAction } from "../login/actions";
-import { isActionError } from "../utils/error";
-import { useMultiStepForm } from "../utils/useMultistepForm";
-import Input from "./Input";
-import SubmitButton from "./SubmitButton";
+import { InputWithLabel } from "./InputWithLabel";
+import { Button } from "./ui/Button";
+import { Form } from "./ui/Form";
 
-export type LoginDataProps = {
-  email: string;
-  OTPCode: string;
-};
+export default function SignInOTPForm() {
+  const form = useForm<z.infer<typeof signInOTPSchema>>({
+    resolver: zodResolver(signInOTPSchema),
+    defaultValues: {
+      email: "",
+      OTPCode: "",
+    },
+  });
 
-type LoginStepsProps = LoginDataProps & {
-  updateFields: (fields: Partial<LoginDataProps>) => void;
-};
-
-export default function SignInOTP() {
-  const [data, setData] = useState({
-    email: "",
-    OTPCode: "",
-  } as LoginDataProps);
   const { step, next, isLastStep } = useMultiStepForm([
-    <SignInOTPStep1 {...data} updateFields={updateFields} key={1} />,
-    <SignInOTPStep2 {...data} updateFields={updateFields} key={2} />,
+    <SignInOTPStep1 key={1} />,
+    <SignInOTPStep2 email={form.getValues("email")} key={2} />,
   ]);
 
-  const handleOnSubmit = async () => {
+  const onSubmit = async () => {
     if (!isLastStep) {
-      const res = await signInOTPAction(data.email);
-      if (isActionError(res)) throw new Error(res.error);
-      return next();
+      const email = form.getValues("email");
+      const resultStep1 = await signInOTPAction({ email });
+      if (resultStep1?.error || resultStep1?.errors) {
+        form.setError("email", {
+          message: resultStep1.error || resultStep1.message,
+        });
+        return;
+      } else return next();
     }
-    const res = await verifyOTPLoginAction(data);
-    if (isActionError(res)) throw new Error(res.error);
-    return;
+    const resultStep2 = await verifyOTPLoginAction(form.getValues());
+    if (resultStep2?.error)
+      form.setError("OTPCode", { message: resultStep2.error });
   };
-
-  function updateFields(fields: Partial<LoginDataProps>) {
-    setData((prev) => {
-      return { ...prev, ...fields };
-    });
-  }
 
   return (
     <>
-      <form action={handleOnSubmit}>
-        {step}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {step}
 
-        <SubmitButton content={isLastStep ? "Log in" : "Next"} type="submit" />
-      </form>
+          <Button type="submit">Submit</Button>
+        </form>
+      </Form>
       <p>Or login with your Google account</p>
-
       <p>
         Don&apos;t have an account? <Link href="/signup">Sign up</Link>
       </p>
@@ -60,39 +58,62 @@ export default function SignInOTP() {
   );
 }
 
-function SignInOTPStep1({ email, updateFields }: LoginStepsProps) {
+function SignInOTPStep1() {
   return (
     <>
       <h2>Welcome back</h2>
-      <p>Enter your email to receive your login code.</p>
-      <Input
-        id="email"
-        type="email"
-        label="Email"
-        required
-        autoFocus
-        value={email}
-        onChange={(e) => updateFields({ email: e.target.value })}
+      <InputWithLabel
+        fieldTitle="Enter your email to receive your login code."
+        nameInSchema="email"
       />
     </>
   );
 }
 
-function SignInOTPStep2({ OTPCode, email, updateFields }: LoginStepsProps) {
+function SignInOTPStep2({ email }: Pick<SignInOTP, "email">) {
   return (
     <>
-      <p>
-        Check your email address ({email}) and enter the 6-digit code below.
-      </p>
-      <Input
-        type="text"
-        max={6}
-        id="OTPCode"
-        label="OTP Code"
-        value={OTPCode}
-        onChange={(e) => updateFields({ OTPCode: e.target.value })}
-        required
+      <InputWithLabel
+        fieldTitle={`Check your email address (${email}) and enter the 6-digit code below.`}
+        nameInSchema="OTPCode"
       />
     </>
   );
 }
+
+// function SignInOTPStep1({ email, updateFields }: LoginStepsProps) {
+//   return (
+//     <>
+//       <h2>Welcome back</h2>
+//       <p>Enter your email to receive your login code.</p>
+//       <Input
+//         id="email"
+//         type="email"
+//         label="Email"
+//         required
+//         autoFocus
+//         value={email}
+//         onChange={(e) => updateFields({ email: e.target.value })}
+//       />
+//     </>
+//   );
+// }
+
+// function SignInOTPStep2({ OTPCode, email, updateFields }: LoginStepsProps) {
+//   return (
+//     <>
+//       <p>
+//         Check your email address ({email}) and enter the 6-digit code below.
+//       </p>
+//       <Input
+//         type="text"
+//         max={6}
+//         id="OTPCode"
+//         label="OTP Code"
+//         value={OTPCode}
+//         onChange={(e) => updateFields({ OTPCode: e.target.value })}
+//         required
+//       />
+//     </>
+//   );
+// }

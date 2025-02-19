@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCharacters, getUserId } from "../_lib/data-service";
 import CreateNewCharacter from "./CreateNewCharacter";
+import { CharacterForm } from "./CharacterForm";
 
 async function SideNavigation() {
   const id = await getUserId();
@@ -10,20 +11,21 @@ async function SideNavigation() {
   return (
     <nav className="border-r border-primary-900">
       <ul className="flex flex-col gap-2 h-full text-lg">
-        {characters?.map((char) => (
-          <li key={char.name}>
+        {characters?.map((character) => (
+          <li key={character.characterName}>
             <Link
               className="flex items-center justify-between"
-              href={`/dashboard/${char.displayName}`}
+              href={`/dashboard/${character.displayName}`}
             >
-              <span>{char.name}</span>
-              <span>{char.game}</span>
+              <span>{character.characterName}</span>
+              <span>{character.gameName}</span>
             </Link>
           </li>
         ))}
       </ul>
 
-      <CreateNewCharacter />
+      {/* <CreateNewCharacter /> */}
+      <CharacterForm />
     </nav>
   );
 }

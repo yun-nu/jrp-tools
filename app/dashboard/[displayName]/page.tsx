@@ -7,6 +7,7 @@ import {
 } from "@/app/_lib/data-service";
 import { threadsCols } from "@/app/_components/Columns";
 import DeleteCharacter from "@/app/_components/DeleteCharacter";
+import EditCharacter from "@/app/_components/EditCharacter";
 
 interface Props {
   params: { displayName: string };
@@ -50,6 +51,7 @@ export default async function Page({ params }: Props) {
       <h2>Finished</h2>
       <DataTable columns={threadsCols} data={finishedThreads} />
       <DeleteCharacter character={character} />
+      <EditCharacter character={character} />
     </section>
   );
 }

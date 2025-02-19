@@ -3,20 +3,30 @@ import { revalidatePath } from "next/cache";
 import { AuthActionHelper } from "../_lib/actions";
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
+import { Character, characterSchema } from "../_schemas/Character";
 
-export async function addCharacterAction(formData: FormData) {
+export async function addCharacterAction(characterData: Character) {
   const { user, supabase } = await AuthActionHelper();
 
   const newCharacter: Partial<Character> = {
     user_id: user,
-    displayName: formData.get("displayName") as string,
-    name: formData.get("characterName") as string,
-    game: formData.get("game") as string,
-    acLink: formData.get("acLink") as string,
-    isPublic: false,
-    journalName: formData.get("journalName") as string,
-    journalLink: formData.get("journalLink") as string,
+    displayName: characterData.displayName.replaceAll(" ", ""),
+    characterName: characterData.characterName,
+    gameName: characterData.gameName,
+    acLink: characterData.acLink,
+    isPublic: characterData.isPublic,
+    journalName: characterData.journalName.replaceAll(" ", ""),
+    journalLink: characterData.journalLink,
   };
+
+  const parsed = characterSchema.safeParse(newCharacter);
+
+  if (!parsed.success) {
+    return {
+      message: "Submission Failed",
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
 
   const { error } = await supabase
     .from("characters")
@@ -24,46 +34,50 @@ export async function addCharacterAction(formData: FormData) {
     .select();
 
   if (error?.code === "23505") {
-    return { errorMessage: "This display name is already taken." };
+    return { error: "This display name is already taken." };
   }
 
-  if (error) throw new Error("Could not add new character.");
+  if (error) return { error: "Could not add new character" };
 
-  redirect(`/dashboard/${newCharacter.displayName}`);
+  return {
+    success: "Character created successfully",
+    displayName: newCharacter.displayName,
+  };
 }
 
-export async function deleteCharacterAction(character: Character) {
+export async function deleteCharacterAction({
+  user_id: userId,
+  id: characterId,
+}: Pick<Character, "user_id" | "id">) {
   const { user, supabase } = await AuthActionHelper();
 
-  if (user === character.user_id) {
+  if (user === userId) {
     const { error } = await supabase
       .from("characters")
       .delete()
-      .eq("id", character.id);
+      .eq("id", characterId);
 
     if (error) {
-      console.log(error);
       throw new Error("Could not delete character.");
     }
   }
 
-  revalidatePath(`/dashboard/${character.name}`);
-  redirect(`/dashboard/`);
+  redirect(`/dashboard`);
 }
 
-export async function verifyDisplayNameAvailability(
-  _previousState: unknown,
-  displayName: string
-) {
+export async function verifyDisplayNameAvailability(displayName: string) {
+  // if (!displayName.length)
+  //   return { taken: true, message: "Display name can't be empty." };
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("characters")
     .select("displayName")
     .eq("displayName", displayName);
 
-  if (error) throw new Error("Could not perform this action.");
+  if (error) return { error: "Could not perform this action." };
 
-  if (!data?.length)
-    return { taken: false, message: "This display name is available." };
-  else return { taken: true, message: "This display name is already taken." };
+  if (!data?.length) {
+    return { taken: false };
+  } else return { taken: true };
 }

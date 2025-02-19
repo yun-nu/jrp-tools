@@ -1,7 +1,7 @@
 import { FaGoogle } from "react-icons/fa6";
 import { TbPasswordUser } from "react-icons/tb";
 import SubmitButton from "../_components/SubmitButton";
-import SignUpOTP from "../_components/SignUpOTP";
+import { SignUpOTP } from "../_components/SignUpOTP";
 
 export default function Page() {
   return (

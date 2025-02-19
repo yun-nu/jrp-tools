@@ -1,5 +1,5 @@
-import SignInOTP from "../_components/SignInOTP";
+import SignInOTPForm from "../_components/SignInOTP";
 
 export default function Page() {
-  return <SignInOTP />;
+  return <SignInOTPForm />;
 }
