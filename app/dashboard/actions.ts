@@ -5,11 +5,27 @@ import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
 
+export async function verifyDisplayNameAvailability(displayName: string) {
+  if (!displayName.length) return { error: "Display name can't be empty." };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("characters")
+    .select("displayName")
+    .eq("displayName", displayName);
+
+  if (error) return { error: "Could not perform this action." };
+
+  if (!data?.length) {
+    return { taken: false };
+  } else return { taken: true };
+}
+
 export async function addCharacterAction(characterData: Character) {
   const { user, supabase } = await AuthActionHelper();
 
   const newCharacter: Partial<Character> = {
-    user_id: user,
+    userId: user,
     displayName: characterData.displayName.replaceAll(" ", ""),
     characterName: characterData.characterName,
     gameName: characterData.gameName,
@@ -45,10 +61,42 @@ export async function addCharacterAction(characterData: Character) {
   };
 }
 
+export async function editCharacterAction(
+  characterData: Character,
+  characterId: number
+) {
+  const { user, supabase } = await AuthActionHelper();
+
+  const parsed = characterSchema.safeParse(characterData);
+
+  if (!parsed.success) {
+    return {
+      message: "Submission Failed",
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
+
+  if (user === characterData.userId) {
+    const { error } = await supabase
+      .from("characters")
+      .update(characterData)
+      .eq("id", characterId);
+
+    if (error) return { error: "Could not edit character" };
+
+    return {
+      success: "Character edited successfully",
+      displayName: characterData.displayName,
+    };
+  }
+
+  return { error: "An unknown error occurred" };
+}
+
 export async function deleteCharacterAction({
-  user_id: userId,
+  userId: userId,
   id: characterId,
-}: Pick<Character, "user_id" | "id">) {
+}: Pick<Character, "userId" | "id">) {
   const { user, supabase } = await AuthActionHelper();
 
   if (user === userId) {
@@ -58,26 +106,13 @@ export async function deleteCharacterAction({
       .eq("id", characterId);
 
     if (error) {
-      throw new Error("Could not delete character.");
+      return { error: "Could not delete character." };
     }
+
+    return {
+      success: "Character deleted successfully",
+    };
   }
 
-  redirect(`/dashboard`);
-}
-
-export async function verifyDisplayNameAvailability(displayName: string) {
-  // if (!displayName.length)
-  //   return { taken: true, message: "Display name can't be empty." };
-
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("characters")
-    .select("displayName")
-    .eq("displayName", displayName);
-
-  if (error) return { error: "Could not perform this action." };
-
-  if (!data?.length) {
-    return { taken: false };
-  } else return { taken: true };
+  return { error: "An unknown error occurred" };
 }

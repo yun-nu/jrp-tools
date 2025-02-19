@@ -11,7 +11,7 @@ export default async function Page({ params }: Props) {
   const character = await getCharacterData(displayName);
 
   if (
-    (!character.isPublic && character.user_id === userId) ||
+    (!character.isPublic && character.userId === userId) ||
     character.isPublic
   )
     return (

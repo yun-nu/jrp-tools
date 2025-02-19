@@ -15,6 +15,8 @@ import { deleteCharacterAction } from "../dashboard/actions";
 import { startTransition } from "react";
 import { Character } from "../_schemas/Character";
 import { Button } from "./ui/Button";
+import { toast } from "../_hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
@@ -24,15 +26,28 @@ export default function DeleteCharacter({
 }: {
   character: Character;
 }) {
-  const { id, user_id, characterName } = character;
+  const { id, userId, characterName } = character;
+  const router = useRouter();
+
   const handleDeleteCharacter = () => {
-    startTransition(() => deleteCharacterAction({ user_id, id }));
+    startTransition(async () => {
+      const result = await deleteCharacterAction({ userId, id });
+      if (result.error) {
+        toast({
+          description: result.error,
+          variant: "destructive",
+        });
+        return;
+      } else {
+        toast({ description: result.success, variant: "default" });
+        router.push(`/dashboard`);
+      }
+    });
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        {/* btn className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full */}
         <Button variant={"destructive"}>
           <BsFillPersonDashFill />
           <span>Delete {characterName}</span>

@@ -1,53 +1,49 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsFillPersonPlusFill } from "react-icons/bs";
 import { z } from "zod";
-import { characterSchema } from "../_schemas/Character";
-import {
-  addCharacterAction,
-  verifyDisplayNameAvailability,
-} from "../dashboard/actions";
+import { toast } from "../_hooks/use-toast";
+import { Character, characterSchema } from "../_schemas/Character";
+import { verifyDisplayNameAvailability } from "../dashboard/actions";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/Dialog";
+import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import { useState } from "react";
-import { toast } from "../_hooks/use-toast";
-import { useRouter } from "next/navigation";
 
-/// extract the form to its own component to reuse it on the edit modal
+type Props = {
+  setOpen: (open: boolean) => void;
+  character?: Character;
+  action: (characterData: Character, editId?: number) => Promise<Character>;
+};
 
-export function CharacterForm() {
-  const [open, setOpen] = useState(false);
+export function CharacterForm({ setOpen, character, action }: Props) {
   const [isValidDisplayName, setIsValidDisplayName] = useState(true);
   const router = useRouter();
 
+  const { id: editId, ...editedValues } = character || {};
+
   const form = useForm<z.infer<typeof characterSchema>>({
     resolver: zodResolver(characterSchema),
-    defaultValues: {
-      displayName: "",
-      characterName: "",
-      acLink: "",
-      gameName: "",
-      isPublic: false,
-      journalLink: "",
-      journalName: "",
-    },
+    defaultValues: editId
+      ? editedValues
+      : {
+          displayName: "",
+          characterName: "",
+          acLink: "",
+          gameName: "",
+          isPublic: false,
+          journalLink: "",
+          journalName: "",
+        },
   });
 
+  form.getValues();
+
   const onSubmit = async () => {
-    const result = await addCharacterAction(form.getValues());
+    const result = await action(form.getValues(), editId);
     if (result.error || result.errors) {
       toast({
         description: result.error || result.message,
@@ -79,86 +75,52 @@ export function CharacterForm() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
-          <BsFillPersonPlusFill />
-          <span>Add new character</span>
-        </button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
-        <DialogHeader>
-          <DialogTitle>Add new Character</DialogTitle>
-          <DialogDescription>
-            Fields not marked as &quot;required&quot; are optional. Any and all
-            fields can be changed later.
-          </DialogDescription>
-        </DialogHeader>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <InputWithLabel
+          fieldTitle="Display Name"
+          nameInSchema="displayName"
+          description="Required. This is the unique username for your character."
+          onBlur={handleVerifyAvailability}
+        />
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <InputWithLabel
-              fieldTitle="Display Name"
-              nameInSchema="displayName"
-              description="Required. This is the unique username for your character."
-              onBlur={handleVerifyAvailability}
-            />
+        <InputWithLabel
+          fieldTitle="Character Name"
+          nameInSchema="characterName"
+          description="Required. This the name that will be displayed on your character list and page."
+        />
+        <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
+        <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
+        <InputWithLabel
+          fieldTitle="Journal Link"
+          nameInSchema="journalLink"
+          placeholder="Must start with http:// or https://"
+        />
 
-            <InputWithLabel
-              fieldTitle="Character Name"
-              nameInSchema="characterName"
-              description="Required. This the name that will be displayed on your character list and page."
-            />
-            <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
-            <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
-            <InputWithLabel
-              fieldTitle="Journal Link"
-              nameInSchema="journalLink"
-              placeholder="Must start with http:// or https://"
-            />
+        <InputWithLabel
+          fieldTitle="AC Link"
+          nameInSchema="acLink"
+          placeholder="Must start with http:// or https://"
+        />
 
-            <InputWithLabel
-              fieldTitle="AC Link"
-              nameInSchema="acLink"
-              placeholder="Must start with http:// or https://"
-            />
-
-            <CheckboxWithText
-              nameInSchema="isPublic"
-              fieldTitle="Make character profile public"
-              description="Character profiles are private
+        <CheckboxWithText
+          nameInSchema="isPublic"
+          fieldTitle="Make character profile public"
+          description="Character profiles are private
   by default. If you'd like to share your character page, check this option."
-            />
+        />
 
-            {/*
-                        {isDisplayNameTaken ? (
-              <p className="text-sm">{isDisplayNameTaken.message}</p>
-            ) : null}
-
-            
-            {errors ? (
-              <div className="mb-10 text-red-500">
-                {Object.keys(errors).map((key) => (
-                  <p key={key}>{`${key}: ${
-                    errors[key as keyof typeof errors]
-                  }`}</p>
-                ))}
-              </div>
-            ) : null} */}
-
-            <DialogFooter>
-              <DialogClose>Cancel</DialogClose>
-              <Button
-                type="submit"
-                disabled={!form.formState.isValid || !isValidDisplayName}
-              >
-                Add Character
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+        <DialogFooter>
+          <DialogClose>Cancel</DialogClose>
+          <Button
+            type="submit"
+            disabled={!form.formState.isValid || !isValidDisplayName}
+          >
+            Save changes
+          </Button>
+        </DialogFooter>
+      </form>
+    </Form>
   );
 }
 

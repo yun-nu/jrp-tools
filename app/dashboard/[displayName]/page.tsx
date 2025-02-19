@@ -33,7 +33,7 @@ export default async function Page({ params }: Props) {
   const userId = await getUserId();
   const character = await getCharacterData(displayName);
 
-  if (userId !== character.user_id)
+  if (userId !== character.userId)
     throw new Error("You must be logged in to perform this action");
 
   const ongoingThreads = (await getThreads(character.id)).filter(

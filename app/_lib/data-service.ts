@@ -19,7 +19,7 @@ export async function getCharacters(userId: string) {
   const { data: characters, error } = await supabase
     .from("characters")
     .select("*")
-    .eq("user_id", userId);
+    .eq("userId", userId);
   // revalidatePath("/dashboard");
   return characters as Character[];
 }

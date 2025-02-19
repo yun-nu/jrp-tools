@@ -25,19 +25,7 @@ export const characterSchema = z.object({
   ]),
   isPublic: z.boolean(),
   id: z.number().int().positive().optional(),
-  user_id: z.string().optional(),
+  userId: z.string().optional(),
 });
 
 export type Character = z.infer<typeof characterSchema>;
-
-// interface Character {
-//   id: number;
-//   displayName: string;
-//   user_id: string;
-//   name: string;
-//   game: string;
-//   acLink: string;
-//   isPublic: boolean;
-//   journalName: string;
-//   journalLink: string;
-// }

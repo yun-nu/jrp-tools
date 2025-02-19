@@ -10,6 +10,7 @@ type AuthUserSupabase = {
 // Create sb client and returns user (or undefined if it doesn't exist)
 export async function AuthActionHelper(): Promise<AuthUserSupabase> {
   const supabase = await createClient();
+
   const {
     data: { user },
     error,

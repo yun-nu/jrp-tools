@@ -24,8 +24,7 @@ async function SideNavigation() {
         ))}
       </ul>
 
-      {/* <CreateNewCharacter /> */}
-      <CharacterForm />
+      <CreateNewCharacter />
     </nav>
   );
 }
