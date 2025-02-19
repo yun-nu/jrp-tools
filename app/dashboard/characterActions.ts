@@ -1,12 +1,18 @@
 "use server";
-import { revalidatePath } from "next/cache";
+
 import { AuthActionHelper } from "../_lib/actions";
-import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
+import { CharacterActionResult } from "../_utils/actionReturn";
 
-export async function verifyDisplayNameAvailability(displayName: string) {
-  if (!displayName.length) return { error: "Display name can't be empty." };
+export async function verifyDisplayNameAvailability(
+  displayName: string,
+  prevDisplayName: string | undefined
+) {
+  if (displayName === prevDisplayName) return { taken: false };
+
+  if (!displayName.length)
+    return { taken: true, error: "Display name can't be empty." };
 
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -18,10 +24,12 @@ export async function verifyDisplayNameAvailability(displayName: string) {
 
   if (!data?.length) {
     return { taken: false };
-  } else return { taken: true };
+  } else return { taken: true, error: "This display name is already taken." };
 }
 
-export async function addCharacterAction(characterData: Character) {
+export async function addCharacterAction(
+  characterData: Character
+): Promise<CharacterActionResult> {
   const { user, supabase } = await AuthActionHelper();
 
   const newCharacter: Partial<Character> = {

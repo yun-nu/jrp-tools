@@ -31,10 +31,10 @@ export default function Character({ character }: { character: SCharacter }) {
         )}
         <div className="flex gap-4">
           {gameName && <span className="block">Game: {gameName}</span>}
+          {/*  /// This is glitching fsr */}
           {acLink && (
             <Link href={acLink} className="flex items-center gap-2">
-              Link to AC
-              <MdOutlineOpenInNew />
+              {"AC page"} <MdOutlineOpenInNew />
             </Link>
           )}
         </div>

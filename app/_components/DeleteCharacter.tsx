@@ -1,5 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
+import { toast } from "../_hooks/use-toast";
+import { Character } from "../_schemas/Character";
+import { deleteCharacterAction } from "../dashboard/characterActions";
+import { Button } from "./ui/Button";
 import {
   Dialog,
   DialogClose,
@@ -10,16 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import SubmitButton from "./SubmitButton";
-import { deleteCharacterAction } from "../dashboard/actions";
-import { startTransition } from "react";
-import { Character } from "../_schemas/Character";
-import { Button } from "./ui/Button";
-import { toast } from "../_hooks/use-toast";
-import { useRouter } from "next/navigation";
-
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
 
 export default function DeleteCharacter({
   character,
@@ -29,20 +24,18 @@ export default function DeleteCharacter({
   const { id, userId, characterName } = character;
   const router = useRouter();
 
-  const handleDeleteCharacter = () => {
-    startTransition(async () => {
-      const result = await deleteCharacterAction({ userId, id });
-      if (result.error) {
-        toast({
-          description: result.error,
-          variant: "destructive",
-        });
-        return;
-      } else {
-        toast({ description: result.success, variant: "default" });
-        router.push(`/dashboard`);
-      }
-    });
+  const handleDeleteCharacter = async () => {
+    const result = await deleteCharacterAction({ userId, id });
+    if (result.error) {
+      toast({
+        description: result.error,
+        variant: "destructive",
+      });
+      return;
+    } else {
+      toast({ description: result.success, variant: "default" });
+      router.push(`/dashboard`);
+    }
   };
 
   return (

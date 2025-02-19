@@ -6,21 +6,29 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/use-toast";
 import { Character, characterSchema } from "../_schemas/Character";
-import { verifyDisplayNameAvailability } from "../dashboard/actions";
+import { verifyDisplayNameAvailability } from "../dashboard/characterActions";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
+import {
+  actionReturnError,
+  actionReturnSuccess,
+  CharacterActionResult,
+} from "../_utils/actionReturn";
 
 type Props = {
   setOpen: (open: boolean) => void;
   character?: Character;
-  action: (characterData: Character, editId?: number) => Promise<Character>;
+  action: (
+    characterData: Character,
+    editId?: number
+  ) => Promise<CharacterActionResult>;
 };
 
 export function CharacterForm({ setOpen, character, action }: Props) {
-  const [isValidDisplayName, setIsValidDisplayName] = useState(true);
+  const [isValidDisplayName, setIsValidDisplayName] = useState(false);
   const router = useRouter();
 
   const { id: editId, ...editedValues } = character || {};
@@ -44,13 +52,15 @@ export function CharacterForm({ setOpen, character, action }: Props) {
 
   const onSubmit = async () => {
     const result = await action(form.getValues(), editId);
-    if (result.error || result.errors) {
+
+    if (actionReturnError(result)) {
       toast({
         description: result.error || result.message,
         variant: "destructive",
       });
       return;
-    } else {
+    }
+    if (actionReturnSuccess(result)) {
       toast({ description: result.success, variant: "default" });
       form.reset();
       router.push(`/dashboard/${result.displayName}`);
@@ -60,17 +70,18 @@ export function CharacterForm({ setOpen, character, action }: Props) {
 
   const handleVerifyAvailability = async () => {
     const result = await verifyDisplayNameAvailability(
-      form.getValues("displayName")
+      form.getValues("displayName"),
+      character?.displayName
     );
     if (result.taken) {
       setIsValidDisplayName(false);
       form.setError("displayName", {
-        message: "This display name is already taken.",
+        message: result.error,
       });
     }
     if (!result.taken) {
       setIsValidDisplayName(true);
-      form.clearErrors();
+      form.clearErrors("displayName");
     }
   };
 
@@ -112,10 +123,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
 
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
-          <Button
-            type="submit"
-            disabled={!form.formState.isValid || !isValidDisplayName}
-          >
+          <Button type="submit" disabled={!isValidDisplayName}>
             Save changes
           </Button>
         </DialogFooter>
