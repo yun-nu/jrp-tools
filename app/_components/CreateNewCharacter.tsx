@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
+import { Button } from "./ui/Button";
 
 export default function CreateNewCharacter() {
   const [open, setOpen] = useState(false);
@@ -19,10 +20,10 @@ export default function CreateNewCharacter() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
+        <Button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
           <BsFillPersonPlusFill />
           <span>Add new character</span>
-        </button>
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
         <DialogHeader>

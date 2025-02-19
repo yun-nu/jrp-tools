@@ -8,6 +8,12 @@ import {
 import { threadsCols } from "@/app/_components/Columns";
 import DeleteCharacter from "@/app/_components/DeleteCharacter";
 import EditCharacter from "@/app/_components/EditCharacter";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/app/_components/ui/Tabs";
 
 interface Props {
   params: { displayName: string };
@@ -46,10 +52,24 @@ export default async function Page({ params }: Props) {
   return (
     <section>
       <Character character={character} />
-      <h2>Ongoing</h2>
-      <DataTable columns={threadsCols} data={ongoingThreads} />
-      <h2>Finished</h2>
-      <DataTable columns={threadsCols} data={finishedThreads} />
+
+      <Tabs defaultValue="ongoing" className="">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="ongoing" className="bg-slate-100">
+            <h2>Ongoing</h2>
+          </TabsTrigger>
+          <TabsTrigger value="finished">
+            <h2>Finished</h2>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="ongoing">
+          <DataTable columns={threadsCols} data={ongoingThreads} />
+        </TabsContent>
+        <TabsContent value="finished">
+          <DataTable columns={threadsCols} data={finishedThreads} />
+        </TabsContent>
+      </Tabs>
+
       <DeleteCharacter character={character} />
       <EditCharacter character={character} />
     </section>
