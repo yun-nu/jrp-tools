@@ -1,9 +1,11 @@
+import News from "../_components/News";
+
 export const revalidate = 30;
 
 export default async function Page() {
   return (
     <div>
-      <h2 className=""></h2>
+      <News />
     </div>
   );
 }

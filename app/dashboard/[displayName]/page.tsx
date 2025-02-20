@@ -14,6 +14,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
+import { Button } from "@/app/_components/ui/Button";
 
 interface Props {
   params: { displayName: string };
@@ -53,6 +54,8 @@ export default async function Page({ params }: Props) {
     <section>
       <Character character={character} />
 
+      <Button>Add new thread</Button>
+
       <Tabs defaultValue="ongoing" className="">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="ongoing" className="bg-slate-100">
@@ -70,8 +73,10 @@ export default async function Page({ params }: Props) {
         </TabsContent>
       </Tabs>
 
-      <DeleteCharacter character={character} />
-      <EditCharacter character={character} />
+      <div className="flex justify-between">
+        <EditCharacter character={character} />
+        <DeleteCharacter character={character} />
+      </div>
     </section>
   );
 }

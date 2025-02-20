@@ -7,6 +7,10 @@ export const characterSchema = z.object({
   characterName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" }),
+  characterBlurb: z
+    .string()
+    .max(500, { message: "Must be less than 500 characters long" })
+    .optional(),
   gameName: z.string().optional(),
   journalName: z.string(),
   journalLink: z.union([

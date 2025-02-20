@@ -7,22 +7,22 @@ export default function Character({ character }: { character: SCharacter }) {
   const {
     displayName,
     characterName,
+    characterBlurb,
     acLink,
     gameName,
     journalName,
     journalLink,
     isPublic,
-  } = character;
+  } = character || {};
 
   return (
     <div className="space-y-4 max-w-[80%]">
       <span className="block text-3xl font-semibold">{characterName}</span>{" "}
-      {isPublic && (
-        <Link href={`/${displayName}`}>
-          <MdPublic />
-          {characterName}&apos;s public page
-        </Link>
-      )}
+      <div className="flex gap-2">
+        <MdPublic />
+        <Link href={`/${displayName}`}>{characterName}&apos;s public page</Link>
+      </div>
+      <div>{characterBlurb}</div>
       <div className="text-base">
         {journalLink && (
           <Link href={journalLink} className="flex items-center gap-2">
@@ -32,9 +32,13 @@ export default function Character({ character }: { character: SCharacter }) {
         <div className="flex gap-4">
           {gameName && <span className="block">Game: {gameName}</span>}
           {/*  /// This is glitching fsr */}
+
           {acLink && (
-            <Link href={acLink} className="flex items-center gap-2">
-              {"AC page"} <MdOutlineOpenInNew />
+            <Link
+              href={acLink ? acLink : "#"}
+              className="flex items-center gap-2"
+            >
+              <MdOutlineOpenInNew /> AC page
             </Link>
           )}
         </div>

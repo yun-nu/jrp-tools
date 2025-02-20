@@ -2,30 +2,26 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
+import {
+  ArrowUpDown,
+  Copy,
+  Edit,
+  LinkIcon,
+  MoreHorizontal,
+  PanelBottomOpen,
+  SquareCheckBig,
+  Trash,
+} from "lucide-react";
+import Link from "next/link";
 import { Thread } from "../_schemas/Thread";
+import { Button } from "./ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/Button";
-import {
-  ArrowUpDown,
-  Copy,
-  Delete,
-  Edit,
-  GoalIcon,
-  Layers2,
-  LinkIcon,
-  MoreHorizontal,
-  PanelBottomOpen,
-  StickyNote,
-  Trash,
-} from "lucide-react";
-import Link from "next/link";
+} from "./ui/Dropdown-menu";
 
 export const threadsCols: ColumnDef<Thread>[] = [
   {
@@ -78,7 +74,7 @@ export const threadsCols: ColumnDef<Thread>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="start">
             <DropdownMenuItem>
               <PanelBottomOpen />
               <Link
@@ -95,6 +91,10 @@ export const threadsCols: ColumnDef<Thread>[] = [
               }
             >
               <LinkIcon /> Copy URL
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <SquareCheckBig /> Toggle finished
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Edit /> Edit thread

@@ -36,6 +36,7 @@ export async function addCharacterAction(
     userId: user,
     displayName: characterData.displayName.replaceAll(" ", ""),
     characterName: characterData.characterName,
+    characterBlurb: characterData.characterBlurb,
     gameName: characterData.gameName,
     acLink: characterData.acLink,
     isPublic: characterData.isPublic,
@@ -44,6 +45,7 @@ export async function addCharacterAction(
   };
 
   const parsed = characterSchema.safeParse(newCharacter);
+  console.log(parsed);
 
   if (!parsed.success) {
     return {

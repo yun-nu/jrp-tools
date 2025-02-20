@@ -17,6 +17,7 @@ import {
   actionReturnSuccess,
   CharacterActionResult,
 } from "../_utils/actionReturn";
+import TextareaWithLabel from "./TextareaWithLabel";
 
 type Props = {
   setOpen: (open: boolean) => void;
@@ -40,6 +41,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
       : {
           displayName: "",
           characterName: "",
+          characterBlurb: "",
           acLink: "",
           gameName: "",
           isPublic: false,
@@ -47,8 +49,6 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           journalName: "",
         },
   });
-
-  form.getValues();
 
   const onSubmit = async () => {
     const result = await action(form.getValues(), editId);
@@ -100,27 +100,29 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           nameInSchema="characterName"
           description="Required. This the name that will be displayed on your character list and page."
         />
+
+        <TextareaWithLabel fieldTitle="Blurb" nameInSchema="characterBlurb" />
+
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
+
         <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
+
         <InputWithLabel
           fieldTitle="Journal Link"
           nameInSchema="journalLink"
           placeholder="Must start with http:// or https://"
         />
-
         <InputWithLabel
           fieldTitle="AC Link"
           nameInSchema="acLink"
           placeholder="Must start with http:// or https://"
         />
-
         <CheckboxWithText
           nameInSchema="isPublic"
           fieldTitle="Make character profile public"
           description="Character profiles are private
   by default. If you'd like to share your character page, check this option."
         />
-
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
           <Button type="submit" disabled={!isValidDisplayName}>

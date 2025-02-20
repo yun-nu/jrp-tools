@@ -13,7 +13,7 @@ export default function Footer() {
       </span>
       <span className="block">
         Disclaimer: This is a beta project subject to changes or discontinuity.
-        Updates will be announced on the news page.
+        Updates will be announced on the dashboard.
       </span>
     </p>
   );
