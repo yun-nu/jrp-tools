@@ -14,9 +14,6 @@ import {
   DialogTrigger,
 } from "./ui/Dialog";
 
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-
 export default function EditCharacter({ character }: { character: Character }) {
   const { characterName } = character;
   const [open, setOpen] = useState(false);

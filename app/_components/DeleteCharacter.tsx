@@ -15,6 +15,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/AlertDialog";
 
 export default function DeleteCharacter({
   character,
@@ -33,38 +44,40 @@ export default function DeleteCharacter({
       });
       return;
     } else {
-      toast({ description: result.success, variant: "default" });
+      toast({ description: result.success, className: "bg-green-700" });
       router.push(`/dashboard`);
     }
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
         <Button variant={"destructive"}>
           <BsFillPersonDashFill />
           <span>Delete {characterName}</span>
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Delete {characterName}</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete the character {characterName}? This
-            action cannot be undone!
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose>Cancel</DialogClose>
-          <Button
+      </AlertDialogTrigger>
+
+      <AlertDialogContent className="sm:max-w-[425px]">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete {characterName}</AlertDialogTitle>
+          <AlertDialogDescription>
+            Are you sure you want to delete the character {characterName}? Once
+            deleted, a character cannot be restored!
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+          <AlertDialogAction
             type="button"
             onClick={handleDeleteCharacter}
-            variant={"destructive"}
+            className="bg-red-500"
           >
             Delete
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }

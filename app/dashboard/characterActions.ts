@@ -45,7 +45,6 @@ export async function addCharacterAction(
   };
 
   const parsed = characterSchema.safeParse(newCharacter);
-  console.log(parsed);
 
   if (!parsed.success) {
     return {

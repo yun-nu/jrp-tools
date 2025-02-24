@@ -28,7 +28,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "./ui/DropdownMenu";
 import { SlidersHorizontal } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {

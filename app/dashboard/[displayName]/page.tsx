@@ -15,6 +15,8 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import { Button } from "@/app/_components/ui/Button";
+import CreateNewCharacter from "@/app/_components/CreateNewThread";
+import CreateNewThread from "@/app/_components/CreateNewThread";
 
 interface Props {
   params: { displayName: string };
@@ -54,7 +56,7 @@ export default async function Page({ params }: Props) {
     <section>
       <Character character={character} />
 
-      <Button>Add new thread</Button>
+      <CreateNewThread characterId={character.id} />
 
       <Tabs defaultValue="ongoing" className="">
         <TabsList className="grid w-full grid-cols-2">

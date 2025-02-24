@@ -1,8 +1,15 @@
+"use server";
+
+import { toDate } from "date-fns";
 import { AuthActionHelper } from "../_lib/actions";
+import { Character } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
 
-export async function addThreadAction(threadData: Thread) {
-  const { user, supabase } = await AuthActionHelper();
+export async function addThreadAction(
+  threadData: Thread,
+  characterId: Character["id"]
+) {
+  const { supabase } = await AuthActionHelper();
 
   const newThread: Partial<Thread> = {
     date: threadData.date,
@@ -10,6 +17,7 @@ export async function addThreadAction(threadData: Thread) {
     blurb: threadData.blurb,
     type: threadData.type,
     isFinished: threadData.isFinished,
+    characterId: characterId,
   };
 
   const parsed = threadSchema.safeParse(threadData);
@@ -21,22 +29,80 @@ export async function addThreadAction(threadData: Thread) {
     };
   }
 
-  console.log(parsed);
-  console.log(newThread);
+  const { error } = await supabase.from("threads").insert([newThread]).select();
+  if (error) return { error: "Could not add new thread" };
 
-  //   const { error } = await supabase
-  //     .from("characters")
-  //     .insert([newCharacter])
-  //     .select();
+  return {
+    success: "Thread added successfully",
+  };
+}
 
-  //   if (error?.code === "23505") {
-  //     return { error: "This display name is already taken." };
-  //   }
+export async function editThreadAction(threadData: Thread, threadId: number) {
+  const parsed = threadSchema.safeParse(threadData);
 
-  //   if (error) return { error: "Could not add new character" };
+  if (!parsed.success) {
+    return {
+      message: "Submission Failed",
+      errors: parsed.error.flatten().fieldErrors,
+    };
+  }
 
-  //   return {
-  //     success: "Character created successfully",
-  //     displayName: newCharacter.displayName,
-  //   };
+  const { supabase } = await AuthActionHelper();
+
+  const { error } = await supabase
+    .from("threads")
+    .update(threadData)
+    .eq("id", threadId);
+
+  if (error) return { error: "Could not edit thread" };
+
+  return {
+    success: "Thread edited successfully",
+  };
+}
+
+export async function deleteThreadAction(threadId: Thread["id"]) {
+  const { supabase } = await AuthActionHelper();
+
+  const { error } = await supabase.from("threads").delete().eq("id", threadId);
+
+  if (error) return { error: "Could not add new thread" };
+
+  return {
+    success: "Thread deleted successfully",
+  };
+}
+
+export async function toggleIsFinishedAction(thread: Thread) {
+  const statusToggledThread = {
+    ...thread,
+    isFinished: !thread.isFinished,
+  };
+
+  const { supabase } = await AuthActionHelper();
+
+  const { error } = await supabase
+    .from("threads")
+    .update(statusToggledThread)
+    .eq("id", thread.id);
+  if (error) return { error: "Could not change thread status" };
+
+  return {
+    success: "Thread status changed successfully",
+  };
+}
+
+export async function duplicateThreadAction(thread: Thread) {
+  const duplicatedThread = {
+    ...thread,
+    date: toDate(thread.date),
+  };
+
+  const result = await addThreadAction(duplicatedThread, thread.characterId);
+  if (result)
+    return {
+      success: "Thread duplicated successfully",
+    };
+
+  return { error: "Could not duplicate thread" };
 }

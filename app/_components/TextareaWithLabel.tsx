@@ -1,15 +1,15 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import {
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "./ui/Form";
 import { Textarea } from "./ui/Textarea";
-import { useFormContext } from "react-hook-form";
 
 type Props = {
   fieldTitle: string;
@@ -37,6 +37,7 @@ export default function TextareaWithLabel({ fieldTitle, nameInSchema }: Props) {
           <FormDescription>
             Length: {textValue.length} characters
           </FormDescription>
+          <FormMessage />
         </FormItem>
       )}
     />

@@ -24,7 +24,7 @@ type Props = {
   character?: Character;
   action: (
     characterData: Character,
-    editId?: number
+    characterId?: number
   ) => Promise<CharacterActionResult>;
 };
 
@@ -32,12 +32,12 @@ export function CharacterForm({ setOpen, character, action }: Props) {
   const [isValidDisplayName, setIsValidDisplayName] = useState(false);
   const router = useRouter();
 
-  const { id: editId, ...editedValues } = character || {};
+  const { id: characterId, ...values } = character || {};
 
   const form = useForm<z.infer<typeof characterSchema>>({
     resolver: zodResolver(characterSchema),
-    defaultValues: editId
-      ? editedValues
+    defaultValues: characterId
+      ? values
       : {
           displayName: "",
           characterName: "",
@@ -51,7 +51,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
   });
 
   const onSubmit = async () => {
-    const result = await action(form.getValues(), editId);
+    const result = await action(form.getValues(), characterId);
 
     if (actionReturnError(result)) {
       toast({
@@ -61,7 +61,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
       return;
     }
     if (actionReturnSuccess(result)) {
-      toast({ description: result.success, variant: "default" });
+      toast({ description: result.success, className: "bg-green-700" });
       form.reset();
       router.push(`/dashboard/${result.displayName}`);
       setOpen(false);
@@ -126,7 +126,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
           <Button type="submit" disabled={!isValidDisplayName}>
-            Save changes
+            {characterId ? "Save changes" : "Add character"}
           </Button>
         </DialogFooter>
       </form>

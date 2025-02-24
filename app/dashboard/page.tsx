@@ -1,3 +1,4 @@
+import { ContactForm } from "../_components/ContactForm";
 import News from "../_components/News";
 
 export const revalidate = 30;
@@ -6,6 +7,7 @@ export default async function Page() {
   return (
     <div>
       <News />
+      <ContactForm />
     </div>
   );
 }
