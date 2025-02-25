@@ -19,8 +19,14 @@ export default function Character({ character }: { character: SCharacter }) {
     <div className="space-y-4 max-w-[80%]">
       <span className="block text-3xl font-semibold">{characterName}</span>{" "}
       <div className="flex gap-2">
-        <MdPublic />
-        <Link href={`/${displayName}`}>{characterName}&apos;s public page</Link>
+        {isPublic && (
+          <>
+            <MdPublic />
+            <Link href={`/${displayName}`}>
+              {characterName}&apos;s public page
+            </Link>
+          </>
+        )}
       </div>
       <div>{characterBlurb}</div>
       <div className="text-base">

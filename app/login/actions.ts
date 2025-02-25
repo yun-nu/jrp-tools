@@ -48,11 +48,7 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
 
   if (error?.status === 403) return { error: "Expired or invalid code." };
 
-  if (!error) redirect("/dashboard");
-}
-
-export async function signInGoogleAction() {
-  await signIn("google", { redirectTo: "/dashboard" });
+  redirect("/dashboard");
 }
 
 export async function signOutAction() {
@@ -60,4 +56,18 @@ export async function signOutAction() {
   const { error } = await supabase.auth.signOut();
   if (error) console.log(error);
   redirect("/");
+}
+
+export async function signInGoogleAction() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "http://localhost:3000/auth/callback",
+    },
+  });
+
+  if (data.url) {
+    redirect(data.url);
+  }
 }

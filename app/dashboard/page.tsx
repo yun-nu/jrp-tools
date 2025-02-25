@@ -1,25 +1,13 @@
 import { ContactForm } from "../_components/ContactForm";
-import News from "../_components/News";
+import Updates from "../_components/Updates";
 
-export const revalidate = 30;
+export const revalidate = 60;
 
 export default async function Page() {
   return (
     <div>
-      <News />
+      <Updates />
       <ContactForm />
     </div>
   );
 }
-
-// export default function Page({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   return (
-//     <div className="grid grid-cols-[16rem_1fr] h-full gap-12">
-//       <div className="">{children}</div>
-//     </div>
-//   );
-// }

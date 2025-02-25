@@ -11,7 +11,7 @@ import { Thread, threadSchema } from "../_schemas/Thread";
 import {
   actionReturnError,
   actionReturnSuccess,
-  CharacterActionResult,
+  ActionResult,
 } from "../_utils/actionReturn";
 import CheckboxWithText from "./CheckboxWithText";
 import DatePickerWithLabel from "./DatePickerWithLabel";
@@ -24,10 +24,7 @@ import { Form } from "./ui/Form";
 type Props = {
   thread: Thread;
   setOpen: (open: boolean) => void;
-  action: (
-    threadData: Thread,
-    editId: number
-  ) => Promise<CharacterActionResult>;
+  action: (threadData: Thread, editId: number) => Promise<ActionResult>;
   characterId?: Character["id"];
 };
 

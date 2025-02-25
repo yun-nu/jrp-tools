@@ -3,7 +3,7 @@
 import { AuthActionHelper } from "../_lib/actions";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
-import { CharacterActionResult } from "../_utils/actionReturn";
+import { ActionResult } from "../_utils/actionReturn";
 
 export async function verifyDisplayNameAvailability(
   displayName: string,
@@ -29,7 +29,7 @@ export async function verifyDisplayNameAvailability(
 
 export async function addCharacterAction(
   characterData: Character
-): Promise<CharacterActionResult> {
+): Promise<ActionResult> {
   const { user, supabase } = await AuthActionHelper();
 
   const newCharacter: Partial<Character> = {

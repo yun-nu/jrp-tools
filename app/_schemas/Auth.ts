@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const signUpOTPSchema = z
+export const emailAndConfirmationSchema = z
   .object({
     email: z.string().email({ message: "Invalid email address" }),
     emailConfirmation: z.string().email({ message: "Invalid email address" }),
@@ -10,7 +10,7 @@ export const signUpOTPSchema = z
     path: ["emailConfirmation"],
   });
 
-export type SignUpOTP = z.infer<typeof signUpOTPSchema>;
+export type EmailAndConfirmation = z.infer<typeof emailAndConfirmationSchema>;
 
 export const signInOTPSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -18,3 +18,10 @@ export const signInOTPSchema = z.object({
 });
 
 export type SignInOTP = z.infer<typeof signInOTPSchema>;
+
+export const formSchema = z.object({
+  name: z.string().optional(),
+  message: z.string().min(1, { message: "Message can't be empty" }),
+});
+
+export type ContactForm = z.infer<typeof formSchema>;

@@ -1,12 +1,16 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
-import { SignUpOTP, signUpOTPSchema } from "../_schemas/Auth";
+import {
+  EmailAndConfirmation,
+  emailAndConfirmationSchema,
+} from "../_schemas/Auth";
 
-export async function signUpOTPAction(input: SignUpOTP) {
+export async function signUpOTPAction(input: EmailAndConfirmation) {
   const email = input.email;
 
-  const parsed = signUpOTPSchema.safeParse(input);
+  const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
     return {
@@ -20,10 +24,10 @@ export async function signUpOTPAction(input: SignUpOTP) {
     email: email,
   });
 
-  if (error) return { message: "Could not sign up" };
+  if (error) return { error: "Could not sign up" };
 
   return {
-    message:
+    success:
       "Follow the instructions sent to your email to activate your account.",
   };
 }

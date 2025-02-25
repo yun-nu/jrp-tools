@@ -15,7 +15,7 @@ import { Form } from "./ui/Form";
 import {
   actionReturnError,
   actionReturnSuccess,
-  CharacterActionResult,
+  ActionResult,
 } from "../_utils/actionReturn";
 import TextareaWithLabel from "./TextareaWithLabel";
 
@@ -25,7 +25,7 @@ type Props = {
   action: (
     characterData: Character,
     characterId?: number
-  ) => Promise<CharacterActionResult>;
+  ) => Promise<ActionResult>;
 };
 
 export function CharacterForm({ setOpen, character, action }: Props) {

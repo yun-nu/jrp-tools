@@ -2,6 +2,8 @@ import { FaGoogle } from "react-icons/fa6";
 import { TbPasswordUser } from "react-icons/tb";
 import SubmitButton from "../_components/SubmitButton";
 import { SignUpOTP } from "../_components/SignUpOTP";
+import { Button } from "../_components/ui/Button";
+import { signInGoogleAction } from "../login/actions";
 
 export default function Page() {
   return (
@@ -28,11 +30,9 @@ export default function Page() {
         be sent with each login attempt.
       </p>
       <SignUpOTP />
-      <SubmitButton
-        type={"button"}
-        icon={<FaGoogle />}
-        content="Sign up with Google"
-      />
+      <Button type={"button"} onClick={signInGoogleAction}>
+        <FaGoogle /> Sign in with Google
+      </Button>
     </>
   );
 }

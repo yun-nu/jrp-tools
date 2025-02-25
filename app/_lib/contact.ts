@@ -2,24 +2,23 @@
 
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
+import { ContactForm } from "../_schemas/Auth";
 
-export async function sendEmail(data: FormData) {
-  const { name, email, message } = data;
+export async function contactFormAction(data: ContactForm) {
+  const { name, message } = data || {};
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PW,
+      user: process.env.CONTACT_USER,
+      pass: process.env.CONTACT_KEY,
     },
   });
 
   const mailOptions: Mail.Options = {
-    from: process.env.MAIL_USER,
-    to: process.env.MAIL_USER,
-    // cc: email,
-    // ^ sends a copy to the sender
-    subject: `Message from ${name} (${email})`,
+    from: process.env.CONTACT_USER,
+    to: process.env.CONTACT_USER,
+    subject: `Message from ${name}`,
     text: message,
   };
 
@@ -27,15 +26,13 @@ export async function sendEmail(data: FormData) {
     const isVerified = await transporter.verify();
     const info = await transporter.sendMail(mailOptions);
 
-    if (isVerified && info)
-      return { messageId: info.messageId, statusCode: 200 };
-    else throw new Error("An error occurred while trying to send the email.");
-
-    // DEV:
-    // throw new Error("error");
-    // return { messageId: 1, statusCode: 200 };
+    if (isVerified && info) return { messageId: info.messageId };
+    else
+      return {
+        error: "Could not send message.",
+      };
   } catch (error) {
-    console.error("A server error has occurred: ", error);
-    return { statusCode: 500 };
+    console.log(error);
+    return { error: "A server error occurred." };
   }
 }

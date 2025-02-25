@@ -10,6 +10,7 @@ import { signInOTPAction, verifyOTPLoginAction } from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
+import { startTransition } from "react";
 
 export default function SignInOTPForm() {
   const form = useForm<z.infer<typeof signInOTPSchema>>({
@@ -25,20 +26,22 @@ export default function SignInOTPForm() {
     <SignInOTPStep2 email={form.getValues("email")} key={2} />,
   ]);
 
-  const onSubmit = async () => {
-    if (!isLastStep) {
-      const email = form.getValues("email");
-      const resultStep1 = await signInOTPAction({ email });
-      if (resultStep1?.error || resultStep1?.errors) {
-        form.setError("email", {
-          message: resultStep1.error || resultStep1.message,
-        });
-        return;
-      } else return next();
-    }
-    const resultStep2 = await verifyOTPLoginAction(form.getValues());
-    if (resultStep2?.error)
-      form.setError("OTPCode", { message: resultStep2.error });
+  const onSubmit = () => {
+    startTransition(async () => {
+      if (!isLastStep) {
+        const email = form.getValues("email");
+        const resultStep1 = await signInOTPAction({ email });
+        if (resultStep1?.error || resultStep1?.errors) {
+          form.setError("email", {
+            message: resultStep1.error || resultStep1.message,
+          });
+          return;
+        } else return next();
+      }
+      const resultStep2 = await verifyOTPLoginAction(form.getValues());
+      if (resultStep2?.error)
+        form.setError("OTPCode", { message: resultStep2.error });
+    });
   };
 
   return (

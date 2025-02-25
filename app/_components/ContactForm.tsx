@@ -1,18 +1,17 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "./ui/Form";
-import TextareaWithLabel from "./TextareaWithLabel";
+import { contactFormAction } from "../_lib/contact";
+import { formSchema } from "../_schemas/Auth";
 import { InputWithLabel } from "./InputWithLabel";
+import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
+import { Form } from "./ui/Form";
+import { toast } from "../_hooks/use-toast";
 
 export function ContactForm() {
-  const formSchema = z.object({
-    name: z.string().optional(),
-    message: z.string().min(1, { message: "Message can't be empty" }),
-  });
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -21,22 +20,28 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    const result = await contactFormAction(form.getValues());
+    if (result.messageId) {
+      toast({ description: "Message sent successfully" });
+      form.reset();
+    }
+
+    if (result.error)
+      toast({ description: result.error, variant: "destructive" });
+  };
 
   return (
     <Form {...form}>
-      <div>
-        <h2 className="text-2xl">Suggestion box</h2>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <InputWithLabel
-            fieldTitle="Name"
-            nameInSchema="name"
-            placeholder="Optional"
-          />
-          <TextareaWithLabel fieldTitle="Message" nameInSchema="message" />
-          <Button type="submit">Send</Button>
-        </form>
-      </div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <InputWithLabel
+          fieldTitle="Name"
+          nameInSchema="name"
+          placeholder="Optional"
+        />
+        <TextareaWithLabel fieldTitle="Message" nameInSchema="message" />
+        <Button type="submit">Send</Button>
+      </form>
     </Form>
   );
 }
