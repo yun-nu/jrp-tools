@@ -101,7 +101,11 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           description="Required. This the name that will be displayed on your character list and page."
         />
 
-        <TextareaWithLabel fieldTitle="Blurb" nameInSchema="characterBlurb" />
+        <TextareaWithLabel
+          fieldTitle="Blurb"
+          nameInSchema="characterBlurb"
+          placeholder="Maximum of 500 characters"
+        />
 
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
 

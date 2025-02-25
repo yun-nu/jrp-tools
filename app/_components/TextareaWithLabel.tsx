@@ -14,9 +14,14 @@ import { Textarea } from "./ui/Textarea";
 type Props = {
   fieldTitle: string;
   nameInSchema: string;
+  placeholder?: string;
 };
 
-export default function TextareaWithLabel({ fieldTitle, nameInSchema }: Props) {
+export default function TextareaWithLabel({
+  fieldTitle,
+  nameInSchema,
+  placeholder,
+}: Props) {
   const form = useFormContext();
   const textValue = form.watch(nameInSchema as string);
 
@@ -29,7 +34,7 @@ export default function TextareaWithLabel({ fieldTitle, nameInSchema }: Props) {
           <FormLabel>{fieldTitle}</FormLabel>
           <FormControl>
             <Textarea
-              placeholder="Maximum of 500 characters"
+              placeholder={placeholder}
               className="max-w-xs min-h-32 resize"
               {...field}
             />

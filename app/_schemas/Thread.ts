@@ -14,7 +14,10 @@ export const threadSchema = z.object({
     z.literal(""),
   ]),
   type: z.string().optional(),
-  blurb: z.string().optional(),
+  blurb: z
+    .string()
+    .max(500, { message: "Must be less than 500 characters long" })
+    .optional(),
   isFinished: z.boolean(),
 });
 

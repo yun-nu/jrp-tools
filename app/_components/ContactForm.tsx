@@ -10,9 +10,7 @@ import { Button } from "./ui/Button";
 export function ContactForm() {
   const formSchema = z.object({
     name: z.string().optional(),
-    message: z
-      .string()
-      .min(50, { message: "Message should be at least 50 characters long." }),
+    message: z.string().min(1, { message: "Message can't be empty" }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -27,11 +25,18 @@ export function ContactForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <InputWithLabel fieldTitle="Name" nameInSchema="name" />
-        <TextareaWithLabel fieldTitle="Message" nameInSchema="message" />
-        <Button type="submit">Send</Button>
-      </form>
+      <div>
+        <h2 className="text-2xl">Suggestion box</h2>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <InputWithLabel
+            fieldTitle="Name"
+            nameInSchema="name"
+            placeholder="Optional"
+          />
+          <TextareaWithLabel fieldTitle="Message" nameInSchema="message" />
+          <Button type="submit">Send</Button>
+        </form>
+      </div>
     </Form>
   );
 }

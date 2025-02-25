@@ -113,7 +113,7 @@ export async function deleteCharacterAction({
       .from("characters")
       .delete()
       .eq("id", characterId);
-
+    console.log(error);
     if (error) {
       return { error: "Could not delete character." };
     }

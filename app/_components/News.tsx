@@ -14,49 +14,28 @@ export default function News() {
       </p>
 
       <p>
-        There is one very important topic I want to highlight here right off the
-        bat. This application's database runs on supabase's free tier. And
-        naturally, the free tier comes with a number of{" "}
-        <Link
-          href="https://supabase.com/pricing#compare-plans"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          limitations
-        </Link>
-        , notably:
-      </p>
-
-      <blockquote className="text-sm border-l-2">
-        <ul className="text-sm block">
-          <li>500MB database size</li>
-          <li>5GB bandwidth</li>
-        </ul>
-      </blockquote>
-
-      <h3 className="font-bold text-lg">
-        But what does this mean for this app's users?
-      </h3>
-      <p>
-        Honestly, at the current point, not much. That limit should be more than
-        enough; I'm not expecting a huge number of active users, neither heavy
-        database usage. Which is why I launched this app open for everyone.
+        There is one very important topic I want to highlight right off the bat.
+        This is an experimental app, running on a free database with (lenient)
+        data usage restrictions. This means that aside from bugs, the app might
+        become slow when under heavy load — and worst case scenario, become
+        unaccessible until the next cycle if it hits its monthly threshold.
       </p>
       <p>
-        I'll be keeping a close eye on database usage, and any major
-        announcements will be made on this very space. So don't worry, whether
-        you want to keep them private to your account or share them away, your
-        tags are safe here.
+        At the current point, I'm not expecting heavy database usage (or abuse),
+        which is why I launched this app open for everyone. I'll be keeping a
+        close eye on any potential bottlenecks, and any major announcements will
+        be made here on the dashboard.
       </p>
 
       <p>
         With all that said, don't hesitate to report any bugs or issues.
-        Suggestions and contributions are also welcome! You can drop me a
-        message in the form below, or directly{" "}
+        Suggestions and contributions are also welcome! You can drop me an
+        anonymous message in the form below, or directly{" "}
         <Link
           href="https://github.com/yun-nu/rp-tools"
           target="_blank"
           rel="noopener noreferrer"
+          className="text-blue-500"
         >
           open an issue or a pull request on github
         </Link>

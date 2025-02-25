@@ -318,7 +318,15 @@ function Nav({
     }
     goToMonth(previousMonth);
     onPrevClick?.(previousMonth);
-  }, [previousMonth, goToMonth]);
+  }, [
+    previousMonth,
+    navView,
+    goToMonth,
+    onPrevClick,
+    setDisplayYears,
+    displayYears.from,
+    displayYears.to,
+  ]);
 
   const handleNextClick = React.useCallback(() => {
     if (!nextMonth) return;

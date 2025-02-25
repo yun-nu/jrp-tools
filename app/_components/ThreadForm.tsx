@@ -84,7 +84,11 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
           placeholder="Log, network, inbox, etc."
         />
 
-        <TextareaWithLabel fieldTitle="Blurb" nameInSchema="blurb" />
+        <TextareaWithLabel
+          fieldTitle="Blurb"
+          nameInSchema="blurb"
+          placeholder="Maximum of 500 characters"
+        />
 
         <InputWithLabel
           fieldTitle="Thread Link"
