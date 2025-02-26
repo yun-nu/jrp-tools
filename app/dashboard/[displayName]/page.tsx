@@ -28,6 +28,8 @@ interface Props {
 //   return { title: `${character.name} @ ${character.game}` };
 // }
 
+export const revalidate = 300;
+
 export type Person = {
   firstName: string;
   lastName: string;

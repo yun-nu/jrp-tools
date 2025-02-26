@@ -1,15 +1,11 @@
-import { FaGoogle } from "react-icons/fa6";
-import SignInOTPForm from "../_components/SignInOTP";
-import { Button } from "../_components/ui/Button";
-import { signInGoogleAction } from "./actions";
+import SignInForm from "../_components/SignInForm";
 
 export default function Page() {
   return (
-    <>
-      <SignInOTPForm />
-      <Button type={"button"} onClick={signInGoogleAction}>
-        <FaGoogle /> Sign in with Google
-      </Button>
-    </>
+    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+      <div className="w-full max-w-sm">
+        <SignInForm />
+      </div>
+    </div>
   );
 }

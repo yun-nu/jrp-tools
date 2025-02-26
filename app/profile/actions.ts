@@ -64,7 +64,6 @@ export async function deleteUserAction() {
     const { data, error } = await supabase.auth.admin.deleteUser(user);
     if (data) {
       supabase.auth.signOut();
-      /// !: header component
     }
     if (error) return { error: "Could not delete user" };
   }

@@ -104,7 +104,7 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
         />
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
-          <Button type="submit">
+          <Button type="submit" disabled={form.formState.isSubmitting}>
             {threadId ? "Save changes" : "Add thread"}
           </Button>
         </DialogFooter>

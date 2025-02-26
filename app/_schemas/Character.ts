@@ -3,7 +3,11 @@ import { z } from "zod";
 export const characterSchema = z.object({
   displayName: z
     .string()
-    .min(1, { message: "Must be 1 or more characters long" }),
+    .min(1, { message: "Must be 1 or more characters long" })
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Only letters, numbers, and underscores are allowed."
+    ),
   characterName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" }),

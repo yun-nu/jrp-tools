@@ -1,21 +1,16 @@
 import Link from "next/link";
-import SignOutButton from "./SignOutButton";
-import { getUserId } from "../_lib/data-service";
-import { createClient } from "../_lib/supabase-server";
-import LinkButton from "./LinkButton";
 import { PiSignInBold } from "react-icons/pi";
+import { AuthActionHelper } from "../_lib/actions";
+import LinkButton from "./LinkButton";
+import SignOutButton from "./SignOutButton";
 
 export default async function Navigation() {
-  const supabase = await createClient();
-  const {
-    data: { session },
-    error,
-  } = await supabase.auth.getSession();
+  const { user } = await AuthActionHelper();
 
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
-        {!session ? (
+        {!user ? (
           <LinkButton
             size="large"
             icon={<PiSignInBold />}
@@ -43,29 +38,6 @@ export default async function Navigation() {
             <SignOutButton />
           </>
         )}
-        {/* <li>
-          {session?.user?.image ? (
-            <Link
-            href="/account"
-            className="hover:text-accent-400 transition-colors flex items-center gap-4"
-            >
-              <img
-                className="h-8 rounded-full"
-                src={session.user.image}
-                alt={session.user.name!}
-                referrerPolicy="no-referrer"
-              />
-              <span>Guest area</span>
-            </Link>
-          ) : (
-            <Link
-              href="/account"
-              className="hover:text-accent-400 transition-colors"
-            >
-              Guest area
-            </Link>
-          )}
-        </li> */}
       </ul>
     </nav>
   );

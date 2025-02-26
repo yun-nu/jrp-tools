@@ -33,6 +33,6 @@ export async function contactFormAction(data: ContactForm) {
       };
   } catch (error) {
     console.log(error);
-    return { error: "A server error occurred." };
+    return { error: "Could not send message: A server error occurred." };
   }
 }

@@ -91,7 +91,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
         <InputWithLabel
           fieldTitle="Display Name"
           nameInSchema="displayName"
-          description="Required. This is the unique username for your character."
+          description="Required. This is the unique username for your character. Can only contain alphanumeric characters and underscores."
           onBlur={handleVerifyAvailability}
         />
 
@@ -129,7 +129,10 @@ export function CharacterForm({ setOpen, character, action }: Props) {
         />
         <DialogFooter>
           <DialogClose>Cancel</DialogClose>
-          <Button type="submit" disabled={!isValidDisplayName}>
+          <Button
+            type="submit"
+            disabled={!isValidDisplayName || form.formState.isSubmitting}
+          >
             {characterId ? "Save changes" : "Add character"}
           </Button>
         </DialogFooter>

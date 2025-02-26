@@ -45,7 +45,7 @@ export function InputWithLabel({
       render={({ field }) => (
         <FormItem className={labelLeft ? "w-full flex items-center gap-2" : ""}>
           <FormLabel
-            className={`text-base ${labelLeft ? "w-1/3 mt-2" : ""}`}
+            className={`text-sm ${labelLeft ? "w-1/3 mt-2" : ""}`}
             htmlFor={fieldTitleNoSpaces}
           >
             {fieldTitle}

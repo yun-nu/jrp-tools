@@ -1,13 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
+import Update from "./Template";
 
-export default function Updates() {
+export function Update01() {
   return (
-    <div className="max-w-[600px] space-y-4 text-base">
-      <div className="flex gap-4 items-center">
-        <h1 className="text-xl">Update #1:</h1>
-        <h2 className="text-lg">Launch!</h2>
-      </div>
-
+    <Update number={"01"} title={"Launch!"}>
       <p>
         This is the very first update, so let me start it by saying thank you
         for signing up to JRP-Tools!
@@ -40,6 +37,6 @@ export default function Updates() {
         </Link>
         .
       </p>
-    </div>
+    </Update>
   );
 }
