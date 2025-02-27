@@ -1,10 +1,9 @@
 import DeleteAccount from "../_components/DeleteAccount";
-import { Button } from "../_components/ui/Button";
 import { UpdateEmail } from "../_components/UpdateEmail";
-import { getUserId } from "../_lib/data-service";
+import { AuthActionHelper } from "../_lib/actionsAuth";
 
 export default async function Page() {
-  const userId = await getUserId();
+  //const { user } = await AuthActionHelper();
 
   return (
     <div className="grid h-full gap-2">

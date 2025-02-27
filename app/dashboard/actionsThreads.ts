@@ -1,7 +1,7 @@
 "use server";
 
 import { toDate } from "date-fns";
-import { AuthActionHelper } from "../_lib/actions";
+import { AuthActionHelper } from "../_lib/actionsAuth";
 import { Character } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
 

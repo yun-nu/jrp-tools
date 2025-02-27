@@ -2,7 +2,7 @@
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { AuthActionHelper } from "../_lib/actions";
+import { AuthActionHelper } from "../_lib/actionsAuth";
 import { createClient } from "../_lib/supabase-server";
 import {
   EmailAndConfirmation,

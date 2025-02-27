@@ -1,6 +1,6 @@
 "use server";
 
-import { AuthActionHelper } from "../_lib/actions";
+import { AuthActionHelper } from "../_lib/actionsAuth";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
 import { ActionResult } from "../_utils/actionReturn";

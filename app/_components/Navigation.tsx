@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { AuthActionHelper } from "../_lib/actions";
+import { AuthActionHelper } from "../_lib/actionsAuth";
 import LinkButton from "./LinkButton";
 import SignOutButton from "./SignOutButton";
 

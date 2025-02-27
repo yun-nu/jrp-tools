@@ -1,35 +1,31 @@
-import { revalidatePath } from "next/cache";
-import { supabase } from "./supabase-client";
-import { createClient } from "./supabase-server";
 import { Character } from "../_schemas/Character";
-
-export async function getUserId() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error) return error;
-
-  return user?.id;
-}
+import { Thread } from "../_schemas/Thread";
+import { supabase } from "./supabase-client";
 
 export async function getCharacters(userId: string) {
   const { data: characters, error } = await supabase
     .from("characters")
     .select("*")
     .eq("userId", userId);
-  // revalidatePath("/dashboard");
   return characters as Character[];
 }
 
-export async function getThreads(characterId: number) {
+export async function getOngoingThreads(characterId: number) {
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
-    .eq("characterId", characterId);
-  return threads as Threads[];
+    .eq("characterId", characterId)
+    .eq("isFinished", false);
+  return threads as Thread[];
+}
+
+export async function getFinishedThreads(characterId: number) {
+  const { data: threads, error } = await supabase
+    .from("threads")
+    .select("*")
+    .eq("characterId", characterId)
+    .eq("isFinished", true);
+  return threads as Thread[];
 }
 
 export async function getCharacterData(displayName: string) {

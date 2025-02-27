@@ -15,7 +15,7 @@ import { Thread } from "../_schemas/Thread";
 import {
   duplicateThreadAction,
   toggleIsFinishedAction,
-} from "../dashboard/threadsActions";
+} from "../dashboard/actionsThreads";
 import DeleteThread from "./DeleteThread";
 import EditThread from "./EditThread";
 import { Button } from "./ui/Button";

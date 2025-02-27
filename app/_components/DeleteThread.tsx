@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "../_hooks/use-toast";
 import { Thread } from "../_schemas/Thread";
-import { deleteThreadAction } from "../dashboard/threadsActions";
+import { deleteThreadAction } from "../dashboard/actionsThreads";
 import {
   AlertDialog,
   AlertDialogAction,

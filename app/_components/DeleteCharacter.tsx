@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
 import { toast } from "../_hooks/use-toast";
 import { Character } from "../_schemas/Character";
-import { deleteCharacterAction } from "../dashboard/characterActions";
+import { deleteCharacterAction } from "../dashboard/actionsCharacters";
 import { Button } from "./ui/Button";
 import {
   Dialog,

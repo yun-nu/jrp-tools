@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/use-toast";
 import { Character, characterSchema } from "../_schemas/Character";
-import { verifyDisplayNameAvailability } from "../dashboard/characterActions";
+import { verifyDisplayNameAvailability } from "../dashboard/actionsCharacters";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
@@ -139,67 +139,4 @@ export function CharacterForm({ setOpen, character, action }: Props) {
       </form>
     </Form>
   );
-}
-
-{
-  /* <form
-action={addCharacterAction}
-className="py-8 px-12 text-base flex gap-6 flex-col"
->
-<Input
-  id="displayName"
-  label="Display Name"
-  type="text"
-  description="Each display name is unique. This is the username for your character page."
-  required
-  onChange={(e) => setDisplayName(e.target.value)}
-  onBlur={handleVerifyAvailability}
-/>
-
-<p className={state?.taken ? "text-red-500" : "text-green-500"}>
-  {state?.message}
-</p>
-
-<Input
-  id="characterName"
-  label="Character Name"
-  type="text"
-  required
-/>
-
-<Input id="journalName" label="Journal Name" type="text" />
-
-<Input
-  id="journalLink"
-  label="Journal Link"
-  type="text"
-  pattern={linkPattern}
-  description="Must start with http:// or https://"
-  placeholder="https://journal-name.platform.com/"
-/>
-
-<Input id="game" label="Game Name" type="text" />
-
-<Input
-  id="acLink"
-  label="AC Link"
-  type="text"
-  pattern={linkPattern}
-  description="Must start with http:// or https://"
-  placeholder="https://game.platform.com/thread"
-/>
-
-<Input
-  id="isPublic"
-  label="Make character profile public?"
-  type="checkbox"
-  description="Character profiles are private
-  by default. If you'd like to share your character page, check this option."
-/>
-
-<DialogFooter>
-  <DialogClose>Cancel</DialogClose>
-  <SubmitButton type="submit" content="Add character" />
-</DialogFooter>
-</form> */
 }
