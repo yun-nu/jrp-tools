@@ -7,6 +7,9 @@ export async function getCharacters(userId: string) {
     .from("characters")
     .select("*")
     .eq("userId", userId);
+
+  if (error) return { error: "Could not fetch character list." };
+
   return characters as Character[];
 }
 
@@ -16,6 +19,9 @@ export async function getOngoingThreads(characterId: number) {
     .select("*")
     .eq("characterId", characterId)
     .eq("isFinished", false);
+
+  if (error) return { error: "Could not fetch ongoing threads." };
+
   return threads as Thread[];
 }
 
@@ -25,26 +31,23 @@ export async function getFinishedThreads(characterId: number) {
     .select("*")
     .eq("characterId", characterId)
     .eq("isFinished", true);
+
+  if (error) return { error: "Could not fetch finished threads." };
+
   return threads as Thread[];
 }
 
-export async function getCharacterData(displayName: string) {
-  // check session
-
-  //console.log(displayName);
+export async function getCharacterData(
+  displayName: string
+): Promise<Character | { error: string }> {
   const { data, error } = await supabase
     .from("characters")
     .select("*")
     .eq("displayName", displayName)
     .single();
-
-  //console.log(data);
   if (error) {
-    throw new Error(error.message);
-    //notFound();
+    return { error: "Could not fetch character data." };
   }
-
-  // check if profile is public
 
   return data as Character;
 }

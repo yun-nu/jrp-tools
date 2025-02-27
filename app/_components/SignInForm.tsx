@@ -85,6 +85,9 @@ export default function SignInForm() {
             Sign up
           </Link>
         </p>
+        <Button type={"button"} onClick={signInGoogleAction} className="w-full">
+          <FaGoogle /> Sign in with Google
+        </Button>
       </CardFooter>
     </Card>
   );

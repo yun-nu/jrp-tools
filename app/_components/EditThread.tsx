@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Thread } from "../_schemas/Thread";
-import { editThreadAction } from "../dashboard/actionsThreads";
+import { editThreadAction } from "../dashboard/actions-threads";
 import { ThreadForm } from "./ThreadForm";
 import {
   Dialog,

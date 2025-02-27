@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { authActionHelper } from "../_lib/action-auth-helpers";
 import LinkButton from "./LinkButton";
 import SignOutButton from "./SignOutButton";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { IoSettingsOutline } from "react-icons/io5";
 
 export default async function Navigation() {
-  const { user } = await AuthActionHelper();
+  const { user } = await authActionHelper();
 
   return (
     <nav className="z-10 text-xl">
@@ -19,20 +22,20 @@ export default async function Navigation() {
           />
         ) : (
           <>
-            <li>
+            <li className="text-base">
               <Link
                 href="/dashboard"
-                className="hover:text-accent-400 transition-colors"
+                className="flex items-center gap-2 hover:text-accent-400 transition-colors"
               >
-                Dashboard
+                <MdOutlineSpaceDashboard /> Dashboard
               </Link>
             </li>
-            <li>
+            <li className="text-base">
               <Link
-                href="/profile"
-                className="hover:text-accent-400 transition-colors"
+                href="/settings"
+                className="flex  items-center gap-2 hover:text-accent-400 transition-colors"
               >
-                User profile
+                <IoSettingsOutline /> Account settings
               </Link>
             </li>
             <SignOutButton />

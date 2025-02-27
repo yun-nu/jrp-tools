@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { TbEdit } from "react-icons/tb";
 import { Character } from "../_schemas/Character";
-import { editCharacterAction } from "../dashboard/actionsCharacters";
+import { editCharacterAction } from "../dashboard/actions-characters";
 import { CharacterForm } from "./CharacterForm";
 import { Button } from "./ui/Button";
 import {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
-import { addCharacterAction } from "../dashboard/actionsCharacters";
+import { addCharacterAction } from "../dashboard/actions-characters";
 import { CharacterForm } from "./CharacterForm";
 import {
   Dialog,

@@ -1,9 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
-import { toast } from "../_hooks/use-toast";
+import { toast } from "../_hooks/useToast";
 import { Character } from "../_schemas/Character";
-import { deleteCharacterAction } from "../dashboard/actionsCharacters";
+import { deleteCharacterAction } from "../dashboard/actions-characters";
 import { Button } from "./ui/Button";
 import {
   Dialog,

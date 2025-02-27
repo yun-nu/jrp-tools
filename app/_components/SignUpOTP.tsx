@@ -1,12 +1,27 @@
 import { signUpOTPAction } from "../signup/actions";
 import { EmailAndConfirmationForm } from "./EmailAndConfirmationForm";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/Card";
 
 export function SignUpOTP() {
   return (
-    <EmailAndConfirmationForm
-      action={signUpOTPAction}
-      btnDescription="Sign up with OTP"
-    />
+    <Card>
+      <CardHeader>
+        <CardTitle>Sign up</CardTitle>
+        <CardDescription>Sign up passwordlessly</CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-4">
+        <EmailAndConfirmationForm
+          action={signUpOTPAction}
+          btnDescription="Sign up"
+        />
+      </CardContent>
+    </Card>
   );
 
   // const [message, setMessage] = useState("");

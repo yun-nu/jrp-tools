@@ -9,7 +9,7 @@ import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
-import { toast } from "../_hooks/use-toast";
+import { toast } from "../_hooks/useToast";
 
 export function ContactForm() {
   const form = useForm<z.infer<typeof formSchema>>({

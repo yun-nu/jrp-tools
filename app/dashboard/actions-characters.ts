@@ -1,9 +1,9 @@
 "use server";
 
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { authActionHelper } from "../_lib/action-auth-helpers";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
-import { ActionResult } from "../_utils/actionReturn";
+import { ActionResult } from "../_utils/action-return";
 
 export async function verifyDisplayNameAvailability(
   displayName: string,
@@ -30,7 +30,7 @@ export async function verifyDisplayNameAvailability(
 export async function addCharacterAction(
   characterData: Character
 ): Promise<ActionResult> {
-  const { user, supabase } = await AuthActionHelper();
+  const { user, supabase } = await authActionHelper();
 
   const newCharacter: Partial<Character> = {
     userId: user,
@@ -74,7 +74,7 @@ export async function editCharacterAction(
   characterData: Character,
   characterId: number
 ) {
-  const { user, supabase } = await AuthActionHelper();
+  const { user, supabase } = await authActionHelper();
 
   const parsed = characterSchema.safeParse(characterData);
 
@@ -106,7 +106,7 @@ export async function deleteCharacterAction({
   userId: userId,
   id: characterId,
 }: Pick<Character, "userId" | "id">) {
-  const { user, supabase } = await AuthActionHelper();
+  const { user, supabase } = await authActionHelper();
 
   if (user === userId) {
     const { error } = await supabase

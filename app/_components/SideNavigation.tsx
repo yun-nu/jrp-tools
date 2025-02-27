@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { authActionHelper } from "../_lib/action-auth-helpers";
 import { getCharacters } from "../_lib/data-service";
 import { Character } from "../_schemas/Character";
 import CreateNewCharacter from "./CreateNewCharacter";
 import { Badge } from "./ui/Badge";
 
 async function SideNavigation() {
-  const { user: id } = await AuthActionHelper();
+  const { user: id } = await authActionHelper();
   const characters = await getCharacters(id);
 
   return (

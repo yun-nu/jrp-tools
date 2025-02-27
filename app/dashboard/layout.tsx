@@ -8,7 +8,7 @@ export default function Layout({
   return (
     <div className="grid grid-cols-[16rem_1fr] h-full gap-12">
       <SideNavigation />
-      <div className="">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }

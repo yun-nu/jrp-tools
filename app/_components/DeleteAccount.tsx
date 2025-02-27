@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
-import { toast } from "../_hooks/use-toast";
-import { deleteUserAction } from "../profile/actions";
+import { toast } from "../_hooks/useToast";
+import { deleteUserAction } from "../settings/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -48,7 +48,7 @@ export default function DeleteAccount() {
           <AlertDialogDescription>
             <span>
               Are you absolutely sure you want to delete your account? All your
-              data will be permanently erased from the servers.
+              data will be permanently erased.
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>

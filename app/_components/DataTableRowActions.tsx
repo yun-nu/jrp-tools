@@ -10,12 +10,12 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "../_hooks/use-toast";
+import { toast } from "../_hooks/useToast";
 import { Thread } from "../_schemas/Thread";
 import {
   duplicateThreadAction,
   toggleIsFinishedAction,
-} from "../dashboard/actionsThreads";
+} from "../dashboard/actions-threads";
 import DeleteThread from "./DeleteThread";
 import EditThread from "./EditThread";
 import { Button } from "./ui/Button";

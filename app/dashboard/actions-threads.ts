@@ -1,7 +1,7 @@
 "use server";
 
 import { toDate } from "date-fns";
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { authActionHelper } from "../_lib/action-auth-helpers";
 import { Character } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
 
@@ -9,7 +9,7 @@ export async function addThreadAction(
   threadData: Thread,
   characterId: Character["id"]
 ) {
-  const { supabase } = await AuthActionHelper();
+  const { supabase } = await authActionHelper();
 
   const newThread: Partial<Thread> = {
     date: threadData.date,
@@ -47,7 +47,7 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
     };
   }
 
-  const { supabase } = await AuthActionHelper();
+  const { supabase } = await authActionHelper();
 
   const { error } = await supabase
     .from("threads")
@@ -62,7 +62,7 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
 }
 
 export async function deleteThreadAction(threadId: Thread["id"]) {
-  const { supabase } = await AuthActionHelper();
+  const { supabase } = await authActionHelper();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
 
@@ -79,7 +79,7 @@ export async function toggleIsFinishedAction(thread: Thread) {
     isFinished: !thread.isFinished,
   };
 
-  const { supabase } = await AuthActionHelper();
+  const { supabase } = await authActionHelper();
 
   const { error } = await supabase
     .from("threads")

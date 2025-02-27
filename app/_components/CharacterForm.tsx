@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "../_hooks/use-toast";
+import { toast } from "../_hooks/useToast";
 import { Character, characterSchema } from "../_schemas/Character";
-import { verifyDisplayNameAvailability } from "../dashboard/actionsCharacters";
+import { verifyDisplayNameAvailability } from "../dashboard/actions-characters";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
@@ -16,7 +16,7 @@ import {
   actionReturnError,
   actionReturnSuccess,
   ActionResult,
-} from "../_utils/actionReturn";
+} from "../_utils/action-return";
 import TextareaWithLabel from "./TextareaWithLabel";
 
 type Props = {

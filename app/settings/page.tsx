@@ -1,15 +1,13 @@
 import DeleteAccount from "../_components/DeleteAccount";
 import { UpdateEmail } from "../_components/UpdateEmail";
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { getUserEmail } from "../_lib/action-auth-helpers";
 
 export default async function Page() {
-  //const { user } = await AuthActionHelper();
+  const email = await getUserEmail();
 
   return (
     <div className="grid h-full gap-2">
-      <h1>Change your email address</h1>
-      <span>Currently logged in as: </span>
-      <UpdateEmail />
+      <UpdateEmail currentEmail={email} />
 
       <DeleteAccount />
     </div>

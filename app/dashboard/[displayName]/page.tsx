@@ -2,27 +2,29 @@ import Character from "@/app/_components/Character";
 import CreateNewThread from "@/app/_components/CreateNewThread";
 import DeleteCharacter from "@/app/_components/DeleteCharacter";
 import EditCharacter from "@/app/_components/EditCharacter";
-import { AuthActionHelper } from "@/app/_lib/actionsAuth";
+import { authActionHelper } from "@/app/_lib/action-auth-helpers";
 import {
   getCharacterData,
   getFinishedThreads,
   getOngoingThreads,
 } from "@/app/_lib/data-service";
 import ThreadTabs from "./ThreadTabs";
+import { Metadata } from "next";
 
-// export async function generateMetadata({ params }: Props) {
-//   const character = await getCharacterData(await params.displayName);
-//   if (!character) return null;
-//   return { title: `${character.name} @ ${character.game}` };
-// }
-
-export default async function Page({
-  params,
-}: {
+type Props = {
   params: Promise<{ displayName: string }>;
-}) {
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
-  const { user } = await AuthActionHelper();
+  return {
+    title: `Dashboard — ${displayName}`,
+  };
+}
+
+export default async function Page({ params }: Props) {
+  const displayName = (await params).displayName;
+  const { user } = await authActionHelper();
   const character = await getCharacterData(displayName);
 
   if (user !== character.userId)

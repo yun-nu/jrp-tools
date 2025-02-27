@@ -2,7 +2,7 @@
 
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { AuthActionHelper } from "../_lib/actionsAuth";
+import { authActionHelper } from "../_lib/action-auth-helpers";
 import { createClient } from "../_lib/supabase-server";
 import {
   EmailAndConfirmation,
@@ -23,9 +23,8 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.updateUser({
+  const { error } = await supabase.auth.updateUser({
     email: email,
-    /// data: { displayName: },
   });
 
   if (error) return { error: "Could not update email" };
@@ -37,7 +36,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 }
 
 export async function deleteUserAction() {
-  const { user } = await AuthActionHelper();
+  const { user } = await authActionHelper();
 
   const cookieStore = await cookies();
 

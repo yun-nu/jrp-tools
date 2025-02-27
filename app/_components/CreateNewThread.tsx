@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { addThreadAction } from "../dashboard/actionsThreads";
+import { addThreadAction } from "../dashboard/actions-threads";
 import { Character } from "../_schemas/Character";
 
 export default function CreateNewThread({

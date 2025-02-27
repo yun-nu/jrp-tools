@@ -22,7 +22,7 @@ export default function Character({ character }: { character: SCharacter }) {
         {isPublic && (
           <>
             <MdPublic />
-            <Link href={`/${displayName}`}>
+            <Link href={`/characters/${displayName}`}>
               {characterName}&apos;s public page
             </Link>
           </>
