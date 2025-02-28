@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
 import { toast } from "../_hooks/useToast";
-import { deleteUserAction } from "../settings/actions";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +15,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
 import { Button } from "./ui/Button";
+import { deleteUserAction } from "../account/settings/actions";
 
 export default function DeleteAccount() {
   const router = useRouter();

@@ -24,21 +24,12 @@ export default async function Navigation() {
           <>
             <li className="text-base">
               <Link
-                href="/dashboard"
+                href="/account"
                 className="flex items-center gap-2 hover:text-accent-400 transition-colors"
               >
-                <MdOutlineSpaceDashboard /> Dashboard
+                <MdOutlineSpaceDashboard /> Account
               </Link>
             </li>
-            <li className="text-base">
-              <Link
-                href="/settings"
-                className="flex  items-center gap-2 hover:text-accent-400 transition-colors"
-              >
-                <IoSettingsOutline /> Account settings
-              </Link>
-            </li>
-            <SignOutButton />
           </>
         )}
       </ul>

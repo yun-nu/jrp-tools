@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { BsFillPersonDashFill } from "react-icons/bs";
 import { toast } from "../_hooks/useToast";
 import { Character } from "../_schemas/Character";
-import { deleteCharacterAction } from "../dashboard/actions-characters";
+import { deleteCharacterAction } from "../account/actions-characters";
 import { Button } from "./ui/Button";
 import {
   Dialog,
@@ -45,7 +45,7 @@ export default function DeleteCharacter({
       return;
     } else {
       toast({ description: result.success, className: "bg-green-700" });
-      router.push(`/dashboard`);
+      router.push(`/account`);
     }
   };
 

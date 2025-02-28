@@ -1,6 +1,4 @@
-import { Update01 } from "../_data/updates/Update01";
-
-export const revalidate = 60;
+import { Update01 } from "../_data/changelog/Update01";
 
 export default async function Page() {
   return (

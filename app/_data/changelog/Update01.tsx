@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
+import { LuGithub } from "react-icons/lu";
+import { RiMailSendLine } from "react-icons/ri";
 import Update from "./Template";
 
 export function Update01() {
@@ -25,17 +27,24 @@ export function Update01() {
 
       <p>
         With all that said, don't hesitate to report any bugs or issues.
-        Suggestions and contributions are also welcome! You can drop me a report
-        or suggestion in the form below, or{" "}
+        Suggestions and contributions are also welcome!
+      </p>
+
+      <p>
         <Link
           href="https://github.com/yun-nu/rp-tools"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500"
+          className="text-sm flex gap-2 items-center underline underline-offset-4"
         >
-          open an issue or a pull request on github
+          <LuGithub /> Open a PR or issue on github
         </Link>
-        .
+        <Link
+          href="/contact"
+          className="text-sm flex gap-2 items-center underline underline-offset-4"
+        >
+          <RiMailSendLine /> Contact form
+        </Link>
       </p>
     </Update>
   );

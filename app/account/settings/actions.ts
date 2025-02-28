@@ -1,13 +1,13 @@
 "use server";
 
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import { authActionHelper } from "../_lib/action-auth-helpers";
-import { createClient } from "../_lib/supabase-server";
+import { authActionHelper } from "@/app/_lib/action-auth-helpers";
+import { createClient } from "@/app/_lib/supabase-server";
 import {
   EmailAndConfirmation,
   emailAndConfirmationSchema,
-} from "../_schemas/Auth";
+} from "@/app/_schemas/Auth";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export async function updateEmailAction(input: EmailAndConfirmation) {
   const email = input.email;

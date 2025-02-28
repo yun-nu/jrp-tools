@@ -41,9 +41,11 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    (request.nextUrl.pathname.startsWith("/dashboard") ||
-      request.nextUrl.pathname.startsWith("/profile"))
+    (request.nextUrl.pathname === "/account" ||
+      request.nextUrl.pathname === "/changelog" ||
+      request.nextUrl.pathname === "/contact")
   ) {
+    console.log(request.nextUrl.pathname);
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/";

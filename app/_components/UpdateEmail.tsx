@@ -1,4 +1,4 @@
-import { updateEmailAction } from "../settings/actions";
+import { updateEmailAction } from "../account/settings/actions";
 import { EmailAndConfirmationForm } from "./EmailAndConfirmationForm";
 import {
   Card,

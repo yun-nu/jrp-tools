@@ -34,6 +34,10 @@ export const characterSchema = z.object({
   isPublic: z.boolean(),
   id: z.number().int().positive().optional(),
   userId: z.string().optional(),
+  icon: z.union([
+    z.string().url({ message: "Must be a valid image URL" }).nullish(),
+    z.literal(""),
+  ]),
 });
 
 export type Character = z.infer<typeof characterSchema>;

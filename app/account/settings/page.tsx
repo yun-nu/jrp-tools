@@ -1,6 +1,6 @@
-import DeleteAccount from "../_components/DeleteAccount";
-import { UpdateEmail } from "../_components/UpdateEmail";
-import { getUserEmail } from "../_lib/action-auth-helpers";
+import DeleteAccount from "@/app/_components/DeleteAccount";
+import { UpdateEmail } from "@/app/_components/UpdateEmail";
+import { getUserEmail } from "@/app/_lib/action-auth-helpers";
 
 export default async function Page() {
   const email = await getUserEmail();

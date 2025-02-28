@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
 import { Character, characterSchema } from "../_schemas/Character";
-import { verifyDisplayNameAvailability } from "../dashboard/actions-characters";
+import { verifyDisplayNameAvailability } from "../account/actions-characters";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
@@ -63,7 +63,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
     if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       form.reset();
-      router.push(`/dashboard/${result.displayName}`);
+      router.push(`/account/${result.displayName}`);
       setOpen(false);
     }
   };
@@ -99,6 +99,13 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           fieldTitle="Character Name"
           nameInSchema="characterName"
           description="Required. This the name that will be displayed on your character list and page."
+        />
+
+        <InputWithLabel
+          fieldTitle="Icon"
+          nameInSchema="icon"
+          placeholder="https://yourimage.com/icon.jpg"
+          description="Will be transformed into a 50x50 icon."
         />
 
         <TextareaWithLabel
