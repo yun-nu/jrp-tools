@@ -2,35 +2,23 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import {
-  ArrowUpDown,
-  Copy,
-  Edit,
-  LinkIcon,
-  MoreHorizontal,
-  PanelBottomOpen,
-  SquareCheckBig,
-  Trash,
-} from "lucide-react";
+import { ArrowUpDown, LinkIcon } from "lucide-react";
 import Link from "next/link";
 import { Thread } from "../_schemas/Thread";
-import { Button } from "./ui/Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/DropdownMenu";
-import DeleteThread from "./DeleteThread";
 import DataTableRowActions from "./DataTableRowActions";
+import { Button } from "./ui/Button";
 
 export const threadsCols: ColumnDef<Thread>[] = [
   {
     accessorKey: "date",
     cell: ({ row }) => {
       const date = row.getValue("date");
-      const formattedDate = format(new Date(date as string), "MMM dd");
+      const isCurrentYear =
+        (date as string).slice(0, 4) === String(new Date().getFullYear());
+
+      const formattedDate = isCurrentYear
+        ? format(new Date(date as string), "MMM dd")
+        : format(new Date(date as string), "MMM dd yyyy");
 
       return <div className="text-right font-medium">{formattedDate}</div>;
     },
@@ -47,14 +35,6 @@ export const threadsCols: ColumnDef<Thread>[] = [
     },
   },
   {
-    accessorKey: "url",
-    header: () => <div className="text-right">URL</div>,
-    cell: ({ row }) => {
-      const url = row.getValue("url");
-      return <div className="text-right font-medium">{url as string}</div>;
-    },
-  },
-  {
     accessorKey: "type",
     header: "Type",
   },
@@ -63,10 +43,31 @@ export const threadsCols: ColumnDef<Thread>[] = [
     header: "Blurb",
   },
   {
+    accessorKey: "URL",
+    header: "Link",
+    cell: ({ row }) => {
+      const thread = row.original;
+      return (
+        <div className="text-right font-medium">
+          {thread.url && (
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={thread.url ? thread.url : "#"}
+            >
+              <LinkIcon />
+            </Link>
+          )}
+        </div>
+      );
+    },
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const thread = row.original;
       return <DataTableRowActions thread={thread} />;
     },
+    enableHiding: true,
   },
 ];

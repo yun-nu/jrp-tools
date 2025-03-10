@@ -48,13 +48,13 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
 
   if (error?.status === 403) return { error: "Expired or invalid code." };
 
-  redirect("/dashboard");
+  redirect("/account");
 }
 
 export async function signOutAction() {
   const supabase = await createClient();
   const { error } = await supabase.auth.signOut();
-  if (error) console.log(error);
+  if (error) return error;
   redirect("/");
 }
 

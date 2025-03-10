@@ -13,11 +13,13 @@ import { Thread } from "@/app/_schemas/Thread";
 type ThreadTabsProps = {
   ongoingThreads: Thread[];
   finishedThreads: Thread[];
+  showActions?: boolean;
 };
 
 export default function ThreadTabs({
   ongoingThreads,
   finishedThreads,
+  showActions,
 }: ThreadTabsProps) {
   return (
     <Tabs defaultValue="ongoing" className="">
@@ -30,10 +32,18 @@ export default function ThreadTabs({
         </TabsTrigger>
       </TabsList>
       <TabsContent value="ongoing">
-        <DataTable columns={threadsCols} data={ongoingThreads} />
+        <DataTable
+          columns={threadsCols}
+          data={ongoingThreads}
+          showActions={showActions}
+        />
       </TabsContent>
       <TabsContent value="finished">
-        <DataTable columns={threadsCols} data={finishedThreads} />
+        <DataTable
+          columns={threadsCols}
+          data={finishedThreads}
+          showActions={showActions}
+        />
       </TabsContent>
     </Tabs>
   );

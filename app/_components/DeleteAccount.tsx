@@ -30,7 +30,7 @@ export default function DeleteAccount() {
       return;
     } else {
       toast({ description: result.success });
-      router.push(`/dashboard`);
+      router.push(`/account`);
     }
   };
 

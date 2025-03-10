@@ -6,14 +6,21 @@ export const threadSchema = z.object({
   date: z.date({
     required_error: "You must pick a date from the calendar",
   }),
-  url: z.union([
-    z
-      .string()
-      .url({ message: "Must start with http:// or https://" })
-      .nullish(),
-    z.literal(""),
-  ]),
-  type: z.string().optional(),
+  url: z
+    .union([
+      z
+        .string()
+        .url({
+          message: "Must be a valid URL starting with http:// or https://",
+        })
+        .nullish(),
+      z.literal(""),
+    ])
+    .transform((val) => val?.replace(/\s+/g, "")),
+  type: z
+    .string()
+    .max(100, { message: "Must be less than 100 characters long" })
+    .optional(),
   blurb: z
     .string()
     .max(500, { message: "Must be less than 500 characters long" })

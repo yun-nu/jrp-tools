@@ -18,9 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} antialiased dark min-h-screen flex flex-col`}
+      >
         <Header />
-        <main>{children}</main>
+        <main className="flex-1 px-8 py-10 grid">{children}</main>
         <Toaster />
       </body>
     </html>

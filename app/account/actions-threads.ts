@@ -1,7 +1,7 @@
 "use server";
 
 import { toDate } from "date-fns";
-import { authActionHelper } from "../_lib/action-auth-helpers";
+import { createClient } from "../_lib/supabase-server";
 import { Character } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
 
@@ -9,18 +9,12 @@ export async function addThreadAction(
   threadData: Thread,
   characterId: Character["id"]
 ) {
-  const { supabase } = await authActionHelper();
-
-  const newThread: Partial<Thread> = {
-    date: threadData.date,
-    url: threadData.url,
-    blurb: threadData.blurb,
-    type: threadData.type,
-    isFinished: threadData.isFinished,
+  const newThread: Thread = {
+    ...threadData,
     characterId: characterId,
   };
 
-  const parsed = threadSchema.safeParse(threadData);
+  const parsed = threadSchema.safeParse(newThread);
 
   if (!parsed.success) {
     return {
@@ -29,7 +23,13 @@ export async function addThreadAction(
     };
   }
 
-  const { error } = await supabase.from("threads").insert([newThread]).select();
+  const { data: parsedThreadData } = parsed;
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("threads")
+    .insert(parsedThreadData)
+    .select();
   if (error) return { error: "Could not add new thread" };
 
   return {
@@ -47,11 +47,12 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
     };
   }
 
-  const { supabase } = await authActionHelper();
+  const { data: parsedThreadData } = parsed;
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from("threads")
-    .update(threadData)
+    .update(parsedThreadData)
     .eq("id", threadId);
 
   if (error) return { error: "Could not edit thread" };
@@ -62,11 +63,11 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
 }
 
 export async function deleteThreadAction(threadId: Thread["id"]) {
-  const { supabase } = await authActionHelper();
+  const supabase = await createClient();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
 
-  if (error) return { error: "Could not add new thread" };
+  if (error) return { error: "Could not delete thread" };
 
   return {
     success: "Thread deleted successfully",
@@ -79,7 +80,7 @@ export async function toggleIsFinishedAction(thread: Thread) {
     isFinished: !thread.isFinished,
   };
 
-  const { supabase } = await authActionHelper();
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from("threads")
@@ -95,11 +96,12 @@ export async function toggleIsFinishedAction(thread: Thread) {
 export async function duplicateThreadAction(thread: Thread) {
   const duplicatedThread = {
     ...thread,
+    id: undefined,
     date: toDate(thread.date),
   };
 
   const result = await addThreadAction(duplicatedThread, thread.characterId);
-  if (result)
+  if (result.success)
     return {
       success: "Thread duplicated successfully",
     };

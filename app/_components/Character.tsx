@@ -1,50 +1,76 @@
+import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineOpenInNew, MdPublic } from "react-icons/md";
+import { FaAt } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
+import { LuGoal } from "react-icons/lu";
+import { MdPublic } from "react-icons/md";
 import { Character as SCharacter } from "../_schemas/Character";
+import { RiHomeHeartLine } from "react-icons/ri";
 
 export default function Character({ character }: { character: SCharacter }) {
   if (!character) return null;
   const {
     displayName,
     characterName,
-    characterBlurb,
+    blurb,
     acLink,
     gameName,
     journalName,
     journalLink,
     isPublic,
+    icon,
   } = character || {};
 
   return (
     <div className="space-y-4 max-w-[80%]">
-      <span className="block text-3xl font-semibold">{characterName}</span>{" "}
-      <div className="flex gap-2">
-        {isPublic && (
-          <>
-            <MdPublic />
-            <Link href={`/characters/${displayName}`}>
-              {characterName}&apos;s public page
+      <div className="flex gap-4 text-sm">
+        {icon && (
+          <Image
+            src={icon}
+            width={100}
+            height={100}
+            className="rounded max-w-[100px] max-h-[100px]"
+            alt="Character Icon"
+          />
+        )}
+        <div className="flex flex-col gap-2 justify-center">
+          <span className="block text-3xl font-semibold">{characterName}</span>{" "}
+          {journalLink && (
+            <Link
+              href={journalLink}
+              className="flex items-center gap-2 underline underline-offset-4"
+            >
+              <FaAt /> {journalName || "Journal"}
             </Link>
-          </>
-        )}
+          )}
+          {isPublic && (
+            <>
+              <Link
+                href={`/characters/${displayName}`}
+                className="flex gap-2 items-center underline underline-offset-4"
+              >
+                <MdPublic /> {characterName}&apos;s public page
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-      <div>{characterBlurb}</div>
-      <div className="text-base">
-        {journalLink && (
-          <Link href={journalLink} className="flex items-center gap-2">
-            {journalName || "Journal"} <MdOutlineOpenInNew />
-          </Link>
-        )}
-        <div className="flex gap-4">
-          {gameName && <span className="block">Game: {gameName}</span>}
-          {/*  /// This is glitching fsr */}
 
+      {blurb && <div className="text-sm rounded px-4 py-6 border">{blurb}</div>}
+
+      <div className="text-sm">
+        <div className="flex flex-col gap-2">
+          {gameName && (
+            <div className="flex gap-2 items-center">
+              <RiHomeHeartLine /> Played at: {gameName}
+            </div>
+          )}
           {acLink && (
             <Link
               href={acLink ? acLink : "#"}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 underline underline-offset-4"
             >
-              <MdOutlineOpenInNew /> AC page
+              <LuGoal /> AC page
             </Link>
           )}
         </div>

@@ -20,7 +20,7 @@ export default function CreateNewCharacter() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full">
+        <Button variant={"default"} className="w-1/3">
           <BsFillPersonPlusFill />
           <span>Add new character</span>
         </Button>

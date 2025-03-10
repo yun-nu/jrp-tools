@@ -27,7 +27,14 @@ import {
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
 
-export default function DataTableRowActions({ thread }: { thread: Thread }) {
+type DataTableRowActionsProps = {
+  thread: Thread;
+  isPublicPage: boolean;
+};
+
+export default function DataTableRowActions({
+  thread,
+}: DataTableRowActionsProps) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { refresh } = useRouter();
@@ -90,31 +97,21 @@ export default function DataTableRowActions({ thread }: { thread: Thread }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
-          <DropdownMenuItem>
-            <PanelBottomOpen />
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href={thread.url ? thread.url : "#"}
-            >
-              Open Thread
-            </Link>
-          </DropdownMenuItem>
           <DropdownMenuItem onClick={handleCopyUrl}>
             <button className="flex gap-2">
               <LinkIcon /> Copy URL
             </button>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <button className="flex gap-2" onClick={() => setIsEditOpen(true)}>
+              <Edit /> <span>Edit thread</span>
+            </button>
+          </DropdownMenuItem>
           <DropdownMenuItem role="button" onClick={handleToggleThreadStatus}>
             <button className="flex gap-2">
               <SquareCheckBig /> Mark as{" "}
               {thread.isFinished ? "ongoing" : "finished"}
-            </button>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <button className="flex gap-2" onClick={() => setIsEditOpen(true)}>
-              <Edit /> <span>Edit thread</span>
             </button>
           </DropdownMenuItem>
           <DropdownMenuItem>

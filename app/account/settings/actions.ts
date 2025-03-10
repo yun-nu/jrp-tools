@@ -36,7 +36,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 }
 
 export async function deleteUserAction() {
-  const { user } = await authActionHelper();
+  const { userId: user } = await authActionHelper();
 
   const cookieStore = await cookies();
 

@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/Card";
+import { RiHomeHeartLine } from "react-icons/ri";
 
 export function CharacterListCard({ character }: { character: Character }) {
   const { displayName, characterName, gameName, isPublic, journalName, icon } =
@@ -26,8 +27,8 @@ export function CharacterListCard({ character }: { character: Character }) {
               width={50}
               height={50}
               src={icon}
-              alt="User icon"
-              className="rounded"
+              alt="Icon"
+              className="rounded max-w-[50px] max-h-[50px]"
             />
           )}
           <div className="flex justify-between flex-1 items-center">
@@ -54,7 +55,7 @@ export function CharacterListCard({ character }: { character: Character }) {
             ) : null}
             {gameName ? (
               <div className="flex gap-2 items-center">
-                <IoLocationOutline /> Played at: {gameName}
+                <RiHomeHeartLine /> Played at: {gameName}
               </div>
             ) : null}
           </div>

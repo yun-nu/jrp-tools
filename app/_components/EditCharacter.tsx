@@ -23,7 +23,7 @@ export default function EditCharacter({ character }: { character: Character }) {
       <DialogTrigger asChild>
         <Button variant={"outline"}>
           <TbEdit />
-          <span>Edit {characterName}</span>
+          <span>Edit character information</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">

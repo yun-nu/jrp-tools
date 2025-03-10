@@ -10,8 +10,10 @@ export default async function Home() {
   } = await supabase.auth.getSession();
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Text-based roleplay thread tracking made easy.</h1>
+    <div className="flex flex-col items-center justify-between">
+      <h1 className="text-5xl text-primary-50 mb-10 tracking-tight font-normal">
+        RP <span className="custom-underline">thread tracking</span> made easy
+      </h1>
       <p>
         Store and share your threads with ease. Add, edit or delete your data
         anytime.

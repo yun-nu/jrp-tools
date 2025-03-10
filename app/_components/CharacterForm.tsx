@@ -18,6 +18,10 @@ import {
   ActionResult,
 } from "../_utils/action-return";
 import TextareaWithLabel from "./TextareaWithLabel";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
+import { IoInformation, IoInformationCircleOutline } from "react-icons/io5";
+import { BadgeInfo } from "lucide-react";
+import { FaRegLightbulb } from "react-icons/fa6";
 
 type Props = {
   setOpen: (open: boolean) => void;
@@ -41,12 +45,13 @@ export function CharacterForm({ setOpen, character, action }: Props) {
       : {
           displayName: "",
           characterName: "",
-          characterBlurb: "",
+          blurb: "",
           acLink: "",
           gameName: "",
           isPublic: false,
           journalLink: "",
           journalName: "",
+          icon: "",
         },
   });
 
@@ -94,7 +99,6 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           description="Required. This is the unique username for your character. Can only contain alphanumeric characters and underscores."
           onBlur={handleVerifyAvailability}
         />
-
         <InputWithLabel
           fieldTitle="Character Name"
           nameInSchema="characterName"
@@ -104,20 +108,17 @@ export function CharacterForm({ setOpen, character, action }: Props) {
         <InputWithLabel
           fieldTitle="Icon"
           nameInSchema="icon"
-          placeholder="https://yourimage.com/icon.jpg"
-          description="Will be transformed into a 50x50 icon."
+          placeholder="https://image.com/icon.jpg"
+          description="Square icons that will be used alongside character name."
         />
 
         <TextareaWithLabel
           fieldTitle="Blurb"
-          nameInSchema="characterBlurb"
+          nameInSchema="blurb"
           placeholder="Maximum of 500 characters"
         />
-
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
-
         <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
-
         <InputWithLabel
           fieldTitle="Journal Link"
           nameInSchema="journalLink"

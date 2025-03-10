@@ -18,7 +18,7 @@ export default function LinkButton({
     medium:
       "flex items-center gap-6 text-lg border border-primary-300 px-8 py-4 font-medium",
     large:
-      "py-3 px-5 hover:bg-zinc-300 hover:text-zinc-900 transition-colors flex items-center gap-4 font-semibold text-primary-200 w-full",
+      "py-3 px-5 hover:bg-zinc-300 hover:text-zinc-900 transition-colors flex items-center gap-4 font-semibold text-primary-200",
   };
 
   return (

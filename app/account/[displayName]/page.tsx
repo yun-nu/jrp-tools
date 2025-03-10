@@ -8,7 +8,7 @@ import {
   getFinishedThreads,
   getOngoingThreads,
 } from "@/app/_lib/data-service";
-import ThreadTabs from "./ThreadTabs";
+import ThreadTabs from "../../_components/ThreadTabs";
 import { Metadata } from "next";
 
 type Props = {
@@ -18,17 +18,18 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
   return {
-    title: `Dashboard — ${displayName}`,
+    title: `Character page — ${displayName}`,
   };
 }
 
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
-  const { user } = await authActionHelper();
+  const { userId } = await authActionHelper();
   const character = await getCharacterData(displayName);
+  const showActions = userId === character.userId;
 
-  if (user !== character.userId)
-    throw new Error("You must be logged in to perform this action");
+  if (userId !== character.userId)
+    return "You must be logged in to perform this action";
 
   const ongoingThreads = await getOngoingThreads(character.id);
   const finishedThreads = await getFinishedThreads(character.id);
@@ -41,6 +42,7 @@ export default async function Page({ params }: Props) {
       <ThreadTabs
         ongoingThreads={ongoingThreads}
         finishedThreads={finishedThreads}
+        showActions={showActions}
       />
 
       <div className="flex justify-between">

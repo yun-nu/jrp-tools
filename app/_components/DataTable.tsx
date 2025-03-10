@@ -1,17 +1,21 @@
 "use client";
 
 import {
+  ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-  ColumnDef,
-  getPaginationRowModel,
-  SortingState,
-  getSortedRowModel,
-  ColumnFiltersState,
   getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
+  useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+import { useState } from "react";
+import DataTableViewOptions from "./DataTableViewOptions";
+import { Button } from "./ui/Button";
+import { Input } from "./ui/Input";
 import {
   Table,
   TableBody,
@@ -20,29 +24,23 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
-import { Button } from "./ui/Button";
-import { useState } from "react";
-import { Input } from "./ui/Input";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "./ui/DropdownMenu";
-import { SlidersHorizontal } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  showActions?: boolean;
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
+  showActions = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    actions: showActions,
+  });
 
   const table = useReactTable({
     data,
@@ -72,33 +70,7 @@ export default function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              <SlidersHorizontal />
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
         <Table>
@@ -171,68 +143,3 @@ export default function DataTable<TData, TValue>({
     </div>
   );
 }
-
-// export default function Table({ defaultData }) {
-//   const [data, _setData] = useState(() => [...defaultData]);
-//   const rerender = useReducer(() => ({}), {})[1];
-
-//   const table = useReactTable({
-//     data,
-//     columns,
-//     getCoreRowModel: getCoreRowModel(),
-//   });
-
-//   return (
-//     <div className="p-2">
-//       <table>
-//         <thead>
-//           {table.getHeaderGroups().map((headerGroup) => (
-//             <tr key={headerGroup.id}>
-//               {headerGroup.headers.map((header) => (
-//                 <th key={header.id}>
-//                   {header.isPlaceholder
-//                     ? null
-//                     : flexRender(
-//                         header.column.columnDef.header,
-//                         header.getContext()
-//                       )}
-//                 </th>
-//               ))}
-//             </tr>
-//           ))}
-//         </thead>
-//         <tbody>
-//           {table.getRowModel().rows.map((row) => (
-//             <tr key={row.id}>
-//               {row.getVisibleCells().map((cell) => (
-//                 <td key={cell.id}>
-//                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                 </td>
-//               ))}
-//             </tr>
-//           ))}
-//         </tbody>
-//         <tfoot>
-//           {table.getFooterGroups().map((footerGroup) => (
-//             <tr key={footerGroup.id}>
-//               {footerGroup.headers.map((header) => (
-//                 <th key={header.id}>
-//                   {header.isPlaceholder
-//                     ? null
-//                     : flexRender(
-//                         header.column.columnDef.footer,
-//                         header.getContext()
-//                       )}
-//                 </th>
-//               ))}
-//             </tr>
-//           ))}
-//         </tfoot>
-//       </table>
-//       <div className="h-4" />
-//       <button onClick={() => rerender()} className="border p-2">
-//         Rerender
-//       </button>
-//     </div>
-//   );
-// }

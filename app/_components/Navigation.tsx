@@ -1,38 +1,33 @@
+import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
 import { authActionHelper } from "../_lib/action-auth-helpers";
 import LinkButton from "./LinkButton";
-import SignOutButton from "./SignOutButton";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { RiUserSettingsLine } from "react-icons/ri";
-import { IoSettingsOutline } from "react-icons/io5";
+import BreadcrumbHeader from "./BreadcrumbHeader";
 
 export default async function Navigation() {
-  const { user } = await authActionHelper();
+  const { userId: user } = await authActionHelper();
 
+  if (!user)
+    return (
+      <LinkButton
+        size="large"
+        icon={<PiSignInBold />}
+        href="/login"
+        content="Log in"
+      />
+    );
+
+  /// TODO: decide margin here in the first div - match w/ sidenav
   return (
-    <nav className="z-10 text-xl">
-      <ul className="flex gap-16 items-center">
-        {!user ? (
-          <LinkButton
-            size="large"
-            icon={<PiSignInBold />}
-            href="/login"
-            content="Log in"
-          />
-        ) : (
-          <>
-            <li className="text-base">
-              <Link
-                href="/account"
-                className="flex items-center gap-2 hover:text-accent-400 transition-colors"
-              >
-                <MdOutlineSpaceDashboard /> Account
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+    <div className="ml-20 flex flex-1 justify-between items-center">
+      <BreadcrumbHeader />
+      <Link
+        href="/account"
+        className="ml-auto flex items-center gap-2 hover:text-accent-400 transition-colors"
+      >
+        <User /> Account
+      </Link>
+    </div>
   );
 }

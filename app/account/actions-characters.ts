@@ -30,18 +30,11 @@ export async function verifyDisplayNameAvailability(
 export async function addCharacterAction(
   characterData: Character
 ): Promise<ActionResult> {
-  const { user, supabase } = await authActionHelper();
+  const { userId, supabase } = await authActionHelper();
 
-  const newCharacter: Partial<Character> = {
-    userId: user,
-    displayName: characterData.displayName.replaceAll(" ", ""),
-    characterName: characterData.characterName,
-    characterBlurb: characterData.characterBlurb,
-    gameName: characterData.gameName,
-    acLink: characterData.acLink,
-    isPublic: characterData.isPublic,
-    journalName: characterData.journalName.replaceAll(" ", ""),
-    journalLink: characterData.journalLink,
+  const newCharacter: Character = {
+    userId: userId,
+    ...characterData,
   };
 
   const parsed = characterSchema.safeParse(newCharacter);
@@ -53,9 +46,11 @@ export async function addCharacterAction(
     };
   }
 
+  const { data: parsedCharacterData } = parsed;
+
   const { error } = await supabase
     .from("characters")
-    .insert([newCharacter])
+    .insert(parsedCharacterData)
     .select();
 
   if (error?.code === "23505") {
@@ -66,7 +61,7 @@ export async function addCharacterAction(
 
   return {
     success: "Character created successfully",
-    displayName: newCharacter.displayName,
+    displayName: parsedCharacterData.displayName,
   };
 }
 
@@ -74,8 +69,6 @@ export async function editCharacterAction(
   characterData: Character,
   characterId: number
 ) {
-  const { user, supabase } = await authActionHelper();
-
   const parsed = characterSchema.safeParse(characterData);
 
   if (!parsed.success) {
@@ -85,17 +78,20 @@ export async function editCharacterAction(
     };
   }
 
-  if (user === characterData.userId) {
+  const { data: parsedCharacterData } = parsed;
+  const { userId, supabase } = await authActionHelper();
+
+  if (userId === parsedCharacterData.userId) {
     const { error } = await supabase
       .from("characters")
-      .update(characterData)
+      .update(parsedCharacterData)
       .eq("id", characterId);
 
     if (error) return { error: "Could not edit character" };
 
     return {
       success: "Character edited successfully",
-      displayName: characterData.displayName,
+      displayName: parsedCharacterData.displayName,
     };
   }
 
@@ -103,17 +99,16 @@ export async function editCharacterAction(
 }
 
 export async function deleteCharacterAction({
-  userId: userId,
+  userId: characterUserId,
   id: characterId,
 }: Pick<Character, "userId" | "id">) {
-  const { user, supabase } = await authActionHelper();
+  const { userId, supabase } = await authActionHelper();
 
-  if (user === userId) {
+  if (userId === characterUserId) {
     const { error } = await supabase
       .from("characters")
       .delete()
       .eq("id", characterId);
-    console.log(error);
     if (error) {
       return { error: "Could not delete character." };
     }

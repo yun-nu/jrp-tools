@@ -7,8 +7,8 @@ import { getCharacters } from "../_lib/data-service";
 export const revalidate = 60;
 
 export default async function Page() {
-  const { user: id } = await authActionHelper();
-  const characters = await getCharacters(id);
+  const { userId: userId } = await authActionHelper();
+  const characters = await getCharacters(userId);
 
   if ("error" in characters) {
     ///

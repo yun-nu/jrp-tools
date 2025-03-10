@@ -54,7 +54,7 @@ export default function DeleteCharacter({
       <AlertDialogTrigger asChild>
         <Button variant={"destructive"}>
           <BsFillPersonDashFill />
-          <span>Delete {characterName}</span>
+          <span>Delete character</span>
         </Button>
       </AlertDialogTrigger>
 

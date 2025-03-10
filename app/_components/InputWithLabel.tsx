@@ -31,7 +31,6 @@ export function InputWithLabel({
   placeholder,
   labelLeft,
   readOnly,
-  clearable,
   onBlur,
 }: Props) {
   const form = useFormContext();
@@ -74,22 +73,6 @@ export function InputWithLabel({
                 />
               </FormControl>
             </div>
-
-            {clearable ? (
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Clear"
-                title="Clear"
-                className="rounded-mdl grid place-content-center hover:bg-transparent text-red-500 hover:text-rose-400"
-                onClick={(e) => {
-                  e.preventDefault();
-                  form.setValue(nameInSchema, "", { shouldDirty: true });
-                }}
-              >
-                <XIcon className="h-6 w-6 p-0 m-0" />
-              </Button>
-            ) : null}
           </div>
 
           <FormMessage />
