@@ -38,9 +38,11 @@ export function CharacterListCard({ character }: { character: Character }) {
             <CardDescription>@ {displayName}</CardDescription>
           </div>
           {isPublic ? (
-            <Badge className="h-[22px]" variant={"default"}>
-              Public
-            </Badge>
+            <Link href={`/characters/${displayName}`}>
+              <Badge className="h-[22px]" variant={"default"}>
+                Public
+              </Badge>
+            </Link>
           ) : (
             <Badge variant={"secondary"}>Private</Badge>
           )}

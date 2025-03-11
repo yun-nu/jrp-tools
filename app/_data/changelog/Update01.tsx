@@ -9,7 +9,7 @@ export function Update01() {
     <Update number={"01"} title={"Launch!"}>
       <p>
         This is the very first update, so let me start it by saying thank you
-        for signing up to JRP-Tools!
+        for signing up to RP Tools!
       </p>
 
       <p>
@@ -30,7 +30,7 @@ export function Update01() {
         into. Suggestions and contributions are also welcome!
       </p>
 
-      <p>
+      <p className="flex flex-col gap-2">
         <Link
           href="/account/contact"
           className="text-sm flex gap-2 items-center underline underline-offset-4"

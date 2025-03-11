@@ -17,6 +17,7 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
+import { useRouter } from "next/navigation";
 
 type Props = {
   setOpen: (open: boolean) => void;
@@ -29,7 +30,7 @@ type Props = {
 
 export function CharacterForm({ setOpen, character, action }: Props) {
   const [isValidDisplayName, setIsValidDisplayName] = useState(false);
-  //const router = useRouter();
+  const { refresh } = useRouter();
 
   const { id: characterId, ...values } = character || {};
 
@@ -63,7 +64,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
     if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       form.reset();
-      //router.push(`/account/${result.displayName}`);
+      refresh();
       setOpen(false);
     }
   };

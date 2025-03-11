@@ -20,7 +20,7 @@ export default function CreateNewCharacter() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} className="text-base font-semibold">
+        <Button variant={"default"} className="text-base">
           <FaUserPlus />
           Add new character
         </Button>

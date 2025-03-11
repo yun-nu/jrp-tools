@@ -10,7 +10,7 @@ export default function CharacterList({
     return "It feels lonely with no muses around... why don't you start by adding your first character?";
 
   return (
-    <div className="grid gap-8 lg:grid-cols-3 place-items-center">
+    <div className="grid gap-12 lg:grid-cols-3 place-items-center">
       {characters
         ?.sort((a, b) => b.id! - a.id!)
         .map((character) => (

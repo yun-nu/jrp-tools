@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
 
   if ((!isPublic && userId === user) || isPublic)
     return (
-      <div>
+      <div className="grid max-w-screen-2xl">
         <Character character={character} />
 
         <ThreadTabs

@@ -22,8 +22,6 @@ export default async function Navigation() {
   /// TODO: decide margin here in the first div - match w/ sidenav
   return (
     <div className="ml-20 flex flex-1 justify-between items-center">
-      {/* <BreadcrumbHeader /> */}
-
       <Link
         href="/account"
         className="ml-auto flex gap-2 items-center hover:text-primary/80 transition-colors text-sm font-semibold"

@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
   const ongoingThreads = await getOngoingThreads(character.id);
   const finishedThreads = await getFinishedThreads(character.id);
   return (
-    <section className="space-y-4">
+    <section className="space-y-4 max-w-screen-2xl">
       <Character character={character} />
 
       <div className="grid justify-items-center max-w-[80%] gap-y-6">
