@@ -26,19 +26,29 @@ export default function page() {
         For more granular help, shoot me an email, or PM on Plurk or DW, and
         I'll try to get back to you ASAP:
         <ul className="flex gap-4 justify-between">
-          <li className="flex gap-2 items-center">
-            <RiMailSendLine />{" "}
-            <Link href="mailto:yunnu.dev@gmail.com">Email</Link>
-          </li>
-          <li className="flex gap-2 items-center">
-            <SiDreamstime className="text-red-500" />
-            <Link href="https://www.dreamwidth.org/inbox/compose?user=yunnu">
-              Dreamwidth
+          <li>
+            <Link
+              href="mailto:yunnu.dev@gmail.com"
+              className="flex gap-2 items-center"
+            >
+              <RiMailSendLine /> Email
             </Link>
           </li>
-          <li className="flex gap-2 items-center">
-            <SiPlurk className="text-orange-600" />
-            <Link href="https://plurk.com/positron">Plurk</Link>
+          <li>
+            <Link
+              href="https://www.dreamwidth.org/inbox/compose?user=yunnu"
+              className="flex gap-2 items-center"
+            >
+              <SiDreamstime className="text-red-500" /> Dreamwidth
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://plurk.com/positron"
+              className="flex gap-2 items-center"
+            >
+              <SiPlurk className="text-orange-600" /> Plurk
+            </Link>
           </li>
         </ul>
       </p>

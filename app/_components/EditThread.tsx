@@ -10,13 +10,17 @@ import {
   DialogTitle,
 } from "./ui/Dialog";
 
-type Props = {
+type EditThreadProps = {
   thread: Thread;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function EditThread({ thread, isOpen, setIsOpen }: Props) {
+export default function EditThread({
+  thread,
+  isOpen,
+  setIsOpen,
+}: EditThreadProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowBigRightIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,9 +12,13 @@ import {
 
 export default function BreadcrumbHeader() {
   const path = usePathname().slice(9);
-  const captalizedPath = path
+  const segment = useSelectedLayoutSegment();
+
+  const captalizedPath = segment
     ? path?.charAt(0).toUpperCase() + path?.slice(1)
     : null;
+
+  if (segment !== "account") return;
 
   return (
     <Breadcrumb>

@@ -46,8 +46,16 @@ export default async function Page({ params }: Props) {
       />
 
       <div className="flex justify-between">
-        <EditCharacter character={character} />
-        <DeleteCharacter character={character} />
+        <EditCharacter
+          character={character}
+          btnSize="default"
+          text="Edit character"
+        />
+        <DeleteCharacter
+          character={character}
+          btnSize="default"
+          text="Delete character"
+        />
       </div>
     </section>
   );

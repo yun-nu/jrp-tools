@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { TbEdit } from "react-icons/tb";
+import { LiaUserEditSolid } from "react-icons/lia";
 import { Character } from "../_schemas/Character";
 import { editCharacterAction } from "../account/actions-characters";
 import { CharacterForm } from "./CharacterForm";
@@ -14,18 +14,29 @@ import {
   DialogTrigger,
 } from "./ui/Dialog";
 
-export default function EditCharacter({ character }: { character: Character }) {
+export type CardButtonProps = {
+  character: Character;
+  btnSize: "icon" | "default" | "sm" | "lg" | null | undefined;
+  text?: string;
+};
+
+export default function EditCharacter({
+  character,
+  btnSize,
+  text,
+}: CardButtonProps) {
   const { characterName } = character;
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"outline"}>
-          <TbEdit />
-          <span>Edit character information</span>
+        <Button variant="outline" size={btnSize} title="Edit character">
+          <LiaUserEditSolid />
+          {text}
         </Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Edit {characterName}</DialogTitle>

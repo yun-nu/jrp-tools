@@ -6,22 +6,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
 import { Character, characterSchema } from "../_schemas/Character";
+import {
+  ActionResult,
+  actionReturnError,
+  actionReturnSuccess,
+} from "../_utils/action-return";
 import { verifyDisplayNameAvailability } from "../account/actions-characters";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
+import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-  ActionResult,
-} from "../_utils/action-return";
-import TextareaWithLabel from "./TextareaWithLabel";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
-import { IoInformation, IoInformationCircleOutline } from "react-icons/io5";
-import { BadgeInfo } from "lucide-react";
-import { FaRegLightbulb } from "react-icons/fa6";
 
 type Props = {
   setOpen: (open: boolean) => void;

@@ -6,7 +6,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { LuFileClock } from "react-icons/lu";
 import { PiUserList } from "react-icons/pi";
 import SignOutButton from "./SignOutButton";
-import { usePathname } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 const navLinks = [
   {
@@ -33,7 +33,6 @@ const navLinks = [
 
 function SideNavigation() {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <nav className="border-r border-primary-900 px-4">

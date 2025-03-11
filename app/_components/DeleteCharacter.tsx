@@ -26,12 +26,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
+import { CardButtonProps } from "./EditCharacter";
 
 export default function DeleteCharacter({
   character,
-}: {
-  character: Character;
-}) {
+  btnSize,
+  text,
+}: CardButtonProps) {
   const { id, userId, characterName } = character;
   const router = useRouter();
 
@@ -52,9 +53,9 @@ export default function DeleteCharacter({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>
+        <Button variant={"destructive"} size={btnSize} title="Delete character">
           <BsFillPersonDashFill />
-          <span>Delete character</span>
+          {text}
         </Button>
       </AlertDialogTrigger>
 
@@ -72,7 +73,7 @@ export default function DeleteCharacter({
           <AlertDialogAction
             type="button"
             onClick={handleDeleteCharacter}
-            className="bg-red-500"
+            className="bg-destructive hover:bg-destructive/80 text-primary"
           >
             Delete
           </AlertDialogAction>

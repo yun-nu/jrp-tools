@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaAt } from "react-icons/fa6";
-import { IoLocationOutline } from "react-icons/io5";
 import { LuGoal } from "react-icons/lu";
 import { MdPublic } from "react-icons/md";
-import { Character as SCharacter } from "../_schemas/Character";
 import { RiHomeHeartLine } from "react-icons/ri";
+import { Character as SCharacter } from "../_schemas/Character";
 
 export default function Character({ character }: { character: SCharacter }) {
   if (!character) return null;
