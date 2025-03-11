@@ -111,7 +111,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
         <TextareaWithLabel
           fieldTitle="Blurb"
           nameInSchema="blurb"
-          placeholder="Maximum of 500 characters"
+          maxLength={500}
         />
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
         <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />

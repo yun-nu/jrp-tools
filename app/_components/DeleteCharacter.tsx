@@ -1,20 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { BsFillPersonDashFill } from "react-icons/bs";
+import { FaUserMinus } from "react-icons/fa";
 import { toast } from "../_hooks/useToast";
-import { Character } from "../_schemas/Character";
 import { deleteCharacterAction } from "../account/actions-characters";
-import { Button } from "./ui/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/Dialog";
+import { CardButtonProps } from "./EditCharacter";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,7 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
-import { CardButtonProps } from "./EditCharacter";
+import { Button } from "./ui/Button";
 
 export default function DeleteCharacter({
   character,
@@ -54,7 +43,7 @@ export default function DeleteCharacter({
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant={"destructive"} size={btnSize} title="Delete character">
-          <BsFillPersonDashFill />
+          <FaUserMinus />
           {text}
         </Button>
       </AlertDialogTrigger>

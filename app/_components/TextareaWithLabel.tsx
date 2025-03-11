@@ -15,15 +15,18 @@ type Props = {
   fieldTitle: string;
   nameInSchema: string;
   placeholder?: string;
+  maxLength: number;
 };
 
 export default function TextareaWithLabel({
   fieldTitle,
   nameInSchema,
   placeholder,
+  maxLength,
 }: Props) {
   const form = useFormContext();
   const textValue = form.watch(nameInSchema as string);
+  const limitReached = textValue.length > maxLength;
 
   return (
     <FormField
@@ -40,7 +43,11 @@ export default function TextareaWithLabel({
             />
           </FormControl>
           <FormDescription>
-            Length: {textValue.length} characters
+            {limitReached
+              ? `Maximum length exceeded. Remove ${
+                  textValue.length - maxLength
+                } characters.`
+              : `${maxLength - textValue.length} characters left `}
           </FormDescription>
           <FormMessage />
         </FormItem>

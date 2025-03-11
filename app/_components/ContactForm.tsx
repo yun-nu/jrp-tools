@@ -39,7 +39,11 @@ export function ContactForm() {
           nameInSchema="name"
           placeholder="Optional"
         />
-        <TextareaWithLabel fieldTitle="Message" nameInSchema="message" />
+        <TextareaWithLabel
+          fieldTitle="Message"
+          nameInSchema="message"
+          maxLength={2000}
+        />
         <Button type="submit">Send</Button>
       </form>
     </Form>

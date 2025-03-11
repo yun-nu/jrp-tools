@@ -22,9 +22,9 @@ export default function ThreadTabs({
   showActions,
 }: ThreadTabsProps) {
   return (
-    <Tabs defaultValue="ongoing" className="">
-      <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="ongoing" className="bg-slate-100">
+    <Tabs defaultValue="ongoing" className="w-full">
+      <TabsList className="grid max-w-[50%] m-auto grid-cols-2">
+        <TabsTrigger value="ongoing">
           <h2>Ongoing</h2>
         </TabsTrigger>
         <TabsTrigger value="finished">

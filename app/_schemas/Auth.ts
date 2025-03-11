@@ -20,8 +20,14 @@ export const signInOTPSchema = z.object({
 export type SignInOTP = z.infer<typeof signInOTPSchema>;
 
 export const formSchema = z.object({
-  name: z.string().optional(),
-  message: z.string().min(1, { message: "Message can't be empty" }),
+  name: z
+    .string()
+    .max(80, { message: "Name must be less than 80 characters long" })
+    .optional(),
+  message: z
+    .string()
+    .min(1, { message: "Message can't be empty" })
+    .max(2000, { message: "Message must be less than 2000 characters long" }),
 });
 
 export type ContactForm = z.infer<typeof formSchema>;

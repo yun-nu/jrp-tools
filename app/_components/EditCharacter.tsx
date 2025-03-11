@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { LiaUserEditSolid } from "react-icons/lia";
+import { FaUserEdit } from "react-icons/fa";
 import { Character } from "../_schemas/Character";
 import { editCharacterAction } from "../account/actions-characters";
 import { CharacterForm } from "./CharacterForm";
@@ -32,7 +32,7 @@ export default function EditCharacter({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size={btnSize} title="Edit character">
-          <LiaUserEditSolid />
+          <FaUserEdit />
           {text}
         </Button>
       </DialogTrigger>

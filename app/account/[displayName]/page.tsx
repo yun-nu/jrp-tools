@@ -34,16 +34,18 @@ export default async function Page({ params }: Props) {
   const ongoingThreads = await getOngoingThreads(character.id);
   const finishedThreads = await getFinishedThreads(character.id);
   return (
-    <section>
+    <section className="space-y-4">
       <Character character={character} />
 
-      <CreateNewThread characterId={character.id} />
+      <div className="grid justify-items-center max-w-[80%] gap-y-6">
+        <CreateNewThread characterId={character.id} />
 
-      <ThreadTabs
-        ongoingThreads={ongoingThreads}
-        finishedThreads={finishedThreads}
-        showActions={showActions}
-      />
+        <ThreadTabs
+          ongoingThreads={ongoingThreads}
+          finishedThreads={finishedThreads}
+          showActions={showActions}
+        />
+      </div>
 
       <div className="flex justify-between">
         <EditCharacter

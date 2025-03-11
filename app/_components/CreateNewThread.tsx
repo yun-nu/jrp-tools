@@ -1,9 +1,11 @@
 "use client";
 
+import { BookmarkPlus } from "lucide-react";
 import { useState } from "react";
-import { BsFillPersonPlusFill } from "react-icons/bs";
-import { Button } from "./ui/Button";
+import { Character } from "../_schemas/Character";
+import { addThreadAction } from "../account/actions-threads";
 import { ThreadForm } from "./ThreadForm";
+import { Button } from "./ui/Button";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +14,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { addThreadAction } from "../account/actions-threads";
-import { Character } from "../_schemas/Character";
 
 export default function CreateNewThread({
   characterId,
@@ -26,8 +26,8 @@ export default function CreateNewThread({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={"default"} className="w-1/3">
-          <BsFillPersonPlusFill />
-          <span>Add new Thread</span>
+          <BookmarkPlus />
+          Add new Thread
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">

@@ -3,11 +3,9 @@ import {
   Edit,
   LinkIcon,
   MoreHorizontal,
-  PanelBottomOpen,
   SquareCheckBig,
   Trash,
 } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "../_hooks/useToast";
@@ -27,14 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
 
-type DataTableRowActionsProps = {
-  thread: Thread;
-  isPublicPage: boolean;
-};
-
-export default function DataTableRowActions({
-  thread,
-}: DataTableRowActionsProps) {
+export default function DataTableRowActions({ thread }: { thread: Thread }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { refresh } = useRouter();

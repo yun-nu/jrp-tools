@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { BsFillPersonPlusFill } from "react-icons/bs";
+import { FaUserPlus } from "react-icons/fa";
 import { addCharacterAction } from "../account/actions-characters";
 import { CharacterForm } from "./CharacterForm";
+import { Button } from "./ui/Button";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
-import { Button } from "./ui/Button";
 
 export default function CreateNewCharacter() {
   const [open, setOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function CreateNewCharacter() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant={"default"} className="w-1/3">
-          <BsFillPersonPlusFill />
+          <FaUserPlus />
           <span>Add new character</span>
         </Button>
       </DialogTrigger>

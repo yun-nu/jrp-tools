@@ -16,9 +16,9 @@ export default async function Page() {
   }
 
   return (
-    <div className="max-w-[80%]">
+    <section className=" flex flex-col gap-12 items-center">
       <CharacterList characters={characters} />
       <CreateNewCharacter />
-    </div>
+    </section>
   );
 }

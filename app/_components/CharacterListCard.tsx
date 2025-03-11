@@ -1,9 +1,11 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineContactPage } from "react-icons/md";
+import { RiHomeHeartLine } from "react-icons/ri";
 import { Character } from "../_schemas/Character";
+import DeleteCharacter from "./DeleteCharacter";
+import EditCharacter from "./EditCharacter";
 import { Badge } from "./ui/Badge";
 import {
   Card,
@@ -13,19 +15,14 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/Card";
-import { RiHomeHeartLine } from "react-icons/ri";
-import { Button } from "./ui/Button";
-import EditCharacter from "./EditCharacter";
-import DeleteCharacter from "./DeleteCharacter";
-import CharacterDropdownMenu from "./CharacterDropdownMenu";
 
 export function CharacterListCard({ character }: { character: Character }) {
   const { displayName, characterName, gameName, isPublic, journalName, icon } =
     character || {};
 
   return (
-    <Card className={cn("w-[380px]")}>
-      <CardHeader className="flex flex-row gap-2 space-y-0">
+    <Card className={cn("sm:w-[380px] sm:min-h-[235px] flex flex-col")}>
+      <CardHeader className="flex flex-row gap-3 space-y-0">
         {icon && (
           <Image
             width={50}
@@ -49,7 +46,7 @@ export function CharacterListCard({ character }: { character: Character }) {
           )}
         </div>
       </CardHeader>
-      <CardContent className="grid gap-4">
+      <CardContent className="grid gap-4 flex-1">
         <div className="text-sm flex flex-col gap-2">
           {journalName ? (
             <div className="flex gap-2 items-center">

@@ -1,7 +1,4 @@
-import React from "react";
 import { Character } from "../_schemas/Character";
-import Link from "next/link";
-import { Badge } from "./ui/Badge";
 import { CharacterListCard } from "./CharacterListCard";
 
 export default function CharacterList({
@@ -10,10 +7,15 @@ export default function CharacterList({
   characters: Character[];
 }) {
   return (
-    <div className="grid gap-6">
-      {characters?.map((character) => (
-        <CharacterListCard key={character.displayName} character={character} />
-      ))}
+    <div className="grid gap-8 lg:grid-cols-3 place-items-center">
+      {characters
+        ?.sort((a, b) => b.id! - a.id!)
+        .map((character) => (
+          <CharacterListCard
+            key={character.displayName}
+            character={character}
+          />
+        ))}
     </div>
   );
 }
