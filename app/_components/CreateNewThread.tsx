@@ -25,7 +25,7 @@ export default function CreateNewThread({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} className="w-1/3">
+        <Button variant={"default"} className="text-base font-semibold">
           <BookmarkPlus />
           Add new Thread
         </Button>

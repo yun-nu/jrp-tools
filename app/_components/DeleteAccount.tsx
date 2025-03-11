@@ -16,6 +16,8 @@ import {
 } from "./ui/AlertDialog";
 import { Button } from "./ui/Button";
 import { deleteUserAction } from "../account/settings/actions";
+import { FaUserMinus } from "react-icons/fa6";
+import { FaUserTimes } from "react-icons/fa";
 
 export default function DeleteAccount() {
   const router = useRouter();
@@ -37,9 +39,8 @@ export default function DeleteAccount() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"}>
-          <BsFillPersonDashFill />
-          <span>Delete account</span>
+        <Button variant={"destructive"} className="w-fit">
+          Delete account
         </Button>
       </AlertDialogTrigger>
 
@@ -47,10 +48,8 @@ export default function DeleteAccount() {
         <AlertDialogHeader>
           <AlertDialogTitle>Delete account</AlertDialogTitle>
           <AlertDialogDescription>
-            <span>
-              Are you absolutely sure you want to delete your account? All your
-              data will be permanently erased.
-            </span>
+            Are you absolutely sure you want to delete your account? All your
+            data will be permanently erased.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -59,7 +58,7 @@ export default function DeleteAccount() {
           <AlertDialogAction
             type="button"
             onClick={handleDeleteCharacter}
-            className="bg-red-500"
+            className="bg-destructive hover:bg-destructive/80 text-primary"
           >
             Delete
           </AlertDialogAction>

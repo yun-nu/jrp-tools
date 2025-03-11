@@ -28,7 +28,7 @@ export default function Character({ character }: { character: SCharacter }) {
             src={icon}
             width={100}
             height={100}
-            className="rounded max-w-[100px] max-h-[100px]"
+            className="rounded max-w-[100px] max-h-[100px] border"
             alt="Character Icon"
           />
         )}

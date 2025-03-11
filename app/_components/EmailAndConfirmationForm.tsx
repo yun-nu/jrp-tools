@@ -4,8 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaGoogle } from "react-icons/fa6";
-import { TbPasswordUser, TbUserEdit } from "react-icons/tb";
+import { TbPasswordUser, TbStatusChange, TbUserEdit } from "react-icons/tb";
 import { z } from "zod";
 import {
   EmailAndConfirmation,
@@ -16,10 +15,10 @@ import {
   actionReturnError,
   actionReturnSuccess,
 } from "../_utils/action-return";
-import { signInGoogleAction } from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
+import { FaUserEdit } from "react-icons/fa";
 
 type EmailAndConfirmationProps = {
   btnDescription: string;
@@ -86,9 +85,7 @@ export function EmailAndConfirmationForm({
             </div>
           ) : null}
 
-          <Button type="submit" className="w-full">
-            {isUpdate ? <TbUserEdit /> : <TbPasswordUser />} {btnDescription}
-          </Button>
+          <Button type="submit">{btnDescription}</Button>
         </form>
       </Form>
     </>

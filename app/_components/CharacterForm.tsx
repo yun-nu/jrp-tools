@@ -1,6 +1,5 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,7 +29,7 @@ type Props = {
 
 export function CharacterForm({ setOpen, character, action }: Props) {
   const [isValidDisplayName, setIsValidDisplayName] = useState(false);
-  const router = useRouter();
+  //const router = useRouter();
 
   const { id: characterId, ...values } = character || {};
 
@@ -64,7 +63,7 @@ export function CharacterForm({ setOpen, character, action }: Props) {
     if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       form.reset();
-      router.push(`/account/${result.displayName}`);
+      //router.push(`/account/${result.displayName}`);
       setOpen(false);
     }
   };

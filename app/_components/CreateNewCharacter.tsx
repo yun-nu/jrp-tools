@@ -20,9 +20,9 @@ export default function CreateNewCharacter() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} className="w-1/3">
+        <Button variant={"default"} className="text-base font-semibold">
           <FaUserPlus />
-          <span>Add new character</span>
+          Add new character
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">

@@ -29,7 +29,7 @@ export function CharacterListCard({ character }: { character: Character }) {
             height={50}
             src={icon}
             alt="Icon"
-            className="rounded max-w-[50px] max-h-[50px]"
+            className="rounded max-w-[50px] max-h-[50px] border"
           />
         )}
         <div className="flex justify-between flex-1 items-center">
