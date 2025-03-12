@@ -6,7 +6,7 @@ import Update from "./Template";
 
 export function Update01() {
   return (
-    <Update number={"01"} title={"Launch!"}>
+    <Update number="01" date="M D 2025">
       <p>
         This is the very first update, so let me start it by saying thank you
         for signing up to RP Tools!
