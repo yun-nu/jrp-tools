@@ -1,16 +1,11 @@
-import { FaGoogle } from "react-icons/fa6";
-import { TbPasswordUser } from "react-icons/tb";
-import SubmitButton from "../_components/SubmitButton";
+import { MessageCircleQuestion } from "lucide-react";
 import { SignUpOTP } from "../_components/SignUpOTP";
-import { Button } from "../_components/ui/Button";
-import { signInGoogleAction } from "../login/actions";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
-import { MessageCircleQuestion } from "lucide-react";
 
 export default function Page() {
   return (

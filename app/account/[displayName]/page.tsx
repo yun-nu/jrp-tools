@@ -10,6 +10,7 @@ import {
 } from "@/app/_lib/data-service";
 import ThreadTabs from "../../_components/ThreadTabs";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ displayName: string }>;
@@ -26,13 +27,16 @@ export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
   const { userId } = await authActionHelper();
   const character = await getCharacterData(displayName);
-  const showActions = userId === character.userId;
 
+  if ("error" in character) return notFound();
+
+  const showActions = userId === character.userId;
   if (userId !== character.userId)
     return "You must be logged in to perform this action";
 
-  const ongoingThreads = await getOngoingThreads(character.id);
-  const finishedThreads = await getFinishedThreads(character.id);
+  const ongoingThreads = await getOngoingThreads(character.id as number);
+  const finishedThreads = await getFinishedThreads(character.id as number);
+
   return (
     <section className="space-y-4 max-w-screen-2xl">
       <CharacterHeader character={character} />
