@@ -1,4 +1,4 @@
-import Character from "@/app/_components/Character";
+import CharacterHeader from "@/app/_components/CharacterHeader";
 import CreateNewThread from "@/app/_components/CreateNewThread";
 import DeleteCharacter from "@/app/_components/DeleteCharacter";
 import EditCharacter from "@/app/_components/EditCharacter";
@@ -35,7 +35,7 @@ export default async function Page({ params }: Props) {
   const finishedThreads = await getFinishedThreads(character.id);
   return (
     <section className="space-y-4 max-w-screen-2xl">
-      <Character character={character} />
+      <CharacterHeader character={character} />
 
       <div className="grid justify-items-center max-w-[80%] gap-y-6">
         <CreateNewThread characterId={character.id} />

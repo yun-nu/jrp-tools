@@ -11,7 +11,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col items-center justify-between">
-      <h1 className="text-5xl text-primary-50 mb-10 tracking-tight font-normal">
+      <h1 className="text-5xl text-primary mb-10 tracking-tight font-normal">
         RP <span className="custom-underline">thread tracking</span> made easy
       </h1>
       <p>

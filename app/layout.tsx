@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased dark min-h-screen flex flex-col`}
+        className={`${inter.className} antialiased dark flex flex-col h-screen`}
       >
         <Header />
-        <main className="flex-1 grid">{children}</main>
+        <main className="flex-1 overflow-hidden">{children}</main>
         <Toaster />
       </body>
     </html>

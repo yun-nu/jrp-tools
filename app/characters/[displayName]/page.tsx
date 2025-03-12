@@ -4,7 +4,7 @@ import {
   getOngoingThreads,
 } from "@/app/_lib/data-service";
 import { Metadata } from "next";
-import Character from "../../_components/Character";
+import CharacterHeader from "../../_components/CharacterHeader";
 import { authActionHelper } from "../../_lib/action-auth-helpers";
 import { notFound } from "next/navigation";
 import ThreadTabs from "@/app/_components/ThreadTabs";
@@ -35,7 +35,7 @@ export default async function Page({ params }: Props) {
   if ((!isPublic && userId === user) || isPublic)
     return (
       <div className="grid max-w-screen-2xl">
-        <Character character={character} />
+        <CharacterHeader character={character} />
 
         <ThreadTabs
           ongoingThreads={ongoingThreads}

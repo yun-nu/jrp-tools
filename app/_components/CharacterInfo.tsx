@@ -1,13 +1,14 @@
+import React from "react";
+import { Character } from "../_schemas/Character";
 import Image from "next/image";
-import Link from "next/link";
+
 import { FaAt } from "react-icons/fa6";
 import { LuGoal } from "react-icons/lu";
 import { MdPublic } from "react-icons/md";
 import { RiHomeHeartLine } from "react-icons/ri";
-import { Character as SCharacter } from "../_schemas/Character";
+import Link from "next/link";
 
-export default function Character({ character }: { character: SCharacter }) {
-  if (!character) return null;
+export default function CharacterInfo({ character }: { character: Character }) {
   const {
     displayName,
     characterName,
@@ -21,7 +22,7 @@ export default function Character({ character }: { character: SCharacter }) {
   } = character || {};
 
   return (
-    <div className="space-y-4 max-w-[80%]">
+    <div className="space-y-4 max-w-[80%] flex-1">
       <div className="flex gap-4 text-sm">
         {icon && (
           <Image
