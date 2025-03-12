@@ -9,7 +9,7 @@ export default function CharacterHeader({
 }: {
   character: SCharacter;
 }) {
-  const [showInfo, setShowInfo] = useState(true);
+  const [showHeader, setShowHeader] = useState(true);
 
   if (!character) return null;
 
@@ -19,11 +19,11 @@ export default function CharacterHeader({
         size="sm"
         variant="link"
         className="text-xs ml-auto h-6"
-        onClick={() => setShowInfo(!showInfo)}
+        onClick={() => setShowHeader(!showHeader)}
       >
-        {showInfo ? "Close character info" : "Expand character info"}
+        {showHeader ? "Close character info" : "Expand character info"}
       </Button>
-      {showInfo && <CharacterInfo character={character} />}
+      {showHeader && <CharacterInfo character={character} />}
     </div>
   );
 }

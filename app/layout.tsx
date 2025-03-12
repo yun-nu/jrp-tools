@@ -22,7 +22,7 @@ export default function RootLayout({
         className={`${inter.className} antialiased dark flex flex-col h-screen`}
       >
         <Header />
-        <main className="flex-1 overflow-hidden">{children}</main>
+        <main className="flex-1 overflow-auto">{children}</main>
         <Toaster />
       </body>
     </html>
