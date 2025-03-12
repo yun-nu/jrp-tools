@@ -17,8 +17,8 @@ export async function GET(request: Request) {
       if (isLocalEnv) {
         // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
         return NextResponse.redirect(`${process.env.ROOT_URL}/account`);
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`);
+        // } else if (forwardedHost) {
+        //   return NextResponse.redirect(`https://${forwardedHost}${next}`);
       } else {
         return NextResponse.redirect(`${process.env.ROOT_URL}/account`);
       }
