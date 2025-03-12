@@ -18,7 +18,7 @@ interface InputProps {
 
 import * as React from "react";
 
-import { cn } from "@/app/_lib/cn-utils";
+import { cn } from "@/app/_utils/cn-utils";
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {

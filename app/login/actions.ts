@@ -67,6 +67,8 @@ export async function signInGoogleAction() {
     },
   });
 
+  if (error) return { error };
+
   if (data.url) {
     redirect(data.url);
   }

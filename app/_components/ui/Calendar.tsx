@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/app/_lib/cn-utils";
+import { cn } from "@/app/_utils/cn-utils";
 import { differenceInCalendarDays } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import * as React from "react";
