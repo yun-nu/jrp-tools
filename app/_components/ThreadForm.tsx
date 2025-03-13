@@ -85,6 +85,7 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
           fieldTitle="Blurb"
           nameInSchema="blurb"
           placeholder="Maximum of 500 characters"
+          maxLength={500}
         />
 
         <InputWithLabel
@@ -103,7 +104,9 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
           }.`}
         />
         <DialogFooter>
-          <DialogClose>Cancel</DialogClose>
+          <DialogClose className="mr-auto border rounded px-4 py-2 text-sm">
+            Cancel
+          </DialogClose>
           <Button type="submit" disabled={form.formState.isSubmitting}>
             {threadId ? "Save changes" : "Add thread"}
           </Button>

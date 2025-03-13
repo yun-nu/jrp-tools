@@ -7,8 +7,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "RP-tools (beta)",
-  description: "RP thread tracking made easy",
+  title: "JRP Tools (beta)",
+  description: "Lightweight thread tracker for journal roleplay",
 };
 
 export default function RootLayout({

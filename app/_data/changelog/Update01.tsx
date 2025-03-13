@@ -9,7 +9,7 @@ export function Update01() {
     <Update number="01" date="M D 2025">
       <p>
         This is the very first update, so let me start it by saying thank you
-        for signing up to RP Tools!
+        for signing up to JRP Tools!
       </p>
 
       <p>
@@ -38,7 +38,7 @@ export function Update01() {
           <RiMailSendLine /> Contact form
         </Link>
         <Link
-          href="https://github.com/yun-nu/rp-tools"
+          href="https://github.com/yun-nu/jrp-tools"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm flex gap-2 items-center underline underline-offset-4"

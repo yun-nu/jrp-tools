@@ -25,11 +25,11 @@ export default function CreateNewCharacter() {
           Add new character
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
+      <DialogContent className="sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Add new Character</DialogTitle>
           <DialogDescription>
-            Fields not marked as &quot;required&quot; are optional. Any and all
+            Fields not marked as &quot;required&quot; are optional. Any of the
             fields can be changed later.
           </DialogDescription>
         </DialogHeader>

@@ -30,7 +30,7 @@ export default function CreateNewThread({
           Add new Thread
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
+      <DialogContent className="sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Add new Thread</DialogTitle>
           <DialogDescription>

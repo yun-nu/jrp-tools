@@ -1,23 +1,20 @@
 import Link from "next/link";
+import StyledLink from "./StyledLink";
 
 export default function Footer() {
   return (
     <p className="text-sm flex flex-col items-center gap-4">
-      <span>
-        <Link
-          href="https://github.com/yun-nu/rp-tools"
-          className="underline underline-offset-4"
-        >
-          Open Source project
-        </Link>{" "}
-        built with ❤️ for the hobby by{" "}
-        <Link href="https://yunnu.dev" className="underline underline-offset-4">
-          Yunnu
-        </Link>
-      </span>
       <span className="block">
-        Disclaimer: This is an experimental project subject to changes or
-        discontinuity. Updates will be announced within the application.
+        This is an experimental project subject to changes or discontinuity.
+        Updates will be announced within the application.
+      </span>
+      <span>
+        <StyledLink href="https://github.com/yun-nu/jrp-tools">
+          Open source
+        </StyledLink>{" "}
+        project built with ❤️ for the hobby. Powered by{" "}
+        <StyledLink href="https://ui.shadcn.com">shadcn/ui</StyledLink> and{" "}
+        <StyledLink href="https://supabase.com">Supabase</StyledLink>.
       </span>
     </p>
   );

@@ -24,6 +24,7 @@ import {
   CardTitle,
 } from "./ui/Card";
 import { FaGoogle } from "react-icons/fa6";
+import StyledLink from "./StyledLink";
 
 export default function SignInForm() {
   const form = useForm<z.infer<typeof signInOTPSchema>>({
@@ -79,7 +80,7 @@ export default function SignInForm() {
         </Button>
       </CardContent>
       <CardFooter>
-        <p className="text-sm">
+        <p className="text-sm flex-1 text-center">
           Don&apos;t have an account?{" "}
           <Link href="/signup" className="underline underline-offset-4">
             Sign up

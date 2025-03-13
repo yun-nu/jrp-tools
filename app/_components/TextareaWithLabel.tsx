@@ -27,6 +27,7 @@ export default function TextareaWithLabel({
   const form = useFormContext();
   const textValue = form.watch(nameInSchema as string);
   const limitReached = textValue.length > maxLength;
+  const charactersLeft = maxLength - textValue.length;
 
   return (
     <FormField
@@ -47,7 +48,7 @@ export default function TextareaWithLabel({
               ? `Maximum length exceeded. Remove ${
                   textValue.length - maxLength
                 } characters.`
-              : `${maxLength - textValue.length} characters left `}
+              : `${charactersLeft} characters left `}
           </FormDescription>
           <FormMessage />
         </FormItem>
