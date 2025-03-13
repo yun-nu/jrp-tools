@@ -44,10 +44,11 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           blurb: "",
           acLink: "",
           gameName: "",
-          isPublic: false,
           journalLink: "",
           journalName: "",
           icon: "",
+          isPublic: false,
+          isActive: true,
         },
   });
 

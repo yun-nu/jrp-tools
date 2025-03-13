@@ -22,7 +22,7 @@ export default function CharacterInfo({ character }: { character: Character }) {
   } = character || {};
 
   return (
-    <div className="space-y-4 max-w-[80%] flex-1">
+    <div className="space-y-4 flex-1 border rounded p-6">
       <div className="flex gap-4 text-sm">
         {icon && (
           <Image

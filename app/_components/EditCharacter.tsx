@@ -14,30 +14,19 @@ import {
   DialogTrigger,
 } from "./ui/Dialog";
 
-export type CardButtonProps = {
-  character: Character;
-  btnSize: "icon" | "default" | "sm" | "lg" | null | undefined;
-  text?: string;
-};
-
-export default function EditCharacter({
-  character,
-  btnSize,
-  text,
-}: CardButtonProps) {
+export default function EditCharacter({ character }: { character: Character }) {
   const { characterName } = character;
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size={btnSize} title="Edit character">
+        <Button variant="outline" size="icon" title="Edit character">
           <FaUserEdit />
-          {text}
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[60%] max-h-[90vh] overflow-auto">
+      <DialogContent className="sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Edit {characterName}</DialogTitle>
           <DialogDescription>Edit your character data</DialogDescription>

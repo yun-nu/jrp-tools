@@ -16,7 +16,7 @@ export default async function Home() {
       </h1>
       <p>
         Lightweight thread tracker for journal-based roleplay. Store and share
-        your threads with ease.
+        your threads with just a few clicks.
       </p>
       {!session && (
         <LinkButton

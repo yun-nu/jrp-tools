@@ -24,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
+import CreateNewThread from "./CreateNewThread";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -66,14 +67,15 @@ export default function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
+        <CreateNewThread characterId={0} />
         <Input
           placeholder="Search blurb"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("blurb")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-[250px]"
         />
         <DataTableViewOptions table={table} />
       </div>

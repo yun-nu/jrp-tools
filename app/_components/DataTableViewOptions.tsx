@@ -20,7 +20,7 @@ export default function DataTableViewOptions<TData>({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="ml-auto">
+        <Button variant="outline">
           <SlidersHorizontal />
           Columns
         </Button>

@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 import { FaUserMinus } from "react-icons/fa";
 import { toast } from "../_hooks/useToast";
+import { Character } from "../_schemas/Character";
 import { deleteCharacterAction } from "../account/actions-characters";
-import { CardButtonProps } from "./EditCharacter";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,9 +19,9 @@ import { Button } from "./ui/Button";
 
 export default function DeleteCharacter({
   character,
-  btnSize,
-  text,
-}: CardButtonProps) {
+}: {
+  character: Character;
+}) {
   const { id, userId, characterName } = character;
   const router = useRouter();
 
@@ -42,9 +42,8 @@ export default function DeleteCharacter({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"} size={btnSize} title="Delete character">
+        <Button variant={"destructive"} size="icon" title="Delete character">
           <FaUserMinus />
-          {text}
         </Button>
       </AlertDialogTrigger>
 

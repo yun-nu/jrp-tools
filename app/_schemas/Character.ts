@@ -54,6 +54,7 @@ export const characterSchema = z.object({
     ])
     .transform((val) => val?.replace(/\s+/g, "")),
   isPublic: z.boolean(),
+  isActive: z.boolean(),
 });
 
 export type Character = z.infer<typeof characterSchema>;

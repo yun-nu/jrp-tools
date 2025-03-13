@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "./ui/Dialog";
 
+/// char ID
 export default function CreateNewThread({
   characterId,
 }: {
@@ -25,7 +26,7 @@ export default function CreateNewThread({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} className="text-base">
+        <Button variant={"default"}>
           <BookmarkPlus />
           Add new Thread
         </Button>
