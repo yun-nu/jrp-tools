@@ -103,7 +103,7 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
               : "you're adding an already finished thread"
           }.`}
         />
-        <DialogFooter>
+        <DialogFooter className="pt-4">
           <DialogClose className="mr-auto border rounded px-4 py-2 text-sm">
             Cancel
           </DialogClose>

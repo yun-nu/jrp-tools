@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
+import { Separator } from "./ui/Separator";
 
 export default function CreateNewCharacter() {
   const [open, setOpen] = useState(false);
@@ -20,12 +21,12 @@ export default function CreateNewCharacter() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} className="text-base">
+        <Button>
           <FaUserPlus />
           Add new character
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
+      <DialogContent className="lg:p-8 sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Add new Character</DialogTitle>
           <DialogDescription>
@@ -33,7 +34,7 @@ export default function CreateNewCharacter() {
             fields can be changed later.
           </DialogDescription>
         </DialogHeader>
-
+        <Separator className="my-2" />
         <CharacterForm
           setOpen={setOpen}
           action={addCharacterAction}

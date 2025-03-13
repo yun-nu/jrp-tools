@@ -115,25 +115,31 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           nameInSchema="blurb"
           maxLength={500}
         />
+
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
+
         <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
+
         <InputWithLabel
           fieldTitle="Journal Link"
           nameInSchema="journalLink"
           placeholder="Must start with http:// or https://"
         />
+
         <InputWithLabel
           fieldTitle="AC Link"
           nameInSchema="acLink"
           placeholder="Must start with http:// or https://"
         />
+
         <CheckboxWithText
           nameInSchema="isPublic"
           fieldTitle="Make character profile public"
           description="Character profiles are private
   by default. If you'd like to share your character page, check this option."
         />
-        <DialogFooter>
+
+        <DialogFooter className="pt-4">
           <DialogClose className="mr-auto border rounded px-4 py-2 text-sm">
             Cancel
           </DialogClose>

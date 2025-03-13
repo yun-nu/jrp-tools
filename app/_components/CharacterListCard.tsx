@@ -38,7 +38,11 @@ export function CharacterListCard({ character }: { character: Character }) {
             <CardDescription>@ {displayName}</CardDescription>
           </div>
           {isPublic ? (
-            <Link href={`/characters/${displayName}`}>
+            <Link
+              href={`/characters/${displayName}`}
+              title={`${characterName}'s public page`}
+              target="_blank"
+            >
               <Badge className="h-[22px]" variant={"default"}>
                 Public
               </Badge>
@@ -65,15 +69,16 @@ export function CharacterListCard({ character }: { character: Character }) {
       </CardContent>
       <CardFooter className="justify-between gap-2">
         <Link
-          href={`/account/${displayName}`}
-          className="px-4 py-2 text-sm border border-secondary-foreground rounded hover:bg-secondary/50 font-semibold w-[50%] text-center"
+          href={`/account/characters/${displayName}`}
+          className="px-4 py-2 text-sm border border-secondary-foreground bg-secondary rounded hover:bg-secondary/50 font-semibold w-[50%] text-center"
+          title={`${characterName}'s threads page`}
         >
           Thread tracker
         </Link>
 
         <div className="flex gap-2">
-          <EditCharacter btnSize="sm" character={character} />
-          <DeleteCharacter btnSize="sm" character={character} />
+          <EditCharacter character={character} />
+          <DeleteCharacter character={character} />
         </div>
       </CardFooter>
     </Card>

@@ -7,6 +7,7 @@ import { LuGoal } from "react-icons/lu";
 import { MdPublic } from "react-icons/md";
 import { RiHomeHeartLine } from "react-icons/ri";
 import Link from "next/link";
+import StyledLink from "./StyledLink";
 
 export default function CharacterInfo({ character }: { character: Character }) {
   const {
@@ -45,12 +46,9 @@ export default function CharacterInfo({ character }: { character: Character }) {
           )}
           {isPublic && (
             <>
-              <Link
-                href={`/characters/${displayName}`}
-                className="flex gap-2 items-center underline underline-offset-4"
-              >
+              <StyledLink href={`/characters/${displayName}`}>
                 <MdPublic /> {characterName}&apos;s public page
-              </Link>
+              </StyledLink>
             </>
           )}
         </div>

@@ -18,7 +18,7 @@ function Heading({ number, date }: HeadingProps) {
 
 function Content({ children }: { children: ReactNode }) {
   return (
-    <div className="space-y-4 p-6 rounded rounded-t-none bg-card border">
+    <div className="space-y-4 p-6 rounded rounded-t-none bg-card border text-sm">
       {children}
     </div>
   );

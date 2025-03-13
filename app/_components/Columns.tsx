@@ -20,16 +20,17 @@ export const threadsCols: ColumnDef<Thread>[] = [
         ? format(new Date(date as string), "MMM dd")
         : format(new Date(date as string), "MMM dd yyyy");
 
-      return <div className="text-right font-medium">{formattedDate}</div>;
+      return formattedDate;
     },
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex"
         >
-          Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
+          Date
         </Button>
       );
     },
@@ -48,7 +49,7 @@ export const threadsCols: ColumnDef<Thread>[] = [
     cell: ({ row }) => {
       const thread = row.original;
       return (
-        <div className="text-right font-medium">
+        <div>
           {thread.url && (
             <Link
               target="_blank"

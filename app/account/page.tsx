@@ -1,18 +1,15 @@
-import CharacterList from "../_components/CharacterList";
-import CreateNewCharacter from "../_components/CreateNewCharacter";
+import { notFound } from "next/navigation";
 import { authActionHelper } from "../_lib/action-auth-helpers";
-import { getCharacters } from "../_lib/data-service";
+import Home from "../_components/Home";
 
 export default async function Page() {
   const { userId: userId } = await authActionHelper();
-  const characters = await getCharacters(userId as string);
 
-  if ("error" in characters) return characters.error;
+  if (!userId) return notFound();
 
   return (
     <section className="flex flex-col gap-12 items-center ">
-      <CharacterList characters={characters} />
-      <CreateNewCharacter />
+      <Home />
     </section>
   );
 }

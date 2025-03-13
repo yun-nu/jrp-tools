@@ -25,17 +25,20 @@ import {
   TableRow,
 } from "./ui/Table";
 import CreateNewThread from "./CreateNewThread";
+import { Character } from "../_schemas/Character";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   showActions?: boolean;
+  characterId: Character["id"];
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
   showActions = false,
+  characterId,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -68,7 +71,7 @@ export default function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        <CreateNewThread characterId={0} />
+        <CreateNewThread characterId={characterId} />
         <Input
           placeholder="Search blurb"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}

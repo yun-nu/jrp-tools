@@ -19,7 +19,7 @@ export const threadSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   type: z
     .string()
-    .max(100, { message: "Must be less than 100 characters long" })
+    .max(50, { message: "Must be less than 50 characters long" })
     .optional(),
   blurb: z
     .string()

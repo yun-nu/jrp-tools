@@ -9,17 +9,20 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import { Thread } from "@/app/_schemas/Thread";
+import { Character } from "../_schemas/Character";
 
 type ThreadTabsProps = {
   ongoingThreads: Thread[];
   finishedThreads: Thread[];
   showActions?: boolean;
+  characterId: Character["id"];
 };
 
 export default function ThreadTabs({
   ongoingThreads,
   finishedThreads,
   showActions,
+  characterId,
 }: ThreadTabsProps) {
   return (
     <Tabs defaultValue="ongoing" className="w-full">
@@ -36,6 +39,7 @@ export default function ThreadTabs({
           columns={threadsCols}
           data={ongoingThreads}
           showActions={showActions}
+          characterId={characterId}
         />
       </TabsContent>
       <TabsContent value="finished">
@@ -43,6 +47,7 @@ export default function ThreadTabs({
           columns={threadsCols}
           data={finishedThreads}
           showActions={showActions}
+          characterId={characterId}
         />
       </TabsContent>
     </Tabs>

@@ -22,7 +22,7 @@ type NavLinkProps = {
 
 const navLinks = [
   {
-    href: "/account",
+    href: "/account/characters",
     icon: <PiUserList />,
     title: "Character list",
   },

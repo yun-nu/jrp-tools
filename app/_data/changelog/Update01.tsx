@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import Link from "next/link";
+import StyledLink from "@/app/_components/StyledLink";
 import { LuGithub } from "react-icons/lu";
 import { RiMailSendLine } from "react-icons/ri";
 import Update from "./Template";
@@ -31,20 +31,12 @@ export function Update01() {
       </p>
 
       <p className="flex flex-col gap-2">
-        <Link
-          href="/account/contact"
-          className="text-sm flex gap-2 items-center underline underline-offset-4"
-        >
+        <StyledLink href="/account/contact">
           <RiMailSendLine /> Contact form
-        </Link>
-        <Link
-          href="https://github.com/yun-nu/jrp-tools"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm flex gap-2 items-center underline underline-offset-4"
-        >
+        </StyledLink>
+        <StyledLink href="https://github.com/yun-nu/jrp-tools">
           <LuGithub /> Open a PR or issue on github
-        </Link>
+        </StyledLink>
       </p>
     </Update>
   );

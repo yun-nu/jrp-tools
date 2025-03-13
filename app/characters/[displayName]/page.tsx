@@ -16,7 +16,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
   return {
-    title: `Character page — ${displayName}`,
+    title: `${displayName}'s public page`,
   };
 }
 

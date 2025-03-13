@@ -1,4 +1,5 @@
 import CharacterHeader from "@/app/_components/CharacterHeader";
+import ThreadTabs from "@/app/_components/ThreadTabs";
 import { authActionHelper } from "@/app/_lib/action-auth-helpers";
 import {
   getCharacterData,
@@ -7,7 +8,6 @@ import {
 } from "@/app/_lib/data-service";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import ThreadTabs from "../../_components/ThreadTabs";
 
 type Props = {
   params: Promise<{ displayName: string }>;
@@ -16,7 +16,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
   return {
-    title: `${displayName}'s Character page `,
+    title: `Character: ${displayName}'s `,
   };
 }
 
@@ -39,12 +39,11 @@ export default async function Page({ params }: Props) {
       <CharacterHeader character={character} />
 
       <div className="mt-8 grid justify-items-center max-w-[80%] gap-y-6">
-        {/* <CreateNewThread characterId={character.id} /> */}
-
         <ThreadTabs
           ongoingThreads={ongoingThreads}
           finishedThreads={finishedThreads}
           showActions={showActions}
+          characterId={character.id}
         />
       </div>
     </section>

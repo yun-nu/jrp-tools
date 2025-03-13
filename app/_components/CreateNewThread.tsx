@@ -14,8 +14,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/Dialog";
+import { Separator } from "./ui/Separator";
 
-/// char ID
 export default function CreateNewThread({
   characterId,
 }: {
@@ -26,12 +26,12 @@ export default function CreateNewThread({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"}>
+        <Button>
           <BookmarkPlus />
           Add new Thread
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
+      <DialogContent className="lg:p-8 sm:max-w-[50dvw] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle>Add new Thread</DialogTitle>
           <DialogDescription>
@@ -39,6 +39,8 @@ export default function CreateNewThread({
             fields can be changed later.
           </DialogDescription>
         </DialogHeader>
+
+        <Separator className="my-2" />
 
         <ThreadForm
           setOpen={setOpen}
