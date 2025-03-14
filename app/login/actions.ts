@@ -39,9 +39,12 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
   }
 
   const supabase = await createClient();
+
+  const { email: parsedEmail, OTPCode: parsedToken } = parsed.data;
+
   const { error } = await supabase.auth.verifyOtp({
-    email: data.email,
-    token: data.OTPCode,
+    email: parsedEmail,
+    token: parsedToken,
     type: "email",
   });
 

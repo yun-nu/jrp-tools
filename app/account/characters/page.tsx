@@ -12,6 +12,7 @@ export default async function Page() {
   return (
     <section className="flex flex-col gap-12 items-center ">
       <CreateNewCharacter />
+
       <CharacterList characters={characters} />
     </section>
   );

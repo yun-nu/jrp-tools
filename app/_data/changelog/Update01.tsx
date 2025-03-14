@@ -1,7 +1,4 @@
 /* eslint-disable react/no-unescaped-entities */
-import StyledLink from "@/app/_components/StyledLink";
-import { LuGithub } from "react-icons/lu";
-import { RiMailSendLine } from "react-icons/ri";
 import Update from "./Template";
 
 export function Update01() {
@@ -28,15 +25,6 @@ export function Update01() {
       <p>
         Please don't hesitate to report any bugs or issues you might stumble
         into. Suggestions and contributions are also welcome!
-      </p>
-
-      <p className="flex flex-col gap-2">
-        <StyledLink href="/account/contact">
-          <RiMailSendLine /> Contact form
-        </StyledLink>
-        <StyledLink href="https://github.com/yun-nu/jrp-tools">
-          <LuGithub /> Open a PR or issue on github
-        </StyledLink>
       </p>
     </Update>
   );
