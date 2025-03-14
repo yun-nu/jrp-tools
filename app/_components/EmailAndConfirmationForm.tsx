@@ -35,7 +35,7 @@ export function EmailAndConfirmationForm({
   action,
 }: EmailAndConfirmationProps) {
   const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const form = useForm<z.infer<typeof emailAndConfirmationSchema>>({
@@ -50,11 +50,12 @@ export function EmailAndConfirmationForm({
     const result = await action(form.getValues());
     if (actionReturnError(result)) {
       setMessage(result.message);
-      setErrors(result.errors);
+      setError(result.errors || result.error);
       return;
     }
     if (actionReturnSuccess(result)) {
       setMessage(result.success);
+      setError("");
       router.refresh();
       form.reset(form.getValues());
     }
@@ -73,17 +74,9 @@ export function EmailAndConfirmationForm({
             nameInSchema="emailConfirmation"
           />
 
-          {message ? <p className="text-base">{message}</p> : null}
+          {message ? <p className="text-sm">{message}</p> : null}
 
-          {errors ? (
-            <div className="mb-10 text-red-500">
-              {Object.keys(errors).map((key) => (
-                <p key={key}>{`${key}: ${
-                  errors[key as keyof typeof errors]
-                }`}</p>
-              ))}
-            </div>
-          ) : null}
+          {error ? <p className="mb-10 text-red-500 text-sm">{error}</p> : null}
 
           <Button type="submit">{btnDescription}</Button>
         </form>

@@ -1,6 +1,6 @@
 import CharacterHeader from "@/app/_components/CharacterHeader";
 import ThreadTabs from "@/app/_components/ThreadTabs";
-import { authActionHelper } from "@/app/_lib/action-auth-helpers";
+import { clientAndUserHelper } from "@/app/_lib/action-auth-helpers";
 import {
   getCharacterData,
   getFinishedThreads,
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
-  const { userId } = await authActionHelper();
+  const { userId } = await clientAndUserHelper();
   const character = await getCharacterData(displayName);
 
   if ("error" in character) return notFound();

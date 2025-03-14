@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
-import { authActionHelper } from "../_lib/action-auth-helpers";
+import { clientAndUserHelper } from "../_lib/action-auth-helpers";
 import Home from "../_components/Home";
 
 export default async function Page() {
-  const { userId: userId } = await authActionHelper();
+  const { userId } = await clientAndUserHelper();
 
   if (!userId) return notFound();
 

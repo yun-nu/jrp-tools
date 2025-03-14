@@ -5,7 +5,7 @@ import {
 } from "@/app/_lib/data-service";
 import { Metadata } from "next";
 import CharacterHeader from "../../_components/CharacterHeader";
-import { authActionHelper } from "../../_lib/action-auth-helpers";
+import { clientAndUserHelper } from "../../_lib/action-auth-helpers";
 import { notFound } from "next/navigation";
 import ThreadTabs from "@/app/_components/ThreadTabs";
 
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { userId: user } = await authActionHelper();
+  const { userId: user } = await clientAndUserHelper();
   const displayName = (await params).displayName;
   const character = await getCharacterData(displayName);
 

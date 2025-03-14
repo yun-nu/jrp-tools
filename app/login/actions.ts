@@ -15,8 +15,11 @@ export async function signInOTPAction({ email }: Pick<SignInOTP, "email">) {
   }
 
   const supabase = await createClient();
+
+  const { email: parsedEmail } = parsed.data;
+
   const { error } = await supabase.auth.signInWithOtp({
-    email: email,
+    email: parsedEmail,
     options: {
       shouldCreateUser: false,
     },

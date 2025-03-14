@@ -1,6 +1,6 @@
 "use server";
 
-import { authActionHelper } from "../_lib/action-auth-helpers";
+import { clientAndUserHelper } from "../_lib/action-auth-helpers";
 import { createClient } from "../_lib/supabase-server";
 import { Character, characterSchema } from "../_schemas/Character";
 import { ActionResult } from "../_utils/action-return";
@@ -30,7 +30,7 @@ export async function verifyDisplayNameAvailability(
 export async function addCharacterAction(
   characterData: Character
 ): Promise<ActionResult> {
-  const { userId, supabase } = await authActionHelper();
+  const { userId, supabase } = await clientAndUserHelper();
 
   const newCharacter: Character = {
     userId: userId,
@@ -79,7 +79,7 @@ export async function editCharacterAction(
   }
 
   const { data: parsedCharacterData } = parsed;
-  const { userId, supabase } = await authActionHelper();
+  const { userId, supabase } = await clientAndUserHelper();
 
   if (userId === parsedCharacterData.userId) {
     const { error } = await supabase
@@ -95,14 +95,14 @@ export async function editCharacterAction(
     };
   }
 
-  return { error: "An unknown error occurred" };
+  return { error: "Unauthorized" };
 }
 
 export async function deleteCharacterAction({
   userId: characterUserId,
   id: characterId,
 }: Pick<Character, "userId" | "id">) {
-  const { userId, supabase } = await authActionHelper();
+  const { userId, supabase } = await clientAndUserHelper();
 
   if (userId === characterUserId) {
     const { error } = await supabase
@@ -118,5 +118,5 @@ export async function deleteCharacterAction({
     };
   }
 
-  return { error: "An unknown error occurred" };
+  return { error: "Unauthorized" };
 }

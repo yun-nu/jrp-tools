@@ -9,7 +9,7 @@ type AuthUserSupabase = {
 };
 
 // Creates server sb client and returns user ID (or undefined if it doesn't exist)
-export async function authActionHelper(): Promise<AuthUserSupabase> {
+export async function clientAndUserHelper(): Promise<AuthUserSupabase> {
   const supabase = await createClient();
 
   const {

@@ -1,17 +1,15 @@
 "use server";
 
-import { authActionHelper } from "@/app/_lib/action-auth-helpers";
-import { createClient } from "@/app/_lib/supabase-server";
+import { clientAndUserHelper } from "@/app/_lib/action-auth-helpers";
+import { createClient as createServerClient } from "@/app/_lib/supabase-server";
 import {
   EmailAndConfirmation,
   emailAndConfirmationSchema,
 } from "@/app/_schemas/Auth";
-import { createServerClient } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 export async function updateEmailAction(input: EmailAndConfirmation) {
-  const email = input.email;
-
   const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
@@ -21,50 +19,46 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
     };
   }
 
-  const supabase = await createClient();
+  const supabase = await createServerClient();
+
+  const {
+    data: { email: parsedEmail },
+  } = parsed;
 
   const { error } = await supabase.auth.updateUser({
-    email: email,
+    email: parsedEmail,
   });
+  console.log(error);
+
+  if (error?.status === 422) return { error: "Email already in use" };
 
   if (error) return { error: "Could not update email" };
 
   return {
     success:
-      "Please check both the new and old email addresses, and follow the instructions.",
+      "Change requested successfully. Please check both the new and old email addresses.",
   };
 }
 
 export async function deleteUserAction() {
-  const { userId: user } = await authActionHelper();
+  const { userId: user } = await clientAndUserHelper();
 
-  const cookieStore = await cookies();
+  if (!user) return { error: "User not found" };
 
-  const supabase = createServerClient(
+  const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            );
-          } catch {}
-        },
-      },
-    }
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  if (user) {
-    const { data, error } = await supabase.auth.admin.deleteUser(user);
-    if (data) {
-      supabase.auth.signOut();
-    }
-    if (error) return { error: "Could not delete user" };
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(user);
+
+  if (error) return { error: "Could not delete user" };
+
+  const cookieStore = await cookies();
+  const allCookies = cookieStore.getAll();
+
+  for (const { name } of allCookies) {
+    await cookieStore.set(name, "", { maxAge: -1, path: "/" });
   }
 
   return {

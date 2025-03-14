@@ -1,12 +1,12 @@
 import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { authActionHelper, getUserEmail } from "../_lib/action-auth-helpers";
+import { clientAndUserHelper, getUserEmail } from "../_lib/action-auth-helpers";
 import LinkButton from "./LinkButton";
 import BreadcrumbHeader from "./BreadcrumbHeader";
 
 export default async function Navigation() {
-  const { userId: user } = await authActionHelper();
+  const { userId: user } = await clientAndUserHelper();
   const email = (await getUserEmail()) as string;
 
   if (!user)
