@@ -1,4 +1,4 @@
-/* import { createClient } from "@/app/_lib/supabase-server";
+import { createClient } from "@/app/_lib/supabase-server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,7 +13,5 @@ export async function GET(request: Request) {
     }
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}/`);
 }
- */

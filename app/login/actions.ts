@@ -1,6 +1,5 @@
 "use server";
 
-import { signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
@@ -63,7 +62,7 @@ export async function signInGoogleAction() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${process.env.ROOT_URL}/auth/callback`,
+      redirectTo: `${process.env.ROOT_URL}/api/auth/callback`,
     },
   });
 

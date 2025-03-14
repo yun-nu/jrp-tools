@@ -19,14 +19,12 @@ export default function Home() {
         <p>Latest news:</p>
       </CardContent>
       <CardFooter>
-        <p>
-          <div>Quick how-to:</div>
-          <div>Why "tools" and not thread tracker, you ask?</div>
-          <div>
-            Planned upcoming features: - Functionality to set characters as
-            inactive - Functionality to generate selected table in html
-          </div>
-        </p>
+        <div>Quick how-to:</div>
+        <div>Why "tools" and not thread tracker, you ask?</div>
+        <div>
+          Planned upcoming features: - Functionality to set characters as
+          inactive - Functionality to generate selected table in html
+        </div>
       </CardFooter>
     </Card>
   );
