@@ -6,25 +6,28 @@ export function Update01() {
     <Update number="01" date="M D 2025">
       <p>
         This is the very first update, so let me start it by saying thank you
-        for signing up to JRP Tools!
+        for your interest in JRP Tools!
       </p>
 
       <p>
         There is one very important topic I want to highlight right off the bat.
-        This is an experimental app, running on a free database with (lenient)
-        data usage restrictions. This means that aside from bugs crawling
-        around, the app might become slow or unaccessible under heavy load.
+        This is an experimental app, with all data being stored on the free tier
+        of a database service. As with every free service, there are
+        restrictions. In this case, data usage restrictions that can render the
+        application slow or entirely unaccessible for a varying number of days.
       </p>
       <p>
-        At the current point, I'm not expecting heavy database usage, which is
-        why I launched this app open for everyone. I'll be keeping a close eye
-        on any potential bottlenecks, and any major announcements will be made
-        here on this page.
+        As of launch, the app will be open for anyone to sign up and try it out.
+        However, I'll be keeping a close eye on any potential bottlenecks, and
+        will take countermeasures if needed. Announcements will be made here on
+        this page, or on the main page if the database ever goes down. Also, an
+        export data (format to be decided) feature is at the top of the list of
+        future updates, so you'll be able to generate a backup of your threads.
       </p>
 
       <p>
-        Please don't hesitate to report any bugs or issues you might stumble
-        into. Suggestions and contributions are also welcome!
+        With all that said, please don't hesitate to report any bugs or issues
+        you might stumble into. Suggestions and contributions are also welcome!
       </p>
     </Update>
   );

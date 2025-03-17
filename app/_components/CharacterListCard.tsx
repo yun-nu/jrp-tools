@@ -1,4 +1,3 @@
-import { cn } from "@/app/_utils/cn-utils";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineContactPage } from "react-icons/md";
@@ -21,7 +20,7 @@ export function CharacterListCard({ character }: { character: Character }) {
     character || {};
 
   return (
-    <Card className={cn("sm:w-[380px] sm:min-h-[235px] flex flex-col")}>
+    <Card className={"sm:w-[380px] min-h-[235px] flex flex-col"}>
       <CardHeader className="flex flex-row gap-3 space-y-0">
         {icon && (
           <Image

@@ -8,10 +8,10 @@ type HeadingProps = {
 function Heading({ number, date }: HeadingProps) {
   return (
     <div className="flex items-center justify-between gap-4 p-6 rounded rounded-b-none bg-card border-t border-x">
-      <h1 className="text-lg font-semibold leading-none tracking-tight">
+      <h1 className="text-2xl font-semibold leading-none tracking-tight">
         Update #{number}
       </h1>
-      <h2 className="text-base">{date}</h2>
+      <h2 className="text-lg">{date}</h2>
     </div>
   );
 }

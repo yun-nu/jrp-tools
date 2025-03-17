@@ -30,6 +30,7 @@ export async function addThreadAction(
     .from("threads")
     .insert(parsedThreadData)
     .select();
+
   if (error) return { error: "Could not add new thread" };
 
   return {
@@ -48,6 +49,7 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
   }
 
   const { data: parsedThreadData } = parsed;
+
   const supabase = await createClient();
 
   const { error } = await supabase

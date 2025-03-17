@@ -71,7 +71,7 @@ export default function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        <CreateNewThread characterId={characterId} />
+        {characterId && <CreateNewThread characterId={characterId} />}
         <Input
           placeholder="Search blurb"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}

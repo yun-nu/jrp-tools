@@ -35,17 +35,15 @@ export default async function Page({ params }: Props) {
   const finishedThreads = await getFinishedThreads(character.id as number);
 
   return (
-    <section className="max-w-screen-2xl">
+    <section className="w-full flex flex-col items-center">
       <CharacterHeader character={character} />
 
-      <div className="mt-8 grid justify-items-center max-w-[80%] gap-y-6">
-        <ThreadTabs
-          ongoingThreads={ongoingThreads}
-          finishedThreads={finishedThreads}
-          showActions={showActions}
-          characterId={character.id}
-        />
-      </div>
+      <ThreadTabs
+        ongoingThreads={ongoingThreads}
+        finishedThreads={finishedThreads}
+        showActions={showActions}
+        characterId={character.id}
+      />
     </section>
   );
 }

@@ -25,31 +25,33 @@ export default function ThreadTabs({
   characterId,
 }: ThreadTabsProps) {
   return (
-    <Tabs defaultValue="ongoing" className="w-full">
-      <TabsList className="grid max-w-[50%] m-auto grid-cols-2">
-        <TabsTrigger value="ongoing">
-          <h2>Ongoing</h2>
-        </TabsTrigger>
-        <TabsTrigger value="finished">
-          <h2>Finished</h2>
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="ongoing">
-        <DataTable
-          columns={threadsCols}
-          data={ongoingThreads}
-          showActions={showActions}
-          characterId={characterId}
-        />
-      </TabsContent>
-      <TabsContent value="finished">
-        <DataTable
-          columns={threadsCols}
-          data={finishedThreads}
-          showActions={showActions}
-          characterId={characterId}
-        />
-      </TabsContent>
-    </Tabs>
+    <div className="mt-12 flex justify-center max-w-[80%] gap-y-6 w-full">
+      <Tabs defaultValue="ongoing" className="w-full min-w-[60%]">
+        <TabsList className="grid max-w-[50%] m-auto grid-cols-2">
+          <TabsTrigger value="ongoing">
+            <h2>Ongoing</h2>
+          </TabsTrigger>
+          <TabsTrigger value="finished">
+            <h2>Finished</h2>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="ongoing">
+          <DataTable
+            columns={threadsCols}
+            data={ongoingThreads}
+            showActions={showActions}
+            characterId={characterId}
+          />
+        </TabsContent>
+        <TabsContent value="finished">
+          <DataTable
+            columns={threadsCols}
+            data={finishedThreads}
+            showActions={showActions}
+            characterId={characterId}
+          />
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

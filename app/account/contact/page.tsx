@@ -15,10 +15,10 @@ export default function page() {
     <div className="flex flex-col gap-4 max-w-screen-md">
       <Card>
         <CardHeader>
-          <CardTitle>Suggestion box</CardTitle>
+          <CardTitle>Contact</CardTitle>
           <CardDescription>
-            For general suggestions, non-app breaking bugs or issues, feel free
-            to drop me a message in the form below.
+            For anything ranging from general suggestions to non-app breaking
+            bugs or issues, feel free to drop me a message in the form below.
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -34,14 +34,14 @@ export default async function Page({ params }: Props) {
 
   if ((!isPublic && userId === user) || isPublic)
     return (
-      <div className="grid max-w-screen-2xl">
+      <section className="py-8 w-full flex flex-col items-center">
         <CharacterHeader character={character} />
 
         <ThreadTabs
           ongoingThreads={ongoingThreads}
           finishedThreads={finishedThreads}
         />
-      </div>
+      </section>
     );
 
   return (
