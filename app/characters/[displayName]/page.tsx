@@ -35,7 +35,7 @@ export default async function Page({ params }: Props) {
   if ((!isPublic && userId === user) || isPublic)
     return (
       <section className="py-8 w-full flex flex-col items-center">
-        <CharacterHeader character={character} />
+        <CharacterHeader character={character} isPublicPage />
 
         <ThreadTabs
           ongoingThreads={ongoingThreads}

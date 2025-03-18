@@ -9,7 +9,13 @@ import { RiHomeHeartLine } from "react-icons/ri";
 import Link from "next/link";
 import StyledLink from "./StyledLink";
 
-export default function CharacterInfo({ character }: { character: Character }) {
+export default function CharacterInfo({
+  character,
+  isPublicPage,
+}: {
+  character: Character;
+  isPublicPage: boolean;
+}) {
   const {
     displayName,
     characterName,
@@ -35,7 +41,7 @@ export default function CharacterInfo({ character }: { character: Character }) {
           />
         )}
         <div className="flex flex-col gap-2 justify-center">
-          <span className="block text-3xl font-semibold">{characterName}</span>{" "}
+          <span className="block text-3xl font-semibold">{characterName}</span>
           {journalLink && (
             <Link
               href={journalLink}
@@ -44,7 +50,7 @@ export default function CharacterInfo({ character }: { character: Character }) {
               <FaAt /> {journalName || "Journal"}
             </Link>
           )}
-          {isPublic && (
+          {isPublic && !isPublicPage && (
             <>
               <StyledLink href={`/characters/${displayName}`}>
                 <MdPublic /> {characterName}&apos;s public page

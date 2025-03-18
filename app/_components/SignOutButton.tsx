@@ -16,7 +16,7 @@ export default function SignOutButton() {
           <TooltipTrigger asChild>
             <Button
               variant="secondary"
-              className="w-full font-semibold text-base border border-destructive"
+              className="font-semibold text-base border border-destructive"
             >
               <PiSignOutBold />
             </Button>

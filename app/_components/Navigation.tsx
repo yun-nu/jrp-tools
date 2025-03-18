@@ -1,12 +1,14 @@
 import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { clientAndUserHelper, getUserEmail } from "../_lib/action-auth-helpers";
+import { getUserEmail } from "../_lib/action-auth-helpers";
 import LinkButton from "./LinkButton";
-import BreadcrumbHeader from "./BreadcrumbHeader";
 
-export default async function Navigation() {
-  const { userId: user } = await clientAndUserHelper();
+export default async function Navigation({
+  user,
+}: {
+  user: string | undefined;
+}) {
   const email = (await getUserEmail()) as string;
 
   if (!user)
@@ -19,15 +21,14 @@ export default async function Navigation() {
       />
     );
 
-  /// TODO: decide margin here in the first div - match w/ sidenav
   return (
-    <div className="ml-20 flex flex-1 justify-between items-center">
+    <div className="ml-20 flex flex-1 sm:justify-between items-center">
       <Link
         href="/account"
-        className="ml-auto flex gap-2 items-center hover:text-primary/80 transition-colors text-sm font-semibold"
+        className="flex flex-col text-xs sm:flex-row sm:text-sm ml-auto gap-2 items-center hover:text-primary/80 transition-colors font-semibold"
         title="Your account"
       >
-        <User /> {email}
+        <User className="w-5 h-5 sm:w-6 sm:h-6" /> {email}
       </Link>
     </div>
   );

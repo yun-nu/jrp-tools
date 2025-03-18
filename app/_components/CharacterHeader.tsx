@@ -6,8 +6,10 @@ import { Button } from "./ui/Button";
 
 export default function CharacterHeader({
   character,
+  isPublicPage = false,
 }: {
   character: Character;
+  isPublicPage?: boolean;
 }) {
   const [showHeader, setShowHeader] = useState(true);
 
@@ -23,7 +25,9 @@ export default function CharacterHeader({
       >
         {showHeader ? "Close character info" : "Expand character info"}
       </Button>
-      {showHeader && <CharacterInfo character={character} />}
+      {showHeader && (
+        <CharacterInfo character={character} isPublicPage={isPublicPage} />
+      )}
     </div>
   );
 }
