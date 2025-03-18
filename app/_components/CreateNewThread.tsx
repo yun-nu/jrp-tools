@@ -3,7 +3,7 @@
 import { BookmarkPlus } from "lucide-react";
 import { useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
-import { useIsMobile } from "../_hooks/useMediaQuery";
+import { useIsMobile } from "../_hooks/useIsMobile";
 import { Character } from "../_schemas/Character";
 import { addThreadAction } from "../account/actions-threads";
 import { ThreadForm } from "./ThreadForm";

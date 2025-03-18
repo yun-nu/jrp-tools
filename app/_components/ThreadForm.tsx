@@ -68,7 +68,10 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col h-full gap-8"
+      >
         <DatePickerWithLabel
           fieldTitle="Date"
           nameInSchema="date"
