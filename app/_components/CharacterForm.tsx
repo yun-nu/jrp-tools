@@ -95,7 +95,6 @@ export function CharacterForm({ setOpen, character, action }: Props) {
           nameInSchema="displayName"
           description="Required. This is the unique username for your character. Can only contain alphanumeric characters and underscores."
           onBlur={handleVerifyAvailability}
-          placeholder="Example: journalNameDW"
         />
         <InputWithLabel
           fieldTitle="Character Name"
@@ -139,13 +138,14 @@ export function CharacterForm({ setOpen, character, action }: Props) {
   by default. If you'd like to share your character page, check this option."
         />
 
-        <DialogFooter className="pt-4">
-          <DialogClose className="mr-auto border rounded px-4 py-2 text-sm">
+        <DialogFooter className="pt-4 gap-4">
+          <DialogClose className="mr-auto border rounded px-4 py-2 text-sm sm:w-fit w-full bg-secondary hover:bg-accent/80 transition-colors">
             Cancel
           </DialogClose>
           <Button
             type="submit"
             disabled={!isValidDisplayName || form.formState.isSubmitting}
+            className="sm:w-fit w-full"
           >
             {characterId ? "Save changes" : "Add character"}
           </Button>

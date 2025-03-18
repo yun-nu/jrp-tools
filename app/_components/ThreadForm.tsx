@@ -72,7 +72,7 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
         <DatePickerWithLabel
           fieldTitle="Date"
           nameInSchema="date"
-          description="Required. Use the calendar to choose a date."
+          description="Click the input field to change the date."
         />
 
         <InputWithLabel
@@ -103,11 +103,15 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
               : "you're adding an already finished thread"
           }.`}
         />
-        <DialogFooter className="pt-4">
-          <DialogClose className="mr-auto border rounded px-4 py-2 text-sm">
+        <DialogFooter className="flex-col-reverse gap-4 pt-4">
+          <DialogClose className="mr-auto border rounded px-4 py-2 text-sm sm:w-fit w-full bg-secondary hover:bg-accent/80 transition-colors">
             Cancel
           </DialogClose>
-          <Button type="submit" disabled={form.formState.isSubmitting}>
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="sm:w-fit w-full"
+          >
             {threadId ? "Save changes" : "Add thread"}
           </Button>
         </DialogFooter>
