@@ -21,14 +21,27 @@ import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
 
-type Props = {
+type ThreadFormProps = {
   thread?: Thread;
   characterId?: Character["id"];
   setOpen: (open: boolean) => void;
-  action: (threadData: Thread, editId: number) => Promise<ActionResult>;
+  action: AddThreadAction | UpdateThreadAction;
 };
 
-export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
+type AddThreadAction = {
+  (threadData: Thread, characterId: Character["id"]): Promise<ActionResult>;
+};
+
+type UpdateThreadAction = {
+  (threadData: Thread, threadId: number): Promise<ActionResult>;
+};
+
+export function ThreadForm({
+  thread,
+  characterId,
+  setOpen,
+  action,
+}: ThreadFormProps) {
   const router = useRouter();
 
   const { id: threadId, ...values } = thread || {};
@@ -50,8 +63,10 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
 
   const onSubmit = async () => {
     let result;
-    if (threadId) result = await action(form.getValues(), threadId);
-    else result = await action(form.getValues(), characterId as number);
+    if (threadId)
+      result = await (action as UpdateThreadAction)(form.getValues(), threadId);
+    else
+      result = await (action as AddThreadAction)(form.getValues(), characterId);
 
     if (actionReturnError(result)) {
       toast({

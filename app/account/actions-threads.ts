@@ -4,11 +4,12 @@ import { toDate } from "date-fns";
 import { createClient } from "../_lib/supabase-server";
 import { Character } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
+import { ActionResult } from "../_utils/action-return";
 
 export async function addThreadAction(
   threadData: Thread,
   characterId: Character["id"]
-) {
+): Promise<ActionResult> {
   const newThread: Thread = {
     ...threadData,
     characterId: characterId,
@@ -38,7 +39,10 @@ export async function addThreadAction(
   };
 }
 
-export async function editThreadAction(threadData: Thread, threadId: number) {
+export async function editThreadAction(
+  threadData: Thread,
+  threadId: number
+): Promise<ActionResult> {
   const parsed = threadSchema.safeParse(threadData);
 
   if (!parsed.success) {
@@ -64,7 +68,9 @@ export async function editThreadAction(threadData: Thread, threadId: number) {
   };
 }
 
-export async function deleteThreadAction(threadId: Thread["id"]) {
+export async function deleteThreadAction(
+  threadId: Thread["id"]
+): Promise<ActionResult> {
   const supabase = await createClient();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
@@ -76,7 +82,9 @@ export async function deleteThreadAction(threadId: Thread["id"]) {
   };
 }
 
-export async function toggleIsFinishedAction(thread: Thread) {
+export async function toggleIsFinishedAction(
+  thread: Thread
+): Promise<ActionResult> {
   const statusToggledThread = {
     ...thread,
     isFinished: !thread.isFinished,
@@ -95,7 +103,9 @@ export async function toggleIsFinishedAction(thread: Thread) {
   };
 }
 
-export async function duplicateThreadAction(thread: Thread) {
+export async function duplicateThreadAction(
+  thread: Thread
+): Promise<ActionResult> {
   const duplicatedThread = {
     ...thread,
     id: undefined,
@@ -103,7 +113,7 @@ export async function duplicateThreadAction(thread: Thread) {
   };
 
   const result = await addThreadAction(duplicatedThread, thread.characterId);
-  if (result.success)
+  if ("success" in result)
     return {
       success: "Thread duplicated successfully",
     };

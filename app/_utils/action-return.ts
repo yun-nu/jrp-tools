@@ -1,7 +1,7 @@
 export type ActionResult =
   | { error: string }
   | { message: string; errors: Record<string, string[]> }
-  | { success: string; displayName: string | undefined };
+  | { success: string; displayName?: string };
 
 export function actionReturnError(result: ActionResult): result is {
   error: string;
@@ -13,7 +13,7 @@ export function actionReturnError(result: ActionResult): result is {
 
 export function actionReturnSuccess(result: ActionResult): result is {
   success: string;
-  displayName: string;
+  displayName?: string;
 } {
   return "success" in result;
 }

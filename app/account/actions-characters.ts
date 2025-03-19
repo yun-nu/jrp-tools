@@ -68,7 +68,7 @@ export async function addCharacterAction(
 export async function editCharacterAction(
   characterData: Character,
   characterId: number
-) {
+): Promise<ActionResult> {
   const parsed = characterSchema.safeParse(characterData);
 
   if (!parsed.success) {

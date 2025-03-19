@@ -1,5 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,18 +18,26 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import { useRouter } from "next/navigation";
 
-type Props = {
+type CharacterFormProps = {
   setOpen: (open: boolean) => void;
   character?: Character;
-  action: (
-    characterData: Character,
-    characterId?: number
-  ) => Promise<ActionResult>;
+  action: AddCharacterAction | UpdateCharacterAction;
 };
 
-export function CharacterForm({ setOpen, character, action }: Props) {
+type AddCharacterAction = {
+  (characterData: Character): Promise<ActionResult>;
+};
+
+type UpdateCharacterAction = {
+  (characterData: Character, characterId: number): Promise<ActionResult>;
+};
+
+export function CharacterForm({
+  setOpen,
+  character,
+  action,
+}: CharacterFormProps) {
   const [isValidDisplayName, setIsValidDisplayName] = useState(false);
   const { refresh } = useRouter();
 
@@ -53,7 +62,9 @@ export function CharacterForm({ setOpen, character, action }: Props) {
   });
 
   const onSubmit = async () => {
-    const result = await action(form.getValues(), characterId);
+    let result;
+    if (characterId) result = await action(form.getValues(), characterId);
+    else result = await (action as AddCharacterAction)(form.getValues());
 
     if (actionReturnError(result)) {
       toast({
