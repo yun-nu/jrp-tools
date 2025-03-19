@@ -15,7 +15,6 @@ import {
   toggleIsFinishedAction,
 } from "../account/actions-threads";
 import DeleteThread from "./DeleteThread";
-import EditThread from "./EditThread";
 import { Button } from "./ui/Button";
 import {
   DropdownMenu,
@@ -24,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
+import ThreadDialog from "./ThreadDialog";
 
 export default function DataTableRowActions({ thread }: { thread: Thread }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -74,7 +74,9 @@ export default function DataTableRowActions({ thread }: { thread: Thread }) {
         thread={thread}
       />
 
-      <EditThread
+      <ThreadDialog
+        isControlled
+        mode="edit"
         isOpen={isEditOpen}
         setIsOpen={setIsEditOpen}
         thread={thread}

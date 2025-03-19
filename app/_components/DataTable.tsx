@@ -24,8 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
-import CreateNewThread from "./CreateNewThread";
 import { Character } from "../_schemas/Character";
+import ThreadDialog from "./ThreadDialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -71,7 +71,7 @@ export default function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        {characterId && <CreateNewThread characterId={characterId} />}
+        {characterId && <ThreadDialog characterId={characterId} mode="add" />}
         <Input
           placeholder="Search blurb"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}

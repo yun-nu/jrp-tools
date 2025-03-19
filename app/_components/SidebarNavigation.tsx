@@ -53,8 +53,8 @@ export function SidebarNavigation() {
     <Sidebar collapsible="icon" variant="inset">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="justify-center">
-            JRP Tools
+          <SidebarGroupLabel className="justify-center font-semibold">
+            <Link href="/">JRP Tools</Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-2">
@@ -74,7 +74,7 @@ export function SidebarNavigation() {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex justify-center">
             <SidebarMenuButton
               variant="default"
               className="border border-destructive w-fit px-4"

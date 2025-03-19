@@ -11,7 +11,7 @@ import { updateEmailAction } from "./actions";
 
 export default async function Page() {
   return (
-    <div className="grid max-w-screen-md gap-4">
+    <div className="flex flex-col gap-4 max-w-screen-md">
       <Card>
         <CardHeader>
           <CardTitle>Update email</CardTitle>

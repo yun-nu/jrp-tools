@@ -8,7 +8,7 @@ export default async function Page() {
   if (!userId) return notFound();
 
   return (
-    <section className="flex flex-col gap-12 items-center ">
+    <section className="flex flex-col gap-12 items-center">
       <Home />
     </section>
   );

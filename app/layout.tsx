@@ -36,7 +36,9 @@ export default async function RootLayout({
           <SidebarInset>
             <main className="w-full h-full flex flex-col">
               <Header user={user} />
-              <div className="py-8">{children}</div>
+              <div className="flex h-full justify-center py-10 px-4 sm:px-8">
+                {children}
+              </div>
             </main>
             <Toaster />
           </SidebarInset>

@@ -1,8 +1,7 @@
+import CharacterDialog from "@/app/_components/CharacterDialog";
 import CharacterList from "../../_components/CharacterList";
-import CreateNewCharacter from "../../_components/CreateNewCharacter";
 import { clientAndUserHelper } from "../../_lib/action-auth-helpers";
 import { getCharacters } from "../../_lib/data-service";
-import Loading from "./loading";
 
 export default async function Page() {
   const { userId } = await clientAndUserHelper();
@@ -12,7 +11,7 @@ export default async function Page() {
 
   return (
     <section className="flex flex-col gap-12 items-center">
-      <CreateNewCharacter />
+      <CharacterDialog mode="add" />
       <CharacterList characters={characters} />
     </section>
   );

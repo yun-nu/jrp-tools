@@ -3,8 +3,8 @@ import Link from "next/link";
 import { MdOutlineContactPage } from "react-icons/md";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { Character } from "../_schemas/Character";
+import CharacterDialog from "./CharacterDialog";
 import DeleteCharacter from "./DeleteCharacter";
-import EditCharacter from "./EditCharacter";
 import { Badge } from "./ui/Badge";
 import {
   Card,
@@ -76,7 +76,7 @@ export function CharacterListCard({ character }: { character: Character }) {
         </Link>
 
         <div className="flex gap-2">
-          <EditCharacter character={character} />
+          <CharacterDialog character={character} mode="edit" />
           <DeleteCharacter character={character} />
         </div>
       </CardFooter>

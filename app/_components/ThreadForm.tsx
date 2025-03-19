@@ -22,10 +22,10 @@ import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
 
 type Props = {
-  thread: Thread;
+  thread?: Thread;
+  characterId?: Character["id"];
   setOpen: (open: boolean) => void;
   action: (threadData: Thread, editId: number) => Promise<ActionResult>;
-  characterId?: Character["id"];
 };
 
 export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
@@ -36,7 +36,9 @@ export function ThreadForm({ thread, characterId, setOpen, action }: Props) {
   const form = useForm<z.infer<typeof threadSchema>>({
     resolver: zodResolver(threadSchema),
     defaultValues: threadId
-      ? { ...values, date: toDate(values.date) }
+      ? "date" in values
+        ? { ...values, date: toDate(values.date) }
+        : { ...values }
       : {
           date: new Date(),
           type: "",
