@@ -21,6 +21,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/Sidebar";
+import { Separator } from "@radix-ui/react-separator";
 
 const navLinks = [
   {
@@ -63,6 +64,27 @@ export function SidebarNavigation() {
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel className="justify-center font-semibold">
+            <Link href="/">JRP Tools</Link>
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu className="gap-2">
+              {navLinks.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <Separator />
+
         <SidebarGroup>
           <SidebarGroupLabel className="justify-center font-semibold">
             <Link href="/">JRP Tools</Link>
