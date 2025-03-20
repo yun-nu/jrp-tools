@@ -53,7 +53,7 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
 
   if (error?.status === 403) return { error: "Expired or invalid code." };
 
-  redirect("/account");
+  redirect("/account/characters");
 }
 
 export async function signOutAction() {

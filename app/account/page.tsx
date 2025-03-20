@@ -1,15 +1,15 @@
-import { notFound } from "next/navigation";
-import { clientAndUserHelper } from "../_lib/action-auth-helpers";
-import Home from "../_components/Home";
+// import { notFound } from "next/navigation";
+// import { clientAndUserHelper } from "../_lib/action-auth-helpers";
+// import Home from "../_components/Home";
 
-export default async function Page() {
-  const { userId } = await clientAndUserHelper();
+// export default async function Page() {
+//   const { userId } = await clientAndUserHelper();
 
-  if (!userId) return notFound();
+//   if (!userId) return notFound();
 
-  return (
-    <section className="flex flex-col gap-12 items-center">
-      <Home />
-    </section>
-  );
-}
+//   return (
+//     <section className="flex flex-col gap-12 items-center">
+//       <Home />
+//     </section>
+//   );
+// }

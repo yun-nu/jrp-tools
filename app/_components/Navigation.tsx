@@ -2,7 +2,6 @@ import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
 import { getUserEmail } from "../_lib/action-auth-helpers";
-import LinkButton from "./LinkButton";
 import { Button } from "./ui/Button";
 
 export default async function Navigation({

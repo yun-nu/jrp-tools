@@ -88,11 +88,11 @@ export function SidebarNavigation() {
           <SidebarMenuItem className="flex justify-center">
             <SidebarMenuButton
               variant="default"
-              className="border border-destructive w-fit px-4"
+              className="border border-destructive w-fit px-4 font-semibold"
               onClick={handleSignOut}
             >
               <PiSignOutBold />
-              <span>Sign out</span>
+              Sign out
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -39,29 +39,41 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (
-    (!user && request.nextUrl.pathname.startsWith("/account")) ||
-    (user && request.nextUrl.pathname.startsWith("/login")) ||
-    (user && request.nextUrl.pathname.startsWith("/signup"))
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+  const pathname = request.nextUrl.pathname;
+
+  let response;
+
+  switch (true) {
+    case user &&
+      (pathname.startsWith("/login") || pathname.startsWith("/signup")):
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/";
+      response = NextResponse.redirect(loginUrl);
+      break;
+
+    case !user && pathname.startsWith("/account/"):
+      const accountUrl = request.nextUrl.clone();
+      accountUrl.pathname = "/";
+      response = NextResponse.redirect(accountUrl);
+      break;
+
+    case pathname === "/account":
+      const redirectUrl = request.nextUrl.clone();
+      redirectUrl.pathname = "/account/characters";
+      response = NextResponse.redirect(redirectUrl);
+      break;
+
+    default:
+      response = NextResponse.next({ request });
+      break;
   }
 
-  // IMPORTANT: You *must* return the supabaseResponse object as it is.
-  // If you're creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
+  const supabaseCookies = supabaseResponse.cookies.getAll();
 
-  return supabaseResponse;
+  for (const cookie of supabaseCookies) {
+    const { name, value, ...cookieOptions } = cookie;
+    response.cookies.set(name, value, cookieOptions);
+  }
+
+  return response;
 }

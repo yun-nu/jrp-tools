@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navigation from "./Navigation";
+import TooltipWrapper from "./TooltipWrapper";
 import { SidebarTrigger } from "./ui/Sidebar";
 
 export default function Header({ user }: { user: string | undefined }) {
@@ -10,7 +11,11 @@ export default function Header({ user }: { user: string | undefined }) {
           JRP Tools
         </Link>
       )}
-      {user && <SidebarTrigger variant={"secondary"} />}
+      {user && (
+        <TooltipWrapper text="Open sidebar">
+          <SidebarTrigger variant={"secondary"} />
+        </TooltipWrapper>
+      )}
       <Navigation user={user} />
     </nav>
   );
