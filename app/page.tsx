@@ -1,7 +1,13 @@
-import { PiSignInBold } from "react-icons/pi";
+import {
+  PiPersonSimpleRun,
+  PiShootingStarLight,
+  PiSignInBold,
+} from "react-icons/pi";
 import Footer from "./_components/Footer";
 import LinkButton from "./_components/LinkButton";
 import { createClient } from "./_lib/supabase-server";
+import { Button } from "./_components/ui/Button";
+import Link from "next/link";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -19,12 +25,14 @@ export default async function Home() {
         your threads with just a few clicks.
       </p>
       {!session && (
-        <LinkButton
-          size="medium"
-          href={"/signup"}
-          icon={<PiSignInBold />}
-          content="Sign up"
-        />
+        <Button
+          asChild
+          variant="link"
+          size="lg"
+          className="border-2 border-foreground text-lg font-semibold"
+        >
+          <Link href="/signup">Sign up</Link>
+        </Button>
       )}
       <Footer />
     </div>

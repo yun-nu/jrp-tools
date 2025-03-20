@@ -52,7 +52,7 @@ export default function CharacterInfo({
           )}
           {isPublic && !isPublicPage && (
             <>
-              <StyledLink href={`/characters/${displayName}`}>
+              <StyledLink type="new-window" href={`/characters/${displayName}`}>
                 <MdPublic /> {characterName}&apos;s public page
               </StyledLink>
             </>

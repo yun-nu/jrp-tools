@@ -17,7 +17,7 @@ export async function getOngoingThreads(characterId: number) {
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
-    .eq("characterIdd", characterId)
+    .eq("characterId", characterId)
     .eq("isFinished", false);
 
   if (error) return { error: "Could not fetch ongoing threads." };

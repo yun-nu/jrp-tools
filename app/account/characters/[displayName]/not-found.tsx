@@ -1,10 +1,4 @@
-"use client";
-
 import Link from "next/link";
-
-interface Props {
-  error: Error;
-}
 
 export default function NotFound() {
   return (

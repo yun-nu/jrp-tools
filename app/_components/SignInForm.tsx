@@ -2,7 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { startTransition } from "react";
 import { useForm } from "react-hook-form";
+import { FaGoogle } from "react-icons/fa6";
 import { z } from "zod";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
@@ -13,8 +15,6 @@ import {
 } from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
-import { Form } from "./ui/Form";
-import { startTransition } from "react";
 import {
   Card,
   CardContent,
@@ -23,7 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/Card";
-import { FaGoogle } from "react-icons/fa6";
+import { Form } from "./ui/Form";
 import StyledLink from "./StyledLink";
 
 export default function SignInForm() {
@@ -82,9 +82,9 @@ export default function SignInForm() {
       <CardFooter>
         <p className="text-sm flex-1 text-center">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="underline underline-offset-4">
+          <StyledLink type="self" href="/signup">
             Sign up
-          </Link>
+          </StyledLink>
         </p>
       </CardFooter>
     </Card>

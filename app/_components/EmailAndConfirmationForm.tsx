@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { TbPasswordUser, TbStatusChange, TbUserEdit } from "react-icons/tb";
 import { z } from "zod";
 import {
   EmailAndConfirmation,
@@ -18,7 +17,6 @@ import {
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
-import { FaUserEdit } from "react-icons/fa";
 
 type EmailAndConfirmationProps = {
   btnDescription: string;
@@ -78,7 +76,9 @@ export function EmailAndConfirmationForm({
 
           {error ? <p className="mb-10 text-red-500 text-sm">{error}</p> : null}
 
-          <Button type="submit">{btnDescription}</Button>
+          <Button type="submit" className={`${isUpdate ? "w-fit" : "w-full"}`}>
+            {btnDescription}
+          </Button>
         </form>
       </Form>
     </>

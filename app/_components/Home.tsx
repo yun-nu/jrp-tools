@@ -33,15 +33,15 @@ export default function Home() {
       <CardFooter className="text-sm">
         <div className="flex flex-col gap-2">
           For general suggestions or bug reports:
-          <StyledLink href="/account/contact">
+          <StyledLink type="self" href="/account/contact">
             <RiMailSendLine /> Contact form
           </StyledLink>
-          <StyledLink href="https://github.com/yun-nu/jrp-tools">
+          <StyledLink type="self" href="https://github.com/yun-nu/jrp-tools">
             <LuGithub /> Open a PR or issue on github
           </StyledLink>
           <div>
             If you like the app please consider{" "}
-            <StyledLink href="https://ko-fi.com/yunnu">
+            <StyledLink type="self" href="https://ko-fi.com/yunnu">
               <SiKofi />
               buying me a Ko-fi
             </StyledLink>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
 import { getUserEmail } from "../_lib/action-auth-helpers";
 import LinkButton from "./LinkButton";
+import { Button } from "./ui/Button";
 
 export default async function Navigation({
   user,
@@ -13,12 +14,11 @@ export default async function Navigation({
 
   if (!user)
     return (
-      <LinkButton
-        size="large"
-        icon={<PiSignInBold />}
-        href="/login"
-        content="Log in"
-      />
+      <Button asChild size="sm" className="font-semibold">
+        <Link href="/login">
+          <PiSignInBold /> Log in
+        </Link>
+      </Button>
     );
 
   return (
