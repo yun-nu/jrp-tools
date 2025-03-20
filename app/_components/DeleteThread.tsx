@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "../_hooks/useToast";
@@ -14,6 +15,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/AlertDialog";
+import {
+  actionReturnError,
+  actionReturnSuccess,
+} from "../_utils/action-return";
 
 type Props = {
   thread: Thread;
@@ -27,13 +32,14 @@ export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
 
   const handleDeleteThread = async () => {
     const result = await deleteThreadAction(threadId);
-    if (result.error) {
+    if (actionReturnError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
-    } else {
+    }
+    if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       router.refresh();
     }

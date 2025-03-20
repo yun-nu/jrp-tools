@@ -16,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
 import { Button } from "./ui/Button";
+import { actionReturnError } from "../_utils/action-return";
 
 export default function DeleteCharacter({
   character,
@@ -27,7 +28,7 @@ export default function DeleteCharacter({
 
   const handleDeleteCharacter = async () => {
     const result = await deleteCharacterAction({ userId, id });
-    if (result.error) {
+    if (actionReturnError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
@@ -35,7 +36,7 @@ export default function DeleteCharacter({
       return;
     } else {
       toast({ description: result.success, className: "bg-green-700" });
-      router.push(`/account`);
+      router.push(`/account/characters`);
     }
   };
 

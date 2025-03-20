@@ -8,6 +8,7 @@ import {
 } from "@/app/_lib/data-service";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Error from "./not-found";
 
 type Props = {
   params: Promise<{ displayName: string }>;
@@ -31,8 +32,17 @@ export default async function Page({ params }: Props) {
   if (userId !== character.userId)
     return "You must be logged in to perform this action";
 
-  const ongoingThreads = await getOngoingThreads(character.id as number);
-  const finishedThreads = await getFinishedThreads(character.id as number);
+  const ongoingThreadsResult = await getOngoingThreads(character.id as number);
+  const finishedThreadsResult = await getFinishedThreads(
+    character.id as number
+  );
+
+  if ("error" in ongoingThreadsResult || "error" in finishedThreadsResult) {
+    return notFound();
+  }
+
+  const ongoingThreads = ongoingThreadsResult;
+  const finishedThreads = finishedThreadsResult;
 
   return (
     <section className="w-full flex flex-col items-center">

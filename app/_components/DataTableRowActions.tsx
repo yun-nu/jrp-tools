@@ -24,6 +24,10 @@ import {
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
 import ThreadDialog from "./ThreadDialog";
+import {
+  actionReturnError,
+  actionReturnSuccess,
+} from "../_utils/action-return";
 
 export default function DataTableRowActions({ thread }: { thread: Thread }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -33,14 +37,14 @@ export default function DataTableRowActions({ thread }: { thread: Thread }) {
   const handleToggleThreadStatus = async () => {
     const result = await toggleIsFinishedAction(thread);
 
-    if ("error" in result) {
+    if (actionReturnError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
     }
-    if ("success" in result) {
+    if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       refresh();
     }
@@ -48,14 +52,14 @@ export default function DataTableRowActions({ thread }: { thread: Thread }) {
 
   const handleDuplicateThread = async () => {
     const result = await duplicateThreadAction(thread);
-    if ("error" in result) {
+    if (actionReturnError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
     }
-    if ("success" in result) {
+    if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       refresh();
     }

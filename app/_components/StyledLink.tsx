@@ -11,7 +11,7 @@ export default function StyledLink({
   return (
     <Link
       href={href}
-      className="underline underline-offset-4 inline-flex gap-2 items-center"
+      className="underline underline-offset-4 inline-flex gap-2 items-center w-fit"
       target="_blank"
       rel="noopener noreferrer"
     >
