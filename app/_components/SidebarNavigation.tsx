@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 import { IoSettingsOutline } from "react-icons/io5";
 import { LuFileClock } from "react-icons/lu";
 import { PiSignOutBold, PiUserList } from "react-icons/pi";
+import { toast } from "../_hooks/useToast";
+import { actionReturnSuccess } from "../_utils/action-return";
 import { signOutAction } from "../login/actions";
 import {
   Sidebar,
@@ -43,9 +46,17 @@ const navLinks = [
 ];
 
 export function SidebarNavigation() {
+  const { push } = useRouter();
+
   const handleSignOut = () => {
     startTransition(async () => {
-      await signOutAction();
+      const result = await signOutAction();
+      if (actionReturnSuccess(result)) {
+        toast({
+          description: result.success,
+        });
+        push("/");
+      }
     });
   };
 

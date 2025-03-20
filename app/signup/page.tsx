@@ -10,7 +10,7 @@ import StyledLink from "../_components/StyledLink";
 
 export default function Page() {
   return (
-    <section className="flex flex-col md:flex-row-reverse md:gap-12 gap-6 items-center">
+    <section className="flex flex-col md:flex-row-reverse md:gap-16 gap-8 items-center">
       <SignUpOTP />
       <Accordions />
     </section>

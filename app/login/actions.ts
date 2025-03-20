@@ -58,9 +58,11 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
 
 export async function signOutAction() {
   const supabase = await createClient();
+
   const { error } = await supabase.auth.signOut();
-  if (error) return error;
-  redirect("/");
+  if (error) return { error: error.message };
+
+  return { success: "Logged out successfully" };
 }
 
 export async function signInGoogleAction() {
@@ -72,7 +74,7 @@ export async function signInGoogleAction() {
     },
   });
 
-  if (error) return { error };
+  if (error) return { error: error.message };
 
   if (data.url) {
     redirect(data.url);
