@@ -6,7 +6,7 @@ export function Update01() {
     <Update number="01" date="M D 2025">
       <p>
         This is the very first update, so let me start it by saying thank you
-        for your interest in JRP Tools!
+        for checking out JRP Tools!
       </p>
 
       <p>
@@ -20,9 +20,7 @@ export function Update01() {
         As of launch, the app will be open for anyone to sign up and try it out.
         However, I'll be keeping a close eye on any potential bottlenecks, and
         will take countermeasures if needed. Announcements will be made here on
-        this page, or on the main page if the database ever goes down. Also, an
-        export data (format to be decided) feature is at the top of the list of
-        future updates, so you'll be able to generate a backup of your threads.
+        this page.
       </p>
 
       <p>

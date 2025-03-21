@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <div>How it works:</div>;
+  return <div></div>;
 }

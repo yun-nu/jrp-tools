@@ -3,10 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
-import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
-import { IoSettingsOutline } from "react-icons/io5";
-import { LuFileClock } from "react-icons/lu";
-import { PiSignOutBold, PiUserList } from "react-icons/pi";
+import { PiSignOutBold } from "react-icons/pi";
 import { toast } from "../_hooks/useToast";
 import { actionReturnSuccess } from "../_utils/action-return";
 import { signOutAction } from "../login/actions";
@@ -21,32 +18,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "./ui/Sidebar";
-import { Separator } from "@radix-ui/react-separator";
+import { NavigationMenu } from "./NavigationMenu";
+import { commonLinks, userLinks } from "../_lib/navigation";
+import { Separator } from "./ui/Separator";
 
-const navLinks = [
-  {
-    url: "/account/characters",
-    icon: PiUserList,
-    title: "Character list",
-  },
-  {
-    url: "/account/settings",
-    icon: IoSettingsOutline,
-    title: "Settings",
-  },
-  {
-    url: "/account/updates",
-    icon: LuFileClock,
-    title: "Updates",
-  },
-  {
-    url: "/account/contact",
-    icon: HiOutlineChatBubbleBottomCenterText,
-    title: "Contact",
-  },
-];
-
-export function SidebarNavigation() {
+export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { push } = useRouter();
 
   const handleSignOut = () => {
@@ -69,56 +45,35 @@ export function SidebarNavigation() {
             <Link href="/">JRP Tools</Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2">
-              {navLinks.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            {isLoggedIn && <NavigationMenu links={userLinks} />}
           </SidebarGroupContent>
         </SidebarGroup>
-        <Separator />
+
+        {isLoggedIn && <Separator className="h-[1px] bg-secondary" />}
 
         <SidebarGroup>
-          <SidebarGroupLabel className="justify-center font-semibold">
-            <Link href="/">JRP Tools</Link>
-          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className="gap-2">
-              {navLinks.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
+            <NavigationMenu links={commonLinks} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem className="flex justify-center">
-            <SidebarMenuButton
-              variant="default"
-              className="border border-destructive w-fit px-4 font-semibold"
-              onClick={handleSignOut}
-            >
-              <PiSignOutBold />
-              Sign out
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+
+      {isLoggedIn && (
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem className="flex justify-center">
+              <SidebarMenuButton
+                variant="default"
+                className="border border-destructive w-fit px-4 font-semibold"
+                onClick={handleSignOut}
+              >
+                <PiSignOutBold />
+                Sign out
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+      )}
     </Sidebar>
   );
 }

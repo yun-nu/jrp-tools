@@ -4,7 +4,7 @@ import { PiSignInBold } from "react-icons/pi";
 import { getUserEmail } from "../_lib/action-auth-helpers";
 import { Button } from "./ui/Button";
 
-export default async function Navigation({
+export default async function HeaderUser({
   user,
 }: {
   user: string | undefined;
@@ -21,9 +21,9 @@ export default async function Navigation({
     );
 
   return (
-    <div className="ml-20 flex flex-1 sm:justify-between items-center">
+    <div className="ml-auto flex flex-1 sm:justify-between items-center">
       <Link
-        href="/account"
+        href="/account/characters"
         className="flex flex-col text-xs sm:flex-row sm:text-sm ml-auto gap-2 items-center hover:text-primary/80 transition-colors font-semibold"
         title="Your account"
       >
