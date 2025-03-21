@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
 
   if ((!isPublic && userId === user) || isPublic)
     return (
-      <section className="flex flex-col items-center">
+      <section className="w-full h-full flex flex-col items-center">
         <CharacterHeader character={character} isPublicPage />
 
         <ThreadTabs
@@ -44,6 +44,7 @@ export default async function Page({ params }: Props) {
       </section>
     );
 
+  ///
   return (
     <div>
       <p>This character information is private.</p>
