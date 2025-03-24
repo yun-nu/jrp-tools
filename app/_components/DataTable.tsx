@@ -13,7 +13,9 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useState } from "react";
+import { ExistingCharacter } from "../_schemas/Character";
 import DataTableViewOptions from "./DataTableViewOptions";
+import ThreadDialog from "./ThreadDialog";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import {
@@ -24,14 +26,12 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
-import { Character } from "../_schemas/Character";
-import ThreadDialog from "./ThreadDialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   showActions?: boolean;
-  characterId: Character["id"];
+  characterId?: ExistingCharacter["id"];
 }
 
 export default function DataTable<TData, TValue>({

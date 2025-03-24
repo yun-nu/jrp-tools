@@ -1,14 +1,7 @@
-import CharacterHeader from "@/app/_components/CharacterHeader";
-import ThreadTabs from "@/app/_components/ThreadTabs";
-import { clientAndUserHelper } from "@/app/_lib/action-auth-helpers";
-import {
-  getCharacterData,
-  getFinishedThreads,
-  getOngoingThreads,
-} from "@/app/_lib/data-service";
+import CharacterView from "@/app/_components/CharacterView";
+import ErrorMsg from "@/app/_components/ErrorMsg";
+import { getCharacterPageData } from "@/app/_utils/helpers";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Error from "./not-found";
 
 type Props = {
   params: Promise<{ displayName: string }>;
@@ -17,43 +10,38 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
   return {
-    title: `Character: ${displayName}'s `,
+    title: `Character: ${displayName}'s`,
   };
 }
 
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
-  const { userId } = await clientAndUserHelper();
-  const character = await getCharacterData(displayName);
+  const pageData = await getCharacterPageData(displayName);
 
-  if ("error" in character) return notFound();
+  if (!pageData)
+    return (
+      <ErrorMsg>
+        <p>Character page not found.</p>
+      </ErrorMsg>
+    );
 
-  const showActions = userId === character.userId;
-  if (userId !== character.userId)
-    return "You must be logged in to perform this action";
-
-  const ongoingThreadsResult = await getOngoingThreads(character.id as number);
-  const finishedThreadsResult = await getFinishedThreads(
-    character.id as number
-  );
-
-  if ("error" in ongoingThreadsResult || "error" in finishedThreadsResult) {
-    return notFound();
+  if ("error" in pageData) {
+    return (
+      <ErrorMsg>
+        <p>{pageData.error}</p>
+      </ErrorMsg>
+    );
   }
 
-  const ongoingThreads = ongoingThreadsResult;
-  const finishedThreads = finishedThreadsResult;
+  const { character, ongoingThreads, finishedThreads } = pageData;
 
   return (
-    <section className="w-full h-full flex flex-col items-center">
-      <CharacterHeader character={character} />
-
-      <ThreadTabs
-        ongoingThreads={ongoingThreads}
-        finishedThreads={finishedThreads}
-        showActions={showActions}
-        characterId={character.id}
-      />
-    </section>
+    <CharacterView
+      character={character}
+      ongoingThreads={ongoingThreads}
+      finishedThreads={finishedThreads}
+      showTableActions
+      characterId={character.id}
+    />
   );
 }

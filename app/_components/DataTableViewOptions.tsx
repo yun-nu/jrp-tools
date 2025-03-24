@@ -1,14 +1,12 @@
-import React from "react";
+import { Table } from "@tanstack/react-table";
+import { SlidersHorizontal } from "lucide-react";
+import { Button } from "./ui/Button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
-import { table } from "console";
-import { SlidersHorizontal } from "lucide-react";
-import { Button } from "./ui/Button";
-import { Table } from "@tanstack/react-table";
 
 type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;

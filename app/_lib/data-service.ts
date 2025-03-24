@@ -13,7 +13,9 @@ export async function getCharacters(userId: string) {
   return characters as Character[];
 }
 
-export async function getOngoingThreads(characterId: number) {
+export async function getOngoingThreads(
+  characterId: number
+): Promise<Thread[] | { error: string }> {
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
@@ -25,13 +27,14 @@ export async function getOngoingThreads(characterId: number) {
   return threads as Thread[];
 }
 
-export async function getFinishedThreads(characterId: number) {
+export async function getFinishedThreads(
+  characterId: number
+): Promise<Thread[] | { error: string }> {
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
     .eq("characterId", characterId)
     .eq("isFinished", true);
-
   if (error) return { error: "Could not fetch finished threads." };
 
   return threads as Thread[];
@@ -45,6 +48,7 @@ export async function getCharacterData(
     .select("*")
     .eq("displayName", displayName)
     .single();
+
   if (error) {
     return { error: "Could not fetch character data." };
   }

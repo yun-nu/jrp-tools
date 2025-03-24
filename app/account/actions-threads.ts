@@ -2,13 +2,13 @@
 
 import { toDate } from "date-fns";
 import { createClient } from "../_lib/supabase-server";
-import { Character } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
 import { Thread, threadSchema } from "../_schemas/Thread";
 import { ActionResult } from "../_utils/action-return";
 
 export async function addThreadAction(
   threadData: Thread,
-  characterId: Character["id"]
+  characterId: ExistingCharacter["id"]
 ): Promise<ActionResult> {
   const newThread: Thread = {
     ...threadData,
@@ -61,6 +61,7 @@ export async function editThreadAction(
     .update(parsedThreadData)
     .eq("id", threadId);
 
+  console.log(error);
   if (error) return { error: "Could not edit thread" };
 
   return {
@@ -74,7 +75,7 @@ export async function deleteThreadAction(
   const supabase = await createClient();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
-
+  console.log(error);
   if (error) return { error: "Could not delete thread" };
 
   return {

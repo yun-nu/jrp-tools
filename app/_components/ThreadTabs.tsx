@@ -14,14 +14,14 @@ import { ExistingCharacter } from "../_schemas/Character";
 type ThreadTabsProps = {
   ongoingThreads: Thread[];
   finishedThreads: Thread[];
-  showActions?: boolean;
-  characterId: ExistingCharacter["id"];
+  showTableActions?: boolean;
+  characterId?: ExistingCharacter["id"];
 };
 
 export default function ThreadTabs({
   ongoingThreads,
   finishedThreads,
-  showActions,
+  showTableActions: showActions,
   characterId,
 }: ThreadTabsProps) {
   return (
