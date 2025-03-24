@@ -9,13 +9,13 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import { Thread } from "@/app/_schemas/Thread";
-import { Character } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
 
 type ThreadTabsProps = {
   ongoingThreads: Thread[];
   finishedThreads: Thread[];
   showActions?: boolean;
-  characterId: Character["id"];
+  characterId: ExistingCharacter["id"];
 };
 
 export default function ThreadTabs({

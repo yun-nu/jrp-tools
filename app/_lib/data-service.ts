@@ -1,4 +1,4 @@
-import { Character } from "../_schemas/Character";
+import { Character, ExistingCharacter } from "../_schemas/Character";
 import { Thread } from "../_schemas/Thread";
 import { supabase } from "./supabase-client";
 
@@ -39,7 +39,7 @@ export async function getFinishedThreads(characterId: number) {
 
 export async function getCharacterData(
   displayName: string
-): Promise<Character | { error: string }> {
+): Promise<ExistingCharacter | { error: string }> {
   const { data, error } = await supabase
     .from("characters")
     .select("*")
@@ -49,5 +49,5 @@ export async function getCharacterData(
     return { error: "Could not fetch character data." };
   }
 
-  return data as Character;
+  return data as ExistingCharacter;
 }

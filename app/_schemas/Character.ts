@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-export const characterSchema = z.object({
-  id: z.number().int().positive().optional(),
-  userId: z.string().optional(),
+const baseCharacterSchema = z.object({
   displayName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
@@ -57,4 +55,23 @@ export const characterSchema = z.object({
   isActive: z.boolean(),
 });
 
-export type Character = z.infer<typeof characterSchema>;
+export const newCharacterSchema = baseCharacterSchema.extend({
+  userId: z.string(),
+});
+export const existingCharacterSchema = newCharacterSchema.extend({
+  id: z.number().int().positive(),
+});
+
+export type NewCharacter = z.infer<typeof newCharacterSchema>;
+export type ExistingCharacter = z.infer<typeof existingCharacterSchema>;
+export type Character = NewCharacter | ExistingCharacter;
+
+export function isExistingCharacter(
+  character: Character | undefined
+): character is ExistingCharacter {
+  return (
+    character !== undefined &&
+    "id" in character &&
+    typeof character.id === "number"
+  );
+}

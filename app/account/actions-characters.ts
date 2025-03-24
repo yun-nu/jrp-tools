@@ -2,7 +2,13 @@
 
 import { clientAndUserHelper } from "../_lib/action-auth-helpers";
 import { createClient } from "../_lib/supabase-server";
-import { Character, characterSchema } from "../_schemas/Character";
+import {
+  Character,
+  ExistingCharacter,
+  existingCharacterSchema,
+  NewCharacter,
+  newCharacterSchema,
+} from "../_schemas/Character";
 import { ActionResult } from "../_utils/action-return";
 
 export async function verifyDisplayNameAvailability(
@@ -28,16 +34,16 @@ export async function verifyDisplayNameAvailability(
 }
 
 export async function addCharacterAction(
-  characterData: Character
+  characterData: Omit<NewCharacter, "userId">
 ): Promise<ActionResult> {
   const { userId, supabase } = await clientAndUserHelper();
 
-  const newCharacter: Character = {
-    userId: userId,
+  const newCharacter = {
+    userId,
     ...characterData,
   };
 
-  const parsed = characterSchema.safeParse(newCharacter);
+  const parsed = newCharacterSchema.safeParse(newCharacter);
 
   if (!parsed.success) {
     return {
@@ -66,10 +72,9 @@ export async function addCharacterAction(
 }
 
 export async function editCharacterAction(
-  characterData: Character,
-  characterId: number
+  characterData: ExistingCharacter
 ): Promise<ActionResult> {
-  const parsed = characterSchema.safeParse(characterData);
+  const parsed = existingCharacterSchema.safeParse(characterData);
 
   if (!parsed.success) {
     return {
@@ -85,7 +90,7 @@ export async function editCharacterAction(
     const { error } = await supabase
       .from("characters")
       .update(parsedCharacterData)
-      .eq("id", characterId);
+      .eq("id", parsedCharacterData.id);
 
     if (error) return { error: "Could not edit character" };
 
@@ -101,7 +106,7 @@ export async function editCharacterAction(
 export async function deleteCharacterAction({
   userId: characterUserId,
   id: characterId,
-}: Pick<Character, "userId" | "id">) {
+}: Pick<ExistingCharacter, "userId" | "id">) {
   const { userId, supabase } = await clientAndUserHelper();
 
   if (userId === characterUserId) {

@@ -1,17 +1,29 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
-import { Character, characterSchema } from "../_schemas/Character";
+import {
+  Character,
+  ExistingCharacter,
+  existingCharacterSchema,
+  isExistingCharacter,
+  NewCharacter,
+  newCharacterSchema,
+} from "../_schemas/Character";
 import {
   ActionResult,
   actionReturnError,
   actionReturnSuccess,
 } from "../_utils/action-return";
-import { verifyDisplayNameAvailability } from "../account/actions-characters";
+import {
+  addCharacterAction,
+  editCharacterAction,
+  verifyDisplayNameAvailability,
+} from "../account/actions-characters";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
@@ -22,15 +34,7 @@ import { Form } from "./ui/Form";
 type CharacterFormProps = {
   setOpen: (open: boolean) => void;
   character?: Character;
-  action: AddCharacterAction | UpdateCharacterAction;
-};
-
-type AddCharacterAction = {
-  (characterData: Character): Promise<ActionResult>;
-};
-
-type UpdateCharacterAction = {
-  (characterData: Character, characterId: number): Promise<ActionResult>;
+  action: typeof addCharacterAction | typeof editCharacterAction;
 };
 
 export function CharacterForm({
@@ -41,30 +45,39 @@ export function CharacterForm({
   const [isValidDisplayName, setIsValidDisplayName] = useState(false);
   const { refresh } = useRouter();
 
-  const { id: characterId, ...values } = character || {};
+  const isEditing = isExistingCharacter(character ?? ({} as Character));
+  const characterSchema = isEditing
+    ? existingCharacterSchema
+    : newCharacterSchema;
 
-  const form = useForm<z.infer<typeof characterSchema>>({
-    resolver: zodResolver(characterSchema),
-    defaultValues: characterId
-      ? values
-      : {
-          displayName: "",
-          characterName: "",
-          blurb: "",
-          acLink: "",
-          gameName: "",
-          journalLink: "",
-          journalName: "",
-          icon: "",
-          isPublic: false,
-          isActive: true,
-        },
+  const form = useForm<Omit<NewCharacter, "userId">>({
+    resolver: zodResolver(characterSchema.omit({ userId: true })),
+    defaultValues: character ?? {
+      displayName: "",
+      characterName: "",
+      blurb: "",
+      acLink: "",
+      gameName: "",
+      journalLink: "",
+      journalName: "",
+      icon: "",
+      isPublic: false,
+      isActive: true,
+    },
   });
 
   const onSubmit = async () => {
     let result;
-    if (characterId) result = await action(form.getValues(), characterId);
-    else result = await (action as AddCharacterAction)(form.getValues());
+    const values = form.getValues();
+
+    if (isEditing && isExistingCharacter(character))
+      result = await (action as typeof editCharacterAction)(
+        values as ExistingCharacter
+      );
+    else
+      result = await (action as typeof addCharacterAction)(
+        values as NewCharacter
+      );
 
     if (actionReturnError(result)) {
       toast({
@@ -161,7 +174,7 @@ export function CharacterForm({
             disabled={!isValidDisplayName || form.formState.isSubmitting}
             className="sm:w-fit w-full"
           >
-            {characterId ? "Save changes" : "Add character"}
+            {isEditing ? "Save changes" : "Add character"}
           </Button>
         </DialogFooter>
       </form>

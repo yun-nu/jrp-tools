@@ -44,9 +44,12 @@ export default async function Page({ params }: Props) {
       </ErrorMsg>
     );
 
-  const { isPublic, userId, id: characterId } = character || {};
-  const ongoingThreads = await getOngoingThreads(characterId);
-  const finishedThreads = await getFinishedThreads(characterId);
+  const { isPublic, userId, id: characterId } = character;
+
+  const [ongoingThreads, finishedThreads] = await Promise.all([
+    getOngoingThreads(characterId),
+    getFinishedThreads(characterId),
+  ]);
 
   if ((!isPublic && userId === user) || isPublic)
     return (
