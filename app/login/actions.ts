@@ -28,7 +28,8 @@ export async function signInOTPAction({ email }: Pick<SignInOTP, "email">) {
   if (error?.status === 422) return { error: "User not found." };
   if (error?.status === 429)
     return { error: "Please wait a minute before attempting to login again." };
-  if (error) throw new Error("A server error occurred: ", error);
+
+  if (error) return { error: `A server error occurred: ${error.message}` };
 }
 
 export async function verifyOTPLoginAction(data: SignInOTP) {

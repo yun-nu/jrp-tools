@@ -1,3 +1,5 @@
+import ErrorMsg from "@/app/_components/ErrorMsg";
+import ThreadTabs from "@/app/_components/ThreadTabs";
 import {
   getCharacterData,
   getFinishedThreads,
@@ -6,29 +8,43 @@ import {
 import { Metadata } from "next";
 import CharacterHeader from "../../_components/CharacterHeader";
 import { clientAndUserHelper } from "../../_lib/action-auth-helpers";
-import { notFound } from "next/navigation";
-import ThreadTabs from "@/app/_components/ThreadTabs";
 
 type Props = {
   params: Promise<{ displayName: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+async function getCharData({ params }: Props) {
   const displayName = (await params).displayName;
+  const character = await getCharacterData(displayName);
+
+  if ("error" in character) return undefined;
+  return character;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const character = await getCharData({ params });
+  if (!character)
+    return {
+      title: "Character page not found",
+    };
+
   return {
-    title: `${displayName}'s public page`,
+    title: `${character.displayName}'s public page`,
   };
 }
 
 export default async function Page({ params }: Props) {
   const { userId: user } = await clientAndUserHelper();
-  const displayName = (await params).displayName;
-  const character = await getCharacterData(displayName);
+  const character = await getCharData({ params });
 
-  if ("error" in character) notFound();
+  if (!character)
+    return (
+      <ErrorMsg>
+        <p>Character page not found.</p>
+      </ErrorMsg>
+    );
 
   const { isPublic, userId, id: characterId } = character || {};
-
   const ongoingThreads = await getOngoingThreads(characterId);
   const finishedThreads = await getFinishedThreads(characterId);
 
@@ -44,10 +60,5 @@ export default async function Page({ params }: Props) {
       </section>
     );
 
-  ///
-  return (
-    <div>
-      <p>This character information is private.</p>
-    </div>
-  );
+  return <ErrorMsg>This character page is private.</ErrorMsg>;
 }
