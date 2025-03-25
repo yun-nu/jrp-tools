@@ -1,18 +1,17 @@
 import CharacterDialog from "@/app/_components/CharacterDialog";
+import ErrorMsg from "@/app/_components/ErrorMsg";
 import CharacterList from "../../_components/CharacterList";
-import { clientAndUserHelper } from "../../_lib/action-auth-helpers";
+import { getClientAndUser } from "../../_lib/action-auth-helpers";
 import { getCharacters } from "../../_lib/data-service";
 
 export default async function Page() {
-  const { userId } = await clientAndUserHelper();
-  const characters = await getCharacters(userId as string);
+  const { userId } = await getClientAndUser();
 
-  if ("error" in characters)
-    return (
-      <div className="p-6 border rounded border-muted-foreground/80">
-        {characters.error}
-      </div>
-    );
+  if (!userId) return <ErrorMsg>User not authenticated.</ErrorMsg>;
+
+  const characters = await getCharacters(userId);
+
+  if ("error" in characters) return <ErrorMsg>{characters.error}</ErrorMsg>;
 
   return (
     <section className="flex flex-col gap-12 items-center">

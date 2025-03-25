@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 
   return {
-    title: `${pageData.character.displayName}'s public page`,
-    description: `${pageData.character.displayName}'s threads on JRP Tools`,
+    title: `${displayName}'s public page`,
+    description: `${displayName}'s threads on JRP Tools`,
   };
 }
 
@@ -26,25 +26,12 @@ export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
   const pageData = await getCharacterPageData(displayName);
 
-  if (!pageData)
+  if (!pageData || "error" in pageData)
     return (
-      <ErrorMsg>
-        <p>Character page not found.</p>
-      </ErrorMsg>
+      <ErrorMsg>{pageData?.error || "Character page not found"}.</ErrorMsg>
     );
-
-  if ("error" in pageData) {
-    return (
-      <ErrorMsg>
-        <p>{pageData.error}</p>
-      </ErrorMsg>
-    );
-  }
 
   const { character, ongoingThreads, finishedThreads } = pageData;
-
-  if (!character.isPublic)
-    return <ErrorMsg>This character page is private.</ErrorMsg>;
 
   return (
     <CharacterView

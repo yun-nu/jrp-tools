@@ -14,7 +14,7 @@ export default function TooltipWrapper({
   children: ReactNode;
 }) {
   return (
-    <TooltipProvider delayDuration={300} skipDelayDuration={500}>
+    <TooltipProvider delayDuration={400} skipDelayDuration={700}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent side="right">

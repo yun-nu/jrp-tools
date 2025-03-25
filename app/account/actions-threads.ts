@@ -2,20 +2,18 @@
 
 import { toDate } from "date-fns";
 import { createClient } from "../_lib/supabase-server";
-import { ExistingCharacter } from "../_schemas/Character";
-import { Thread, threadSchema } from "../_schemas/Thread";
+import {
+  ExistingThread,
+  existingThreadSchema,
+  NewThread,
+  newThreadSchema,
+} from "../_schemas/Thread";
 import { ActionResult } from "../_utils/action-return";
 
 export async function addThreadAction(
-  threadData: Thread,
-  characterId: ExistingCharacter["id"]
+  threadData: NewThread
 ): Promise<ActionResult> {
-  const newThread: Thread = {
-    ...threadData,
-    characterId: characterId,
-  };
-
-  const parsed = threadSchema.safeParse(newThread);
+  const parsed = newThreadSchema.safeParse(threadData);
 
   if (!parsed.success) {
     return {
@@ -40,10 +38,10 @@ export async function addThreadAction(
 }
 
 export async function editThreadAction(
-  threadData: Thread,
-  threadId: number
+  threadData: ExistingThread,
+  threadId: ExistingThread["id"]
 ): Promise<ActionResult> {
-  const parsed = threadSchema.safeParse(threadData);
+  const parsed = existingThreadSchema.safeParse(threadData);
 
   if (!parsed.success) {
     return {
@@ -61,7 +59,6 @@ export async function editThreadAction(
     .update(parsedThreadData)
     .eq("id", threadId);
 
-  console.log(error);
   if (error) return { error: "Could not edit thread" };
 
   return {
@@ -70,12 +67,12 @@ export async function editThreadAction(
 }
 
 export async function deleteThreadAction(
-  threadId: Thread["id"]
+  threadId: ExistingThread["id"]
 ): Promise<ActionResult> {
   const supabase = await createClient();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
-  console.log(error);
+
   if (error) return { error: "Could not delete thread" };
 
   return {
@@ -84,7 +81,7 @@ export async function deleteThreadAction(
 }
 
 export async function toggleIsFinishedAction(
-  thread: Thread
+  thread: ExistingThread
 ): Promise<ActionResult> {
   const statusToggledThread = {
     ...thread,
@@ -105,7 +102,7 @@ export async function toggleIsFinishedAction(
 }
 
 export async function duplicateThreadAction(
-  thread: Thread
+  thread: ExistingThread
 ): Promise<ActionResult> {
   const duplicatedThread = {
     ...thread,
@@ -113,7 +110,7 @@ export async function duplicateThreadAction(
     date: toDate(thread.date),
   };
 
-  const result = await addThreadAction(duplicatedThread, thread.characterId);
+  const result = await addThreadAction(duplicatedThread);
   if ("success" in result)
     return {
       success: "Thread duplicated successfully",

@@ -5,7 +5,7 @@ import Header from "./_components/Header";
 import { SidebarNavigation } from "./_components/SidebarNavigation";
 import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
 import { Toaster } from "./_components/ui/Toaster";
-import { clientAndUserHelper } from "./_lib/action-auth-helpers";
+import { getClientAndUser } from "./_lib/action-auth-helpers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +20,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId: user } = await clientAndUserHelper();
+  const { userId: user } = await getClientAndUser();
   const cookieStore = await cookies();
   const defaultOpen = !cookieStore.get("sidebar_state")
     ? true

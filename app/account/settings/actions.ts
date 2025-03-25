@@ -1,6 +1,6 @@
 "use server";
 
-import { clientAndUserHelper } from "@/app/_lib/action-auth-helpers";
+import { getClientAndUser } from "@/app/_lib/action-auth-helpers";
 import { createClient as createServerClient } from "@/app/_lib/supabase-server";
 import {
   EmailAndConfirmation,
@@ -28,7 +28,6 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
   const { error } = await supabase.auth.updateUser({
     email: parsedEmail,
   });
-  console.log(error);
 
   if (error?.status === 422) return { error: "Email already in use" };
 
@@ -41,7 +40,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 }
 
 export async function deleteUserAction() {
-  const { userId: user } = await clientAndUserHelper();
+  const { userId: user } = await getClientAndUser();
 
   if (!user) return { error: "User not found" };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import StyledLink from "./_components/StyledLink";
 
 interface Props {
   error: Error;
@@ -8,15 +8,12 @@ interface Props {
 
 export default function Error({ error }: Props) {
   return (
-    <>
+    <div className="flex flex-col gap-4 items-center">
       <h1 className="text-3xl font-semibold">Something went wrong!</h1>
       <p className="text-lg">{error.message}</p>
-      <Link
-        href={"/"}
-        className="inline-block bg-accent-500 text-primary-800 px-6 py-3 text-lg"
-      >
+      <StyledLink type="self" href="/">
         Return to main page
-      </Link>
-    </>
+      </StyledLink>
+    </div>
   );
 }

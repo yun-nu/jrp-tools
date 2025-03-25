@@ -9,8 +9,16 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
+  const pageData = await getCharacterPageData(displayName);
+
+  if (!pageData || "error" in pageData || !pageData.isOwner)
+    return {
+      title: "Character page not found",
+    };
+
   return {
-    title: `Character: ${displayName}'s`,
+    title: `${displayName}`,
+    description: `${pageData.character.displayName}'s threads on JRP Tools`,
   };
 }
 
@@ -18,22 +26,16 @@ export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
   const pageData = await getCharacterPageData(displayName);
 
-  if (!pageData)
-    return (
-      <ErrorMsg>
-        <p>Character page not found.</p>
-      </ErrorMsg>
-    );
+  if (!pageData) return <ErrorMsg>Character page not found.</ErrorMsg>;
 
-  if ("error" in pageData) {
-    return (
-      <ErrorMsg>
-        <p>{pageData.error}</p>
-      </ErrorMsg>
-    );
-  }
+  if ("error" in pageData) return <ErrorMsg>{pageData.error}</ErrorMsg>;
 
-  const { character, ongoingThreads, finishedThreads } = pageData;
+  const { character, ongoingThreads, finishedThreads, isOwner } = pageData;
+
+  if (!isOwner)
+    return (
+      <ErrorMsg>You don&apos;t have permission to view this page.</ErrorMsg>
+    );
 
   return (
     <CharacterView

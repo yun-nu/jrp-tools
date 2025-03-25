@@ -16,10 +16,10 @@ export default function Page() {
     <div className="flex flex-col gap-4 max-w-screen-md">
       <Card>
         <CardHeader>
-          <CardTitle>Contact</CardTitle>
+          <CardTitle>Contact Form</CardTitle>
           <CardDescription>
-            For anything ranging from general suggestions to non-app breaking
-            bugs or issues, feel free to drop me a message in the form below.
+            For anything ranging from general suggestions to reporting bugs or
+            issues, feel free to drop me a message in the form below.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -31,8 +31,8 @@ export default function Page() {
         <CardHeader>
           <CardTitle>SOS</CardTitle>
           <CardDescription>
-            For more granular help, shoot me an email, PM on Plurk or DW, and
-            I&apos;ll try to get back to you ASAP:
+            For granular help with app-breaking issues, please use one of the
+            following contact methods below.
           </CardDescription>
         </CardHeader>
         <CardContent>

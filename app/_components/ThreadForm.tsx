@@ -1,18 +1,24 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toDate } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
-import { Character } from "../_schemas/Character";
-import { Thread, threadSchema } from "../_schemas/Thread";
+import { ExistingCharacter } from "../_schemas/Character";
+import {
+  ExistingThread,
+  existingThreadSchema,
+  isExistingThread,
+  NewThread,
+  newThreadSchema,
+  Thread,
+} from "../_schemas/Thread";
 import {
   actionReturnError,
   actionReturnSuccess,
-  ActionResult,
 } from "../_utils/action-return";
+import { addThreadAction, editThreadAction } from "../account/actions-threads";
 import CheckboxWithText from "./CheckboxWithText";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 import { InputWithLabel } from "./InputWithLabel";
@@ -20,20 +26,13 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
+import { toDate } from "date-fns";
 
 type ThreadFormProps = {
   thread?: Thread;
-  characterId?: Character["id"];
+  characterId?: ExistingCharacter["id"];
   setOpen: (open: boolean) => void;
-  action: AddThreadAction | UpdateThreadAction;
-};
-
-type AddThreadAction = {
-  (threadData: Thread, characterId: Character["id"]): Promise<ActionResult>;
-};
-
-type UpdateThreadAction = {
-  (threadData: Thread, threadId: number): Promise<ActionResult>;
+  action: typeof addThreadAction | typeof editThreadAction;
 };
 
 export function ThreadForm({
@@ -44,37 +43,40 @@ export function ThreadForm({
 }: ThreadFormProps) {
   const router = useRouter();
 
-  const { id: threadId, ...values } = thread || {};
+  const isEditing = isExistingThread(thread ?? ({} as Thread));
+  const threadSchema = isEditing ? existingThreadSchema : newThreadSchema;
 
   const form = useForm<z.infer<typeof threadSchema>>({
     resolver: zodResolver(threadSchema),
-    defaultValues: threadId
-      ? "date" in values
-        ? { ...values, date: toDate(values.date) }
-        : { ...values }
+    defaultValues: thread
+      ? { ...thread, date: toDate(thread.date) }
       : {
           date: new Date(),
           type: "",
           blurb: "",
           url: "",
           isFinished: false,
+          characterId: characterId,
         },
   });
 
   const onSubmit = async () => {
     let result;
-    if (threadId)
-      result = await (action as UpdateThreadAction)(form.getValues(), threadId);
-    else
-      result = await (action as AddThreadAction)(form.getValues(), characterId);
+    const values = form.getValues();
 
-    if (actionReturnError(result)) {
+    if (isEditing && isExistingThread(thread))
+      result = await (action as typeof editThreadAction)(
+        values as ExistingThread,
+        thread.id
+      );
+    else result = await (action as typeof addThreadAction)(values as NewThread);
+
+    if (actionReturnError(result))
       toast({
         description: result.error || result.message,
         variant: "destructive",
       });
-      return;
-    }
+
     if (actionReturnSuccess(result)) {
       toast({ description: result.success, className: "bg-green-700" });
       form.reset();
@@ -118,7 +120,7 @@ export function ThreadForm({
           nameInSchema="isFinished"
           fieldTitle="Mark this thread as finished"
           description={`Threads are marked as ongoing by default. Check this option if ${
-            threadId
+            isEditing
               ? "you'd like to mark this thread as finished"
               : "you're adding an already finished thread"
           }.`}
@@ -132,7 +134,7 @@ export function ThreadForm({
             disabled={form.formState.isSubmitting}
             className="sm:w-fit w-full"
           >
-            {threadId ? "Save changes" : "Add thread"}
+            {isEditing ? "Save changes" : "Add thread"}
           </Button>
         </DialogFooter>
       </form>

@@ -9,7 +9,9 @@ export default async function HeaderUser({
 }: {
   user: string | undefined;
 }) {
-  const email = (await getUserEmail()) as string;
+  const { email } = await getUserEmail();
+
+  if (!email) return;
 
   if (!user)
     return (

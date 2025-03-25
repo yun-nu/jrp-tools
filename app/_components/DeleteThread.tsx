@@ -60,7 +60,7 @@ export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
           <AlertDialogAction
             type="button"
             onClick={handleDeleteThread}
-            className="bg-red-500"
+            className="bg-destructive hover:bg-destructive/80 text-primary"
           >
             Delete
           </AlertDialogAction>

@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 import { useIsMobile } from "../_hooks/useIsMobile";
-import { Character } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
 import { Thread } from "../_schemas/Thread";
 import { addThreadAction, editThreadAction } from "../account/actions-threads";
 import { DesktopDialog, MobileDrawer } from "./ResponsiveDialog";
@@ -28,7 +28,7 @@ interface UncontrolledDialogProps extends ThreadDialogBaseProps {
 
 interface AddThreadDialogProps extends ThreadDialogBaseProps {
   mode: "add";
-  characterId: Character["id"];
+  characterId: ExistingCharacter["id"];
   thread?: never;
 }
 

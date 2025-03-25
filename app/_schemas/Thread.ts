@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-export const threadSchema = z.object({
-  id: z.number().int().positive().optional(),
-  characterId: z.number().int().positive().optional(),
+const baseThreadSchema = z.object({
   date: z.date({
     required_error: "You must pick a date from the calendar",
   }),
@@ -28,4 +26,22 @@ export const threadSchema = z.object({
   isFinished: z.boolean(),
 });
 
-export type Thread = z.infer<typeof threadSchema>;
+export const newThreadSchema = baseThreadSchema.extend({
+  characterId: z.number().int().positive(),
+});
+
+export const existingThreadSchema = newThreadSchema.extend({
+  id: z.number().int().positive(),
+});
+
+export type NewThread = z.infer<typeof newThreadSchema>;
+export type ExistingThread = z.infer<typeof existingThreadSchema>;
+export type Thread = NewThread | ExistingThread;
+
+export function isExistingThread(
+  thread: Thread | undefined
+): thread is ExistingThread {
+  return (
+    thread !== undefined && "id" in thread && typeof thread.id === "number"
+  );
+}

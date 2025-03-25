@@ -1,8 +1,12 @@
 import { Character, ExistingCharacter } from "../_schemas/Character";
 import { Thread } from "../_schemas/Thread";
-import { supabase } from "./supabase-client";
+import { createClient } from "./supabase-server";
 
-export async function getCharacters(userId: string) {
+export async function getCharacters(
+  userId: Character["userId"]
+): Promise<Character[] | { error: string }> {
+  const supabase = await createClient();
+
   const { data: characters, error } = await supabase
     .from("characters")
     .select("*")
@@ -16,6 +20,8 @@ export async function getCharacters(userId: string) {
 export async function getOngoingThreads(
   characterId: number
 ): Promise<Thread[] | { error: string }> {
+  const supabase = await createClient();
+
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
@@ -30,6 +36,8 @@ export async function getOngoingThreads(
 export async function getFinishedThreads(
   characterId: number
 ): Promise<Thread[] | { error: string }> {
+  const supabase = await createClient();
+
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
@@ -43,7 +51,9 @@ export async function getFinishedThreads(
 export async function getCharacterData(
   displayName: string
 ): Promise<ExistingCharacter | { error: string }> {
-  const { data, error } = await supabase
+  const supabase = await createClient();
+
+  const { data: character, error } = await supabase
     .from("characters")
     .select("*")
     .eq("displayName", displayName)
@@ -53,5 +63,5 @@ export async function getCharacterData(
     return { error: "Could not fetch character data." };
   }
 
-  return data as ExistingCharacter;
+  return character as ExistingCharacter;
 }
