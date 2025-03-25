@@ -3,7 +3,11 @@
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "../_hooks/useToast";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread } from "../_schemas/Thread";
+import {
+  actionReturnError,
+  actionReturnSuccess,
+} from "../_utils/action-return";
 import { deleteThreadAction } from "../account/actions-threads";
 import {
   AlertDialog,
@@ -15,13 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/AlertDialog";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
 
 type Props = {
-  thread: Thread;
+  thread: ExistingThread;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };

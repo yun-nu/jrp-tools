@@ -11,8 +11,6 @@ export default async function HeaderUser({
 }) {
   const { email } = await getUserEmail();
 
-  if (!email) return;
-
   if (!user)
     return (
       <Button asChild size="sm" className="font-semibold">

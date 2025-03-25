@@ -17,6 +17,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "./ui/Sidebar";
 import { NavigationMenu } from "./NavigationMenu";
 import { commonLinks, userLinks } from "../_lib/navigation";
@@ -24,6 +25,7 @@ import { Separator } from "./ui/Separator";
 
 export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { push } = useRouter();
+  const { setOpenMobile } = useSidebar();
 
   const handleSignOut = () => {
     startTransition(async () => {
@@ -31,10 +33,12 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
       if (actionReturnSuccess(result)) {
         toast({
           description: result.success,
+          className: "bg-green-700",
         });
         push("/");
       }
     });
+    setOpenMobile(false);
   };
 
   return (

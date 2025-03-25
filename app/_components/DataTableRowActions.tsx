@@ -9,12 +9,17 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "../_hooks/useToast";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread } from "../_schemas/Thread";
+import {
+  actionReturnError,
+  actionReturnSuccess,
+} from "../_utils/action-return";
 import {
   duplicateThreadAction,
   toggleIsFinishedAction,
 } from "../account/actions-threads";
 import DeleteThread from "./DeleteThread";
+import ThreadDialog from "./ThreadDialog";
 import { Button } from "./ui/Button";
 import {
   DropdownMenu,
@@ -23,13 +28,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
-import ThreadDialog from "./ThreadDialog";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
 
-export default function DataTableRowActions({ thread }: { thread: Thread }) {
+export default function DataTableRowActions({
+  thread,
+}: {
+  thread: ExistingThread;
+}) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const { refresh } = useRouter();

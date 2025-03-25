@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { FaUserMinus } from "react-icons/fa";
 import { toast } from "../_hooks/useToast";
-import { Character } from "../_schemas/Character";
+import { Character, ExistingCharacter } from "../_schemas/Character";
 import { deleteCharacterAction } from "../account/actions-characters";
 import {
   AlertDialog,
@@ -21,7 +21,7 @@ import { actionReturnError } from "../_utils/action-return";
 export default function DeleteCharacter({
   character,
 }: {
-  character: Character;
+  character: ExistingCharacter;
 }) {
   const { id, userId, characterName } = character;
   const router = useRouter();
