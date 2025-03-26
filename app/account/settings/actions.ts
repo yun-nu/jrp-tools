@@ -1,6 +1,6 @@
 "use server";
 
-import { getClientAndUser } from "@/app/_lib/action-auth-helpers";
+import { getUserId } from "@/app/_lib/actions-user";
 import { createClient as createServerClient } from "@/app/_lib/supabase-server";
 import {
   EmailAndConfirmation,
@@ -45,7 +45,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 }
 
 export async function deleteUserAction() {
-  const { userId: user } = await getClientAndUser();
+  const { userId: user } = await getUserId();
 
   if (!user) return { error: "User not found" };
 

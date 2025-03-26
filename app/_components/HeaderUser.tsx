@@ -1,7 +1,7 @@
 import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { getUserEmail } from "../_lib/action-auth-helpers";
+import { getUserEmail } from "../_lib/actions-user";
 import { Button } from "./ui/Button";
 
 export default async function HeaderUser({

@@ -1,11 +1,11 @@
 import CharacterDialog from "@/app/_components/CharacterDialog";
 import MessageBox from "@/app/_components/MessageBox";
 import CharacterList from "../../_components/CharacterList";
-import { getClientAndUser } from "../../_lib/action-auth-helpers";
+import { getUserId } from "../../_lib/actions-user";
 import { getCharacters } from "../../_lib/data-service";
 
 export default async function Page() {
-  const { userId } = await getClientAndUser();
+  const { userId } = await getUserId();
 
   if (!userId) return <MessageBox>User not authenticated.</MessageBox>;
 

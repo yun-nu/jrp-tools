@@ -1,6 +1,6 @@
 "use server";
 
-import { getClientAndUser } from "../_lib/action-auth-helpers";
+import { getUserId } from "../_lib/actions-user";
 import { createClient } from "../_lib/supabase-server";
 import {
   ExistingCharacter,
@@ -35,7 +35,7 @@ export async function verifyDisplayNameAvailability(
 export async function addCharacterAction(
   characterData: Omit<NewCharacter, "userId">
 ): Promise<ActionResult> {
-  const { userId, supabase } = await getClientAndUser();
+  const { userId } = await getUserId();
 
   const newCharacter = {
     ...characterData,
@@ -52,6 +52,8 @@ export async function addCharacterAction(
   }
 
   const { data: parsedCharacterData } = parsed;
+
+  const supabase = await createClient();
 
   const { error } = await supabase
     .from("characters")
@@ -83,7 +85,9 @@ export async function editCharacterAction(
   }
 
   const { data: parsedCharacterData } = parsed;
-  const { userId, supabase } = await getClientAndUser();
+
+  const { userId } = await getUserId();
+  const supabase = await createClient();
 
   if (userId === parsedCharacterData.userId) {
     const { error } = await supabase
@@ -106,7 +110,8 @@ export async function deleteCharacterAction({
   userId: characterUserId,
   id: characterId,
 }: Pick<ExistingCharacter, "userId" | "id">) {
-  const { userId, supabase } = await getClientAndUser();
+  const { userId } = await getUserId();
+  const supabase = await createClient();
 
   if (userId === characterUserId) {
     const { error } = await supabase

@@ -1,4 +1,4 @@
-import { getClientAndUser } from "../_lib/action-auth-helpers";
+import { getUserId } from "../_lib/actions-user";
 import {
   getCharacterData,
   getFinishedThreads,
@@ -19,7 +19,7 @@ type CharacterPageResult = CharacterPageData | { error: string } | null;
 export async function getCharacterPageData(
   displayName: Character["displayName"]
 ): Promise<CharacterPageResult> {
-  const { userId: currentUser } = await getClientAndUser();
+  const { userId: currentUser } = await getUserId();
   const character = await getCharacterData(displayName);
 
   if (!character || "error" in character) {
