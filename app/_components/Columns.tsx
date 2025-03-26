@@ -3,12 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, LinkIcon } from "lucide-react";
-import Link from "next/link";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread } from "../_schemas/Thread";
 import DataTableRowActions from "./DataTableRowActions";
+import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
 
-export const threadsCols: ColumnDef<Thread>[] = [
+export const threadsCols: ColumnDef<ExistingThread>[] = [
   {
     accessorKey: "date",
     cell: ({ row }) => {
@@ -20,16 +20,18 @@ export const threadsCols: ColumnDef<Thread>[] = [
         ? format(new Date(date as string), "MMM dd")
         : format(new Date(date as string), "MMM dd yyyy");
 
-      return formattedDate;
+      return (
+        <div className="text-muted-foreground w-[100px]">{formattedDate}</div>
+      );
     },
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex"
+          className="flex items-center gap-2"
         >
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="h-4 w-4" />
           Date
         </Button>
       );
@@ -38,10 +40,20 @@ export const threadsCols: ColumnDef<Thread>[] = [
   {
     accessorKey: "type",
     header: "Type",
+    cell: ({ row }) => (
+      <div className="font-medium">{row.getValue("type")}</div>
+    ),
   },
   {
     accessorKey: "blurb",
     header: "Blurb",
+    cell: ({ row }) => {
+      return (
+        <div className="whitespace-pre-wrap break-words text-sm">
+          {row.getValue("blurb")}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "URL",
@@ -51,13 +63,9 @@ export const threadsCols: ColumnDef<Thread>[] = [
       return (
         <div>
           {thread.url && (
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href={thread.url ? thread.url : "#"}
-            >
-              <LinkIcon />
-            </Link>
+            <StyledLink type="new-window" href={thread.url ? thread.url : "#"}>
+              <LinkIcon className="h-5 w-5" />
+            </StyledLink>
           )}
         </div>
       );
@@ -67,7 +75,11 @@ export const threadsCols: ColumnDef<Thread>[] = [
     id: "actions",
     cell: ({ row }) => {
       const thread = row.original;
-      return <DataTableRowActions thread={thread} />;
+      return (
+        <div className="text-right">
+          <DataTableRowActions thread={thread} />
+        </div>
+      );
     },
     enableHiding: true,
   },
