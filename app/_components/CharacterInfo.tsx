@@ -60,7 +60,11 @@ export default function CharacterInfo({
         </div>
       </div>
 
-      {blurb && <div className="text-sm rounded px-4 py-6 border">{blurb}</div>}
+      {blurb && (
+        <div className="text-sm rounded px-4 py-6 border whitespace-pre-wrap">
+          {blurb}
+        </div>
+      )}
 
       <div className="text-sm">
         <div className="flex flex-col gap-2">
