@@ -21,7 +21,9 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
         : format(new Date(date as string), "MMM dd yyyy");
 
       return (
-        <div className="text-muted-foreground w-[100px]">{formattedDate}</div>
+        <div className="pl-4 text-muted-foreground w-[130px]">
+          {formattedDate}
+        </div>
       );
     },
     header: ({ column }) => {
@@ -31,8 +33,8 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="flex items-center gap-2"
         >
-          <ArrowUpDown className="h-4 w-4" />
           Date
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
       );
     },

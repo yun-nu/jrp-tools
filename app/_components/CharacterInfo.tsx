@@ -29,26 +29,26 @@ export default function CharacterInfo({
   } = character || {};
 
   return (
-    <div className="space-y-4 flex-1 border rounded p-6">
+    <div className="space-y-4 flex-1 border rounded p-6 bg-muted/70">
       <div className="flex gap-4 text-sm">
         {icon && (
           <Image
             src={icon}
             width={100}
             height={100}
-            className="rounded max-w-[100px] max-h-[100px] border"
+            className="rounded max-w-[100px] max-h-[100px] border border-muted-foreground"
             alt="Character Icon"
           />
         )}
         <div className="flex flex-col gap-2 justify-center">
           <span className="block text-3xl font-semibold">{characterName}</span>
           {journalLink && (
-            <Link
+            <StyledLink
               href={journalLink}
               className="flex items-center gap-2 underline underline-offset-4"
             >
               <FaAt /> {journalName || "Journal"}
-            </Link>
+            </StyledLink>
           )}
           {isPublic && !isPublicPage && (
             <>
@@ -61,7 +61,7 @@ export default function CharacterInfo({
       </div>
 
       {blurb && (
-        <div className="text-sm rounded px-4 py-6 border whitespace-pre-wrap">
+        <div className="text-sm rounded px-4 py-6 border border-muted-foreground whitespace-pre-wrap">
           {blurb}
         </div>
       )}
@@ -73,7 +73,7 @@ export default function CharacterInfo({
               <RiHomeHeartLine /> Played at: {gameName}
             </div>
           )}
-          {acLink && (
+          {!isPublicPage && acLink && (
             <Link
               href={acLink ? acLink : "#"}
               className="flex items-center gap-2 underline underline-offset-4"
