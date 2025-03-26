@@ -1,5 +1,5 @@
 import CharacterView from "@/app/_components/CharacterView";
-import ErrorMsg from "@/app/_components/ErrorMsg";
+import MessageBox from "@/app/_components/MessageBox";
 import { getCharacterPageData } from "@/app/_utils/helpers";
 import { Metadata } from "next";
 
@@ -28,7 +28,7 @@ export default async function Page({ params }: Props) {
 
   if (!pageData || "error" in pageData)
     return (
-      <ErrorMsg>{pageData?.error || "Character page not found"}.</ErrorMsg>
+      <MessageBox>{pageData?.error || "Character page not found"}.</MessageBox>
     );
 
   const { character, ongoingThreads, finishedThreads } = pageData;

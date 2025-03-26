@@ -25,9 +25,14 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
     data: { email: parsedEmail },
   } = parsed;
 
-  const { error } = await supabase.auth.updateUser({
-    email: parsedEmail,
-  });
+  const { error } = await supabase.auth.updateUser(
+    {
+      email: parsedEmail,
+    },
+    {
+      emailRedirectTo: `${process.env.ROOT_URL}/account/settings/email-confirmation`,
+    }
+  );
 
   if (error?.status === 422) return { error: "Email already in use" };
 

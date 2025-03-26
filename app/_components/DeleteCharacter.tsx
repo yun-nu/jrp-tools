@@ -2,7 +2,8 @@
 import { useRouter } from "next/navigation";
 import { FaUserMinus } from "react-icons/fa";
 import { toast } from "../_hooks/useToast";
-import { Character, ExistingCharacter } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
+import { actionReturnError } from "../_utils/action-return";
 import { deleteCharacterAction } from "../account/actions-characters";
 import {
   AlertDialog,
@@ -16,7 +17,6 @@ import {
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
 import { Button } from "./ui/Button";
-import { actionReturnError } from "../_utils/action-return";
 
 export default function DeleteCharacter({
   character,
