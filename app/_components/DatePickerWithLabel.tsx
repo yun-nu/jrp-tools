@@ -27,6 +27,8 @@ export default function CheckboxWithText({
   description,
 }: Props) {
   const form = useFormContext();
+  const maxDate = "2028-01-01";
+  const minDate = "2023-01-01";
 
   return (
     <FormField
@@ -60,7 +62,7 @@ export default function CheckboxWithText({
                 selected={field.value}
                 onSelect={field.onChange}
                 disabled={(date) =>
-                  date > new Date("2028-01-01") || date < new Date("2023-01-01")
+                  date > new Date(maxDate) || date < new Date(minDate)
                 }
                 autoFocus
               />

@@ -20,7 +20,7 @@ export default function CharacterHeader({
       <Button
         size="sm"
         variant="secondary"
-        className={`text-xs ml-auto h-6 ${showHeader ? "rounded-b-none" : ""}`}
+        className={`text-xs ml-auto h-6 ${showHeader && "rounded-b-none"}`}
         onClick={() => setShowHeader(!showHeader)}
       >
         {showHeader ? "Close character info" : "Expand character info"}

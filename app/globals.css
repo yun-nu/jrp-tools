@@ -26,16 +26,13 @@
   }
 
   .custom-underline::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-image: url("/underline.svg");
-    background-position: center;
-    background-size: 70%;
-    background-repeat: no-repeat;
-    position: absolute;
-    bottom: -40px;
-    left: 0;
+    @apply content-[''] w-[115%] h-[125%] absolute bottom-[-40px] left-[-35px] bg-primary dark:bg-primary;
+    mask: url("/thread.svg") no-repeat 100% center;
+  }
+
+  .custom-underline svg {
+    fill: #000;
+    stroke: #000;
   }
 
   .dots {
@@ -50,6 +47,13 @@
   @keyframes dots-e3xtdg {
     to {
       clip-path: inset(0 -34% 0 0);
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .custom-underline::after {
+      @apply w-full h-full top-[70%] left-0;
+      /*bottom: -85px;*/
     }
   }
 }

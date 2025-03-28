@@ -1,5 +1,6 @@
 import HeaderUser from "./HeaderUser";
 import TooltipWrapper from "./TooltipWrapper";
+import { ModeToggle } from "./ui/ModeToggle";
 import { SidebarTrigger } from "./ui/Sidebar";
 
 export default function Header({ user }: { user: string | undefined }) {
@@ -9,7 +10,10 @@ export default function Header({ user }: { user: string | undefined }) {
         <SidebarTrigger variant={"secondary"} />
       </TooltipWrapper>
 
-      <HeaderUser user={user} />
+      <div className="flex gap-2">
+        <ModeToggle />
+        <HeaderUser user={user} />
+      </div>
     </nav>
   );
 }

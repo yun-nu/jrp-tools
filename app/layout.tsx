@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
 import { Toaster } from "./_components/ui/Toaster";
 import "./globals.css";
 import { getUserId } from "./_lib/actions-user";
+import { ThemeProvider } from "./_components/ui/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,20 +28,27 @@ export default async function RootLayout({
     : cookieStore.get("sidebar_state")?.value === "true";
 
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased dark h-screen`}>
-        <SidebarProvider defaultOpen={defaultOpen}>
-          <SidebarNavigation isLoggedIn={!!user} />
-          <SidebarInset>
-            <main className="w-full h-full flex flex-col">
-              <Header user={user} />
-              <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
-                {children}
-              </div>
-            </main>
-            <Toaster />
-          </SidebarInset>
-        </SidebarProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} antialiased h-screen`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <SidebarNavigation isLoggedIn={!!user} />
+            <SidebarInset>
+              <main className="w-full h-full flex flex-col">
+                <Header user={user} />
+                <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
+                  {children}
+                </div>
+              </main>
+              <Toaster />
+            </SidebarInset>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

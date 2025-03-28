@@ -8,9 +8,9 @@ export default function Footer() {
       </p>
       <p>
         <StyledLink href="https://github.com/yun-nu/jrp-tools">
-          Open source
+          Project
         </StyledLink>{" "}
-        project built with ❤️ for the hobby. Powered by{" "}
+        built with ❤️ for the hobby. Powered by{" "}
         <StyledLink href="https://ui.shadcn.com">shadcn/ui</StyledLink> and{" "}
         <StyledLink href="https://supabase.com">Supabase</StyledLink>.
       </p>
