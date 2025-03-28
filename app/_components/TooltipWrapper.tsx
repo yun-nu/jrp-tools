@@ -17,7 +17,7 @@ export default function TooltipWrapper({
     <TooltipProvider delayDuration={400} skipDelayDuration={700}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent side="right">
+        <TooltipContent side="bottom">
           <p>{text}</p>
         </TooltipContent>
       </Tooltip>

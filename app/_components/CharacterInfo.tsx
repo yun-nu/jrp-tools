@@ -29,7 +29,7 @@ export default function CharacterInfo({
   } = character || {};
 
   return (
-    <div className="space-y-4 flex-1 border rounded p-6 bg-muted/70">
+    <div className="space-y-4 flex-1 border rounded p-4 xs:p-6 bg-muted/70">
       <div className="flex gap-4 text-sm">
         {icon && (
           <Image

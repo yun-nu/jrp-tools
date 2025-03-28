@@ -21,7 +21,7 @@ export default async function HeaderUser({
     );
 
   return (
-    <div className="ml-auto flex flex-1 sm:justify-between items-center">
+    <div className="md:ml-auto flex md:flex-1 sm:justify-between items-center">
       <Link
         href="/account/characters"
         className="flex flex-col text-xs sm:flex-row sm:text-sm ml-auto gap-2 items-center hover:text-primary/80 transition-colors font-semibold"
