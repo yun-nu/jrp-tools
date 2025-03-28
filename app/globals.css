@@ -53,7 +53,6 @@
   @media screen and (max-width: 1024px) {
     .custom-underline::after {
       @apply w-full h-full top-[70%] left-0;
-      /*bottom: -85px;*/
     }
   }
 }
