@@ -1,10 +1,10 @@
-import { Character } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
 import { CharacterListCard } from "./CharacterListCard";
 
 export default function CharacterList({
   characters,
 }: {
-  characters: Character[];
+  characters: ExistingCharacter[];
 }) {
   if (!characters.length)
     return "It feels lonely with no muses around... why don't you start by adding your first character?";

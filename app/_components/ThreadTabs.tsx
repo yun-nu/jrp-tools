@@ -25,9 +25,9 @@ export default function ThreadTabs({
   characterId,
 }: ThreadTabsProps) {
   return (
-    <div className="mt-12 flex justify-center max-w-[80%] gap-y-6 w-full">
+    <div className="mt-12 flex justify-center lg:max-w-[80%] gap-y-6 w-full">
       <Tabs defaultValue="ongoing" className="w-full min-w-[60%]">
-        <TabsList className="grid max-w-[50%] m-auto grid-cols-2">
+        <TabsList className="grid md:max-w-[50%] m-auto grid-cols-2">
           <TabsTrigger value="ongoing">
             <h2>Ongoing</h2>
           </TabsTrigger>

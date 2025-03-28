@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineContactPage } from "react-icons/md";
 import { RiHomeHeartLine } from "react-icons/ri";
-import { Character } from "../_schemas/Character";
+import { ExistingCharacter } from "../_schemas/Character";
 import CharacterDialog from "./CharacterDialog";
 import DeleteCharacter from "./DeleteCharacter";
 import { Badge } from "./ui/Badge";
@@ -15,7 +15,11 @@ import {
   CardTitle,
 } from "./ui/Card";
 
-export function CharacterListCard({ character }: { character: Character }) {
+export function CharacterListCard({
+  character,
+}: {
+  character: ExistingCharacter;
+}) {
   const { displayName, characterName, gameName, isPublic, journalName, icon } =
     character || {};
 
@@ -28,7 +32,7 @@ export function CharacterListCard({ character }: { character: Character }) {
             height={50}
             src={icon}
             alt="Icon"
-            className="rounded max-w-[50px] max-h-[50px] border"
+            className="rounded max-w-[50px] max-h-[50px] border border-muted-foreground"
           />
         )}
         <div className="flex justify-between flex-1 items-center">

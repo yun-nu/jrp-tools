@@ -13,7 +13,7 @@ export default async function HeaderUser({
 
   if (!user)
     return (
-      <Button asChild size="sm" className="font-semibold">
+      <Button asChild size="sm" className="font-semibold md:ml-auto">
         <Link href="/login">
           <PiSignInBold /> Log in
         </Link>

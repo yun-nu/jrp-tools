@@ -53,9 +53,9 @@ function Accordions() {
         </AccordionTrigger>
         <AccordionContent className="space-y-4">
           <p>
-            If you&apos;re logged in with your Google account when prompted to
-            choose an account to continue to this application, instead of
-            &quot;JRP Tools&quot;, the name shown might be:
+            On the consent page, when prompted to login or choose an account to
+            continue to this application, instead of &quot;JRP Tools&quot;, the
+            name shown might be:
             <b className="block my-2">zesrktxbteiqseaumjpa.supabase.co</b>
           </p>
 
