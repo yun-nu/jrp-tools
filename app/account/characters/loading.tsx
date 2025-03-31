@@ -2,7 +2,7 @@ import { Skeleton } from "@/app/_components/ui/Skeleton";
 
 export default async function Loading() {
   return (
-    <div className="mt-16 sm:flex flex-col gap-12 lg:flex-row sm:justify-center">
+    <div className="flex flex-col gap-12 lg:flex-row sm:justify-center sm:mt-16">
       {Array.from({ length: 3 }).map((_, i) => (
         <SkeletonCard key={i} />
       ))}
