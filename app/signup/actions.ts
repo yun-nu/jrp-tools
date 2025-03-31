@@ -5,9 +5,14 @@ import {
   EmailAndConfirmation,
   emailAndConfirmationSchema,
 } from "../_schemas/Auth";
+import { ActionResult } from "../_utils/action-return";
 
-export async function signUpOTPAction(input: EmailAndConfirmation["email"]) {
-  const parsed = emailAndConfirmationSchema.safeParse(input);
+export async function signUpOTPAction({
+  email,
+}: {
+  email: EmailAndConfirmation["email"];
+}): Promise<ActionResult> {
+  const parsed = emailAndConfirmationSchema.safeParse(email);
 
   if (!parsed.success) {
     return {
@@ -16,9 +21,7 @@ export async function signUpOTPAction(input: EmailAndConfirmation["email"]) {
     };
   }
 
-  const {
-    data: { email: parsedEmail },
-  } = parsed;
+  const { email: parsedEmail } = parsed.data;
 
   const supabase = await createClient();
 
