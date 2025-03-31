@@ -3,8 +3,11 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
+import { ActionResult } from "../_utils/action-return";
 
-export async function signInOTPAction({ email }: Pick<SignInOTP, "email">) {
+export async function signInOTPAction({
+  email,
+}: Pick<SignInOTP, "email">): Promise<ActionResult> {
   const parsed = signInOTPSchema.pick({ email: true }).safeParse({ email });
 
   if (!parsed.success) {
@@ -30,9 +33,13 @@ export async function signInOTPAction({ email }: Pick<SignInOTP, "email">) {
     return { error: "Please wait a minute before attempting to login again." };
 
   if (error) return { error: `A server error occurred: ${error.message}` };
+
+  return { success: "Logged in successfully" };
 }
 
-export async function verifyOTPLoginAction(data: SignInOTP) {
+export async function verifyOTPLoginAction(
+  data: SignInOTP
+): Promise<ActionResult> {
   const parsed = signInOTPSchema.safeParse(data);
 
   if (!parsed.success) {

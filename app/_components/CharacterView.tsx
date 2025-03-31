@@ -1,13 +1,12 @@
-import React from "react";
 import { Character, ExistingCharacter } from "../_schemas/Character";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread } from "../_schemas/Thread";
 import CharacterHeader from "./CharacterHeader";
 import ThreadTabs from "./ThreadTabs";
 
 interface CharacterViewProps {
   character: Character | ExistingCharacter;
-  ongoingThreads: Thread[];
-  finishedThreads: Thread[];
+  ongoingThreads: ExistingThread[];
+  finishedThreads: ExistingThread[];
   isPublicPage?: boolean;
   showTableActions?: boolean;
   characterId?: number;

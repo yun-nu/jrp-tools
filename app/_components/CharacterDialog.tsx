@@ -41,7 +41,7 @@ export default function CharacterDialog({
     add: {
       title: "Add new character",
       description:
-        'Fields not marked as "required" are optional. Any of the fields can be changed later.',
+        'Fields not marked as "required" are optional. Entered data can be changed later.',
       trigger: (
         <Button>
           <FaUserPlus />

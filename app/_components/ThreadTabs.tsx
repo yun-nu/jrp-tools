@@ -8,12 +8,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
-import { Thread } from "@/app/_schemas/Thread";
+import { ExistingThread } from "@/app/_schemas/Thread";
 import { ExistingCharacter } from "../_schemas/Character";
 
 type ThreadTabsProps = {
-  ongoingThreads: Thread[];
-  finishedThreads: Thread[];
+  ongoingThreads: ExistingThread[];
+  finishedThreads: ExistingThread[];
   showTableActions?: boolean;
   characterId?: ExistingCharacter["id"];
 };

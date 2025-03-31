@@ -47,7 +47,7 @@ export function InputWithLabel({
                 <Input
                   {...field}
                   id={fieldTitle}
-                  className="w-full max-w-xs"
+                  className="w-full max-w-xs text-sm"
                   placeholder={placeholder}
                   value={field.value}
                   onChange={(e) => field.onChange(e.target.value)}

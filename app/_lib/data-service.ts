@@ -1,10 +1,10 @@
 import { Character, ExistingCharacter } from "../_schemas/Character";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread, Thread } from "../_schemas/Thread";
 import { createClient } from "./supabase-server";
 
 export async function getCharacters(
   userId: Character["userId"]
-): Promise<Character[] | { error: string }> {
+): Promise<ExistingCharacter[] | { error: string }> {
   const supabase = await createClient();
 
   const { data: characters, error } = await supabase
@@ -14,12 +14,12 @@ export async function getCharacters(
 
   if (error) return { error: "Could not fetch character list." };
 
-  return characters as Character[];
+  return characters;
 }
 
 export async function getOngoingThreads(
   characterId: number
-): Promise<Thread[] | { error: string }> {
+): Promise<ExistingThread[] | { error: string }> {
   const supabase = await createClient();
 
   const { data: threads, error } = await supabase
@@ -30,12 +30,12 @@ export async function getOngoingThreads(
 
   if (error) return { error: "Could not fetch ongoing threads." };
 
-  return threads as Thread[];
+  return threads;
 }
 
 export async function getFinishedThreads(
   characterId: number
-): Promise<Thread[] | { error: string }> {
+): Promise<ExistingThread[] | { error: string }> {
   const supabase = await createClient();
 
   const { data: threads, error } = await supabase
@@ -45,7 +45,7 @@ export async function getFinishedThreads(
     .eq("isFinished", true);
   if (error) return { error: "Could not fetch finished threads." };
 
-  return threads as Thread[];
+  return threads;
 }
 
 export async function getCharacterData(
@@ -63,5 +63,5 @@ export async function getCharacterData(
     return { error: "Could not fetch character data." };
   }
 
-  return character as ExistingCharacter;
+  return character;
 }

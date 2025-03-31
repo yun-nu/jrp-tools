@@ -2,7 +2,6 @@ import CharacterView from "@/app/_components/CharacterView";
 import MessageBox from "@/app/_components/MessageBox";
 import { getCharacterPageData } from "@/app/_utils/helpers";
 import { Metadata } from "next";
-import Loading from "./loading";
 
 type Props = {
   params: Promise<{ displayName: string }>;
@@ -39,13 +38,12 @@ export default async function Page({ params }: Props) {
     );
 
   return (
-    // <CharacterView
-    //   character={character}
-    //   ongoingThreads={ongoingThreads}
-    //   finishedThreads={finishedThreads}
-    //   showTableActions
-    //   characterId={character.id}
-    // />
-    <Loading />
+    <CharacterView
+      character={character}
+      ongoingThreads={ongoingThreads}
+      finishedThreads={finishedThreads}
+      showTableActions
+      characterId={character.id}
+    />
   );
 }

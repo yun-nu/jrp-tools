@@ -7,7 +7,12 @@ export default function CharacterList({
   characters: ExistingCharacter[];
 }) {
   if (!characters.length)
-    return "It feels lonely with no muses around... why don't you start by adding your first character?";
+    return (
+      <p className="text-center">
+        It feels lonely with no muses around... why don&apos;t you start by
+        adding your first character?
+      </p>
+    );
 
   return (
     <div className="grid gap-12 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 place-items-center">

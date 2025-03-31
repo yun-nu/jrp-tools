@@ -14,7 +14,7 @@ export type EmailAndConfirmation = z.infer<typeof emailAndConfirmationSchema>;
 
 export const signInOTPSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
-  OTPCode: z.string().max(6, { message: "Enter the 6-digit code" }),
+  OTPCode: z.string().max(6, { message: "Code must be 6 characters" }),
 });
 
 export type SignInOTP = z.infer<typeof signInOTPSchema>;

@@ -22,7 +22,7 @@ export default async function Page({ searchParams }: SearchParams) {
   if (code?.length === 36)
     return <MessageBox>Email address changed successfully.</MessageBox>;
 
-  if (!message || !code) {
+  if (!message || !code || code?.length !== 36) {
     redirect("/account/settings");
   }
 }

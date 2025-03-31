@@ -56,7 +56,7 @@ export async function deleteUserAction() {
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(user);
 
-  if (error) return { error: "Could not delete user" };
+  if (error) return { error: "Could not delete account" };
 
   const cookieStore = await cookies();
   const allCookies = cookieStore.getAll();
@@ -66,6 +66,6 @@ export async function deleteUserAction() {
   }
 
   return {
-    success: "User deleted successfully",
+    success: "Account deleted successfully",
   };
 }

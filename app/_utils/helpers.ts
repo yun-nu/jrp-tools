@@ -5,13 +5,13 @@ import {
   getOngoingThreads,
 } from "../_lib/data-service";
 import { Character, ExistingCharacter } from "../_schemas/Character";
-import { Thread } from "../_schemas/Thread";
+import { ExistingThread } from "../_schemas/Thread";
 
 interface CharacterPageData {
   character: ExistingCharacter;
   isOwner: boolean;
-  ongoingThreads: Thread[];
-  finishedThreads: Thread[];
+  ongoingThreads: ExistingThread[];
+  finishedThreads: ExistingThread[];
 }
 
 type CharacterPageResult = CharacterPageData | { error: string } | null;

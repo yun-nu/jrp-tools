@@ -6,9 +6,7 @@ import {
   emailAndConfirmationSchema,
 } from "../_schemas/Auth";
 
-export async function signUpOTPAction(input: EmailAndConfirmation) {
-  const email = input.email;
-
+export async function signUpOTPAction(input: EmailAndConfirmation["email"]) {
   const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
@@ -18,11 +16,18 @@ export async function signUpOTPAction(input: EmailAndConfirmation) {
     };
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithOtp({
-    email: email,
-  });
+  const {
+    data: { email: parsedEmail },
+  } = parsed;
 
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email: parsedEmail,
+    options: {
+      emailRedirectTo: `${process.env.ROOT_URL}/signup/success`,
+    },
+  });
   if (error) return { error: "Could not sign up" };
 
   return {

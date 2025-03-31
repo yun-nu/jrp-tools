@@ -1,19 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { startTransition } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa6";
 import { z } from "zod";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
+import { actionReturnError } from "../_utils/action-return";
 import {
   signInGoogleAction,
   signInOTPAction,
   verifyOTPLoginAction,
 } from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
+import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
 import {
   Card,
@@ -24,7 +25,6 @@ import {
   CardTitle,
 } from "./ui/Card";
 import { Form } from "./ui/Form";
-import StyledLink from "./StyledLink";
 
 export default function SignInForm() {
   const form = useForm<z.infer<typeof signInOTPSchema>>({
@@ -45,7 +45,7 @@ export default function SignInForm() {
       if (!isLastStep) {
         const email = form.getValues("email");
         const resultStep1 = await signInOTPAction({ email });
-        if (resultStep1?.error || resultStep1?.errors) {
+        if (actionReturnError(resultStep1)) {
           form.setError("email", {
             message: resultStep1.error || resultStep1.message,
           });
@@ -53,7 +53,7 @@ export default function SignInForm() {
         } else return next();
       }
       const resultStep2 = await verifyOTPLoginAction(form.getValues());
-      if (resultStep2?.error)
+      if (actionReturnError(resultStep2))
         form.setError("OTPCode", { message: resultStep2.error });
     });
   };

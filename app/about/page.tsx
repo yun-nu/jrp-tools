@@ -57,18 +57,15 @@ export default async function Page() {
             sorting or filtering options.
           </p>
           <p>
-            This app is my vision of making a thread tracker that is easily
-            shareable and easy to use, built within my technical and financial
-            limitations.
+            This app is my vision of a thread tracker that is easy to use and to
+            share, built within my technical and financial limitations.
           </p>
 
           <p>
-            Why &quot;tools&quot; when it&apos;s just a thread tracker, you
+            But why &quot;tools&quot; when it&apos;s just a thread tracker, you
             ask...? Well, shareable <b>CR chart</b> and <b>Permissions</b> pages
             are two of the more ambitious features I&apos;d like to implement
-            going forward. Whether it&apos;ll be feasible or not will heavily
-            depend on if the app gets (at least a couple of) users, and if it
-            looks like the database can handle the additional workload.
+            going forward, if feasible.
           </p>
         </AccordionContent>
       </AccordionItem>
