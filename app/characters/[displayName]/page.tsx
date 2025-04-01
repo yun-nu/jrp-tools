@@ -16,9 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: "Character page not found",
     };
 
+  if (pageData.isOwner && !pageData.character.isPublic)
+    return {
+      title: "Character page is private",
+    };
+
   return {
     title: `${displayName}'s public page`,
-    description: `${displayName}'s threads on JRP Tools`,
+    description: `${displayName}'s public page on JRP Tools`,
   };
 }
 
@@ -31,7 +36,11 @@ export default async function Page({ params }: Props) {
       <MessageBox>{pageData?.error || "Character page not found"}.</MessageBox>
     );
 
-  const { character, ongoingThreads, finishedThreads } = pageData;
+  const { character, ongoingThreads, finishedThreads, isOwner } = pageData;
+
+  if (isOwner) {
+    return <MessageBox>This character page is set to private.</MessageBox>;
+  }
 
   return (
     <CharacterView

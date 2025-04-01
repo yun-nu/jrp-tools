@@ -1,4 +1,4 @@
-## Journal RP Tools (Beta)
+## JRP Tools
 
 First, run the development server:
 

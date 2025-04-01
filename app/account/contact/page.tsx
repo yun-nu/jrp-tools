@@ -7,9 +7,15 @@ import {
   CardTitle,
 } from "@/app/_components/ui/Card";
 import { Separator } from "@/app/_components/ui/Separator";
+import { Metadata } from "next";
 import Link from "next/link";
 import { RiMailSendLine } from "react-icons/ri";
 import { SiDreamstime, SiPlurk } from "react-icons/si";
+
+export const metadata: Metadata = {
+  title: "Contact - JRP Tools",
+  description: "Offer general suggestions, report issues or get support",
+};
 
 export default function Page() {
   return (

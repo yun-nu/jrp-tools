@@ -1,8 +1,14 @@
 import CharacterDialog from "@/app/_components/CharacterDialog";
 import MessageBox from "@/app/_components/MessageBox";
+import { Metadata } from "next";
 import CharacterList from "../../_components/CharacterList";
 import { getUserId } from "../../_lib/actions-user";
 import { getCharacters } from "../../_lib/data-service";
+
+export const metadata: Metadata = {
+  title: "Character list - JRP Tools",
+  description: "Your character list on JRP Tools",
+};
 
 export default async function Page() {
   const { userId } = await getUserId();

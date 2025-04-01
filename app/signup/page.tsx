@@ -1,12 +1,18 @@
 import { CircleAlert, MessageCircleQuestion } from "lucide-react";
+import { Metadata } from "next";
 import { SignUpOTP } from "../_components/SignUpOTP";
+import StyledLink from "../_components/StyledLink";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
-import StyledLink from "../_components/StyledLink";
+
+export const metadata: Metadata = {
+  title: "Sign up - JRP Tools",
+  description: "Sign up to JRP Tools",
+};
 
 export default function Page() {
   return (

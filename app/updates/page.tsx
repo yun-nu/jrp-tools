@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import { Update01 } from "../_data/changelog/Update01";
 
 export const metadata: Metadata = {
-  title: "Updates",
+  title: "Updates - JRP Tools",
+  description: "JRP Tools Changelog",
 };
 
 export default async function Page() {

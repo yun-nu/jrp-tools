@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Page not found",
+  title: "Page not found - JRP Tools",
 };
 
 export default function NotFound() {

@@ -10,8 +10,7 @@ type SearchParams = {
 };
 
 export const metadata: Metadata = {
-  title: "Welcome to JRP Tools!",
-  description: "Account created successfully",
+  title: "Welcome to JRP Tools",
 };
 
 export default async function Page({ searchParams }: SearchParams) {

@@ -7,7 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/Card";
+import { Metadata } from "next";
 import { updateEmailAction } from "./actions";
+
+export const metadata: Metadata = {
+  title: "Account Settings - JRP Tools",
+  description: "Your account settings",
+};
 
 export default async function Page() {
   return (

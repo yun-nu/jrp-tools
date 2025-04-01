@@ -12,8 +12,8 @@ import { ThemeProvider } from "./_components/ui/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JRP Tools (beta)",
-  description: "Lightweight thread tracker for journal roleplay",
+  title: "JRP Tools",
+  description: "Lightweight thread tracker for journal-based roleplay",
 };
 
 export default async function RootLayout({

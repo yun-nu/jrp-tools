@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 
   return {
-    title: `${displayName}`,
-    description: `${pageData.character.displayName}'s threads on JRP Tools`,
+    title: `${displayName} - Manage threads`,
+    description: `Manage ${displayName}'s threads`,
   };
 }
 

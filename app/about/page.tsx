@@ -1,18 +1,18 @@
 import { Metadata } from "next";
+import { GiThink } from "react-icons/gi";
+import { RiFlowChart } from "react-icons/ri";
+import { HowTo } from "../_components/HowTo";
+import StyledLink from "../_components/StyledLink";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
-import { GiThink } from "react-icons/gi";
-import { BsPersonWorkspace } from "react-icons/bs";
-import StyledLink from "../_components/StyledLink";
-import { RiFlowChart } from "react-icons/ri";
-import { HowTo } from "../_components/HowTo";
 
 export const metadata: Metadata = {
   title: "About JRP Tools",
+  description: "The purpose and origin of JRP Tools",
 };
 
 export default async function Page() {

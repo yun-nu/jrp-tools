@@ -10,7 +10,7 @@ type SearchParams = {
 };
 
 export const metadata: Metadata = {
-  title: "Email Confirmation",
+  title: "Email Confirmation - JRP Tools",
   description: "Confirm your email change",
 };
 
