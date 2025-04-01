@@ -4,6 +4,7 @@ const baseCharacterSchema = z.object({
   displayName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
+    .max(30, { message: "Must be less than 30 characters long" })
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Only letters, numbers, and underscores are allowed."
@@ -11,6 +12,7 @@ const baseCharacterSchema = z.object({
   characterName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
+    .max(50, { message: "Must be less than 50 characters long" })
     .trim(),
   icon: z
     .union([
@@ -24,11 +26,11 @@ const baseCharacterSchema = z.object({
     .optional(),
   gameName: z
     .string()
-    .max(100, { message: "Must be less than 100 characters long" })
+    .max(50, { message: "Must be less than 50 characters long" })
     .optional(),
   journalName: z
     .string()
-    .max(100, { message: "Must be less than 100 characters long" }),
+    .max(50, { message: "Must be less than 50 characters long" }),
   journalLink: z
     .union([
       z

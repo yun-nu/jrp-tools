@@ -7,7 +7,6 @@ import { getCharacters } from "../../_lib/data-service";
 
 export const metadata: Metadata = {
   title: "Character list - JRP Tools",
-  description: "Your character list on JRP Tools",
 };
 
 export default async function Page() {

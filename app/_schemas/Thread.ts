@@ -17,7 +17,7 @@ const baseThreadSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   type: z
     .string()
-    .max(50, { message: "Must be less than 50 characters long" })
+    .max(30, { message: "Must be less than 30 characters long" })
     .optional(),
   blurb: z
     .string()

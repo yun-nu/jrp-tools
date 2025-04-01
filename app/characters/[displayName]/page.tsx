@@ -38,7 +38,7 @@ export default async function Page({ params }: Props) {
 
   const { character, ongoingThreads, finishedThreads, isOwner } = pageData;
 
-  if (isOwner) {
+  if (isOwner && !pageData.character.isPublic) {
     return <MessageBox>This character page is set to private.</MessageBox>;
   }
 
