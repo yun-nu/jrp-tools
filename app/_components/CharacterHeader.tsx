@@ -16,7 +16,7 @@ export default function CharacterHeader({
   if (!character) return null;
 
   return (
-    <div className="flex flex-col lg:max-w-[600px] md:w-[90%]">
+    <div className="flex flex-col w-full sm:max-w-[600px] sm:w-[90%]">
       <Button
         size="sm"
         variant="secondary"

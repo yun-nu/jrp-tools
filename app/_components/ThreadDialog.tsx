@@ -61,7 +61,7 @@ export default function ThreadDialog(props: ThreadDialogProps) {
     add: {
       title: "Add new thread",
       trigger: (
-        <Button>
+        <Button className="w-full sm:max-w-[400px]">
           <FaUserPlus />
           Add new thread
         </Button>

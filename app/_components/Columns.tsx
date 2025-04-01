@@ -20,11 +20,7 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
         ? format(new Date(date as string), "MMM dd")
         : format(new Date(date as string), "MMM dd yyyy");
 
-      return (
-        <div className="pl-4 text-muted-foreground w-[130px]">
-          {formattedDate}
-        </div>
-      );
+      return <div className="pl-4 text-muted-foreground">{formattedDate}</div>;
     },
     header: ({ column }) => {
       return (

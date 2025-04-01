@@ -1,9 +1,10 @@
-import { Character, ExistingCharacter } from "../_schemas/Character";
-import { ExistingThread, Thread } from "../_schemas/Thread";
+import { User } from "@supabase/supabase-js";
+import { ExistingCharacter } from "../_schemas/Character";
+import { ExistingThread } from "../_schemas/Thread";
 import { createClient } from "./supabase-server";
 
 export async function getCharacters(
-  userId: Character["userId"]
+  userId: User["id"]
 ): Promise<ExistingCharacter[] | { error: string }> {
   const supabase = await createClient();
 
@@ -18,7 +19,7 @@ export async function getCharacters(
 }
 
 export async function getOngoingThreads(
-  characterId: number
+  characterId: ExistingCharacter["id"]
 ): Promise<ExistingThread[] | { error: string }> {
   const supabase = await createClient();
 
@@ -34,7 +35,7 @@ export async function getOngoingThreads(
 }
 
 export async function getFinishedThreads(
-  characterId: number
+  characterId: ExistingCharacter["id"]
 ): Promise<ExistingThread[] | { error: string }> {
   const supabase = await createClient();
 
@@ -49,7 +50,7 @@ export async function getFinishedThreads(
 }
 
 export async function getCharacterData(
-  displayName: string
+  displayName: ExistingCharacter["displayName"]
 ): Promise<ExistingCharacter | { error: string }> {
   const supabase = await createClient();
 

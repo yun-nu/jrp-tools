@@ -31,14 +31,12 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   showActions?: boolean;
-  characterId?: ExistingCharacter["id"];
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
   showActions = false,
-  characterId,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -71,25 +69,27 @@ export default function DataTable<TData, TValue>({
   return (
     <div>
       <div className="flex items-center justify-between py-4">
-        {characterId && <ThreadDialog characterId={characterId} mode="add" />}
         <Input
+          className="text-sm max-w-[250px]"
           placeholder="Search blurb"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("blurb")?.setFilterValue(event.target.value)
           }
-          className="max-w-[250px]"
         />
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader className="bg-muted">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className="bg-muted px-2 sm:px-4"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -110,7 +110,7 @@ export default function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="px-2 sm:px-4">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

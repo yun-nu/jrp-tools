@@ -1,6 +1,6 @@
 import CharacterView from "@/app/_components/CharacterView";
 import MessageBox from "@/app/_components/MessageBox";
-import { getCharacterPageData } from "@/app/_utils/helpers";
+import { getCharacterPageData } from "@/app/_utils/page-data";
 import { Metadata } from "next";
 
 type Props = {
@@ -43,7 +43,6 @@ export default async function Page({ params }: Props) {
       ongoingThreads={ongoingThreads}
       finishedThreads={finishedThreads}
       showTableActions
-      characterId={character.id}
     />
   );
 }
