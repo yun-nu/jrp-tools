@@ -20,14 +20,14 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
         ? format(new Date(date as string), "MMM dd")
         : format(new Date(date as string), "MMM dd yyyy");
 
-      return <div className="pl-4 text-muted-foreground">{formattedDate}</div>;
+      return <div className="text-muted-foreground">{formattedDate}</div>;
     },
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 p-0"
         >
           Date
           <ArrowUpDown className="h-4 w-4" />
