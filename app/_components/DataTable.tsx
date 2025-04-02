@@ -70,8 +70,8 @@ export default function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center justify-between py-4">
         <Input
-          className="text-sm max-w-[250px]"
-          placeholder="Search blurb"
+          className="text-sm max-w-[170px] xs:max-w-[230px] sm:max-w-[300px]"
+          placeholder="Search blurb column"
           value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("blurb")?.setFilterValue(event.target.value)
@@ -86,7 +86,10 @@ export default function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="bg-muted sm:px-8">
+                    <TableHead
+                      key={header.id}
+                      className="bg-muted px-2 sm:px-8"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -107,7 +110,7 @@ export default function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="sm:px-8">
+                    <TableCell key={cell.id} className="px-2 sm:px-8">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

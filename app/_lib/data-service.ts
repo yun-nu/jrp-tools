@@ -1,7 +1,8 @@
 import { User } from "@supabase/supabase-js";
-import { ExistingCharacter } from "../_schemas/Character";
+import { Character, ExistingCharacter } from "../_schemas/Character";
 import { ExistingThread } from "../_schemas/Thread";
 import { createClient } from "./supabase-server";
+import { getUserId } from "./actions-user";
 
 export async function getCharacters(
   userId: User["id"]
@@ -18,7 +19,7 @@ export async function getCharacters(
   return characters;
 }
 
-export async function getOngoingThreads(
+export async function getThreads(
   characterId: ExistingCharacter["id"]
 ): Promise<ExistingThread[] | { error: string }> {
   const supabase = await createClient();
@@ -26,25 +27,9 @@ export async function getOngoingThreads(
   const { data: threads, error } = await supabase
     .from("threads")
     .select("*")
-    .eq("characterId", characterId)
-    .eq("isFinished", false);
+    .eq("characterId", characterId);
 
-  if (error) return { error: "Could not fetch ongoing threads." };
-
-  return threads;
-}
-
-export async function getFinishedThreads(
-  characterId: ExistingCharacter["id"]
-): Promise<ExistingThread[] | { error: string }> {
-  const supabase = await createClient();
-
-  const { data: threads, error } = await supabase
-    .from("threads")
-    .select("*")
-    .eq("characterId", characterId)
-    .eq("isFinished", true);
-  if (error) return { error: "Could not fetch finished threads." };
+  if (error) return { error: "Could not fetch threads." };
 
   return threads;
 }
@@ -65,4 +50,42 @@ export async function getCharacterData(
   }
 
   return character;
+}
+
+interface CharacterPageData {
+  character: ExistingCharacter;
+  isOwner: boolean;
+  ongoingThreads: ExistingThread[];
+  finishedThreads: ExistingThread[];
+}
+
+type CharacterPageResult = CharacterPageData | { error: string } | null;
+
+export async function getCharacterPageData(
+  displayName: Character["displayName"]
+): Promise<CharacterPageResult> {
+  const { userId: currentUser } = await getUserId();
+  const character = await getCharacterData(displayName);
+
+  if (!character || "error" in character) {
+    return null;
+  }
+
+  const isOwner = Boolean(currentUser) && currentUser === character.userId;
+
+  const threads = await getThreads(character.id);
+
+  if ("error" in threads) {
+    return { error: "Could not load threads." };
+  }
+
+  const ongoingThreads = threads.filter((thread) => !thread.isFinished);
+  const finishedThreads = threads.filter((thread) => thread.isFinished);
+
+  return {
+    character,
+    isOwner,
+    ongoingThreads,
+    finishedThreads,
+  };
 }

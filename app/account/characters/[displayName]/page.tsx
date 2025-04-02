@@ -1,6 +1,7 @@
 import CharacterView from "@/app/_components/CharacterView";
 import MessageBox from "@/app/_components/MessageBox";
-import { getCharacterPageData } from "@/app/_utils/page-data";
+import { getCharacterPageData } from "@/app/_lib/data-service";
+
 import { Metadata } from "next";
 
 type Props = {
