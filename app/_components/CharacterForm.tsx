@@ -124,7 +124,7 @@ export function CharacterForm({
         <InputWithLabel
           fieldTitle="Character Name"
           nameInSchema="characterName"
-          description="Required. This the name that will be displayed on your character list and page."
+          description="Required. This name will be displayed on your character list and page."
         />
 
         <InputWithLabel
@@ -147,13 +147,13 @@ export function CharacterForm({
         <InputWithLabel
           fieldTitle="Journal Link"
           nameInSchema="journalLink"
-          placeholder="Must start with http:// or https://"
+          description="Must start with http:// or https://"
         />
 
         <InputWithLabel
           fieldTitle="AC Link"
           nameInSchema="acLink"
-          placeholder="Must start with http:// or https://"
+          description="Must start with http:// or https://"
         />
 
         <CheckboxWithText

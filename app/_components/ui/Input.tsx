@@ -1,21 +1,3 @@
-interface InputProps {
-  label: string;
-  id: string;
-  description?: string;
-  placeholder?: string;
-  required?: boolean;
-  pattern?: string;
-  type: string;
-  value?: string;
-  minLength?: number;
-  min?: number;
-  max?: number;
-  errorMsg?: string;
-  autoFocus?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
-}
-
 import * as React from "react";
 
 import { cn } from "@/app/_utils/cn-utils";

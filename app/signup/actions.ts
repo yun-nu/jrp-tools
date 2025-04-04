@@ -7,11 +7,9 @@ import {
 } from "../_schemas/Auth";
 import { ActionResult } from "../_utils/action-return";
 
-export async function signUpOTPAction({
-  email,
-}: {
-  email: EmailAndConfirmation["email"];
-}): Promise<ActionResult> {
+export async function signUpOTPAction(
+  email: EmailAndConfirmation["email"]
+): Promise<ActionResult> {
   const parsed = emailAndConfirmationSchema.safeParse(email);
 
   if (!parsed.success) {
@@ -31,6 +29,7 @@ export async function signUpOTPAction({
       emailRedirectTo: `${process.env.ROOT_URL}/signup/success`,
     },
   });
+
   if (error) return { error: "Could not sign up" };
 
   return {

@@ -4,6 +4,15 @@ import { ExistingThread } from "../_schemas/Thread";
 import { createClient } from "./supabase-server";
 import { getUserId } from "./actions-user";
 
+interface CharacterPageData {
+  character: ExistingCharacter;
+  isOwner: boolean;
+  ongoingThreads: ExistingThread[];
+  finishedThreads: ExistingThread[];
+}
+
+type CharacterPageResult = CharacterPageData | { error: string } | null;
+
 export async function getCharacters(
   userId: User["id"]
 ): Promise<ExistingCharacter[] | { error: string }> {
@@ -51,15 +60,6 @@ export async function getCharacterData(
 
   return character;
 }
-
-interface CharacterPageData {
-  character: ExistingCharacter;
-  isOwner: boolean;
-  ongoingThreads: ExistingThread[];
-  finishedThreads: ExistingThread[];
-}
-
-type CharacterPageResult = CharacterPageData | { error: string } | null;
 
 export async function getCharacterPageData(
   displayName: Character["displayName"]

@@ -36,7 +36,7 @@ export function CharacterListCard({
           />
         )}
         <div className="flex justify-between flex-1 items-center">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <CardTitle>{characterName}</CardTitle>
             <CardDescription>@ {displayName}</CardDescription>
           </div>
