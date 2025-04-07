@@ -4,10 +4,9 @@ import { cookies } from "next/headers";
 import Header from "./_components/Header";
 import { SidebarNavigation } from "./_components/SidebarNavigation";
 import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
+import { ThemeProvider } from "./_components/ui/ThemeProvider";
 import { Toaster } from "./_components/ui/Toaster";
 import "./globals.css";
-import { getUserId } from "./_lib/actions-user";
-import { ThemeProvider } from "./_components/ui/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +20,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId: user } = await getUserId();
   const cookieStore = await cookies();
   const defaultOpen = !cookieStore.get("sidebar_state")
     ? true
     : cookieStore.get("sidebar_state")?.value === "true";
+  const email = cookieStore.get("logged-in-as")?.value;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -40,10 +39,10 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider defaultOpen={defaultOpen}>
-            <SidebarNavigation isLoggedIn={!!user} />
+            <SidebarNavigation isLoggedIn={!!email} />
             <SidebarInset>
               <main className="w-full h-full flex flex-col">
-                <Header user={user} />
+                <Header />
                 <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
                   {children}
                 </div>

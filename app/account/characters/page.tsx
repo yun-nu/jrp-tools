@@ -1,8 +1,8 @@
 import CharacterDialog from "@/app/_components/CharacterDialog";
 import MessageBox from "@/app/_components/MessageBox";
+import { getUserId } from "@/app/_lib/auth";
 import { Metadata } from "next";
 import CharacterList from "../../_components/CharacterList";
-import { getUserId } from "../../_lib/actions-user";
 import { getCharacters } from "../../_lib/data-service";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const { userId } = await getUserId();
+  const userId = await getUserId();
 
   if (!userId) return <MessageBox>User not authenticated.</MessageBox>;
 

@@ -2,7 +2,7 @@
 
 import nodemailer from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
-import { ContactForm } from "../_schemas/Auth";
+import { ContactForm } from "../../_schemas/Auth";
 
 export async function contactFormAction(data: ContactForm) {
   const { name, message } = data || {};

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
 import { ActionResult } from "../_utils/action-return";
+import { cookies } from "next/headers";
 
 export async function signInOTPAction({
   email,
@@ -69,6 +70,13 @@ export async function signOutAction() {
 
   const { error } = await supabase.auth.signOut();
   if (error) return { error: error.message };
+
+  const cookieStore = await cookies();
+  const allCookies = cookieStore.getAll();
+
+  for (const { name } of allCookies) {
+    await cookieStore.set(name, "", { maxAge: -1, path: "/" });
+  }
 
   return { success: "Logged out successfully" };
 }

@@ -23,11 +23,11 @@ export default function DeleteCharacter({
 }: {
   character: ExistingCharacter;
 }) {
-  const { id, userId, characterName } = character;
+  const { id, characterName } = character;
   const router = useRouter();
 
   const handleDeleteCharacter = async () => {
-    const result = await deleteCharacterAction({ userId, id });
+    const result = await deleteCharacterAction(id);
     if (actionReturnError(result)) {
       toast({
         description: result.error,

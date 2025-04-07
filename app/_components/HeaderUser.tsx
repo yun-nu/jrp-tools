@@ -1,17 +1,14 @@
 import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
-import { getUserEmail } from "../_lib/actions-user";
 import { Button } from "./ui/Button";
+import { cookies } from "next/headers";
 
-export default async function HeaderUser({
-  user,
-}: {
-  user: string | undefined;
-}) {
-  const { email } = await getUserEmail();
+export default async function HeaderUser() {
+  const cookieStore = cookies();
+  const email = (await cookieStore).get("logged-in-as")?.value;
 
-  if (!user)
+  if (!email)
     return (
       <Button asChild size="sm" className="font-semibold md:ml-auto">
         <Link href="/login">

@@ -1,7 +1,8 @@
+import card from "@/public/card.jpg";
 import { Metadata } from "next";
+import Image from "next/image";
 import { GiPlantSeed, GiThink } from "react-icons/gi";
 import { RiFlowChart } from "react-icons/ri";
-import card from "@/public/card.jpg";
 import StyledLink from "../_components/StyledLink";
 import {
   Accordion,
@@ -9,7 +10,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../_components/ui/Accordion";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About JRP Tools",

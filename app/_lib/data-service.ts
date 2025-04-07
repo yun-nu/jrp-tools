@@ -2,7 +2,7 @@ import { User } from "@supabase/supabase-js";
 import { Character, ExistingCharacter } from "../_schemas/Character";
 import { ExistingThread } from "../_schemas/Thread";
 import { createClient } from "./supabase-server";
-import { getUserId } from "./actions-user";
+import { getUserId } from "./auth";
 
 interface CharacterPageData {
   character: ExistingCharacter;
@@ -64,7 +64,7 @@ export async function getCharacterData(
 export async function getCharacterPageData(
   displayName: Character["displayName"]
 ): Promise<CharacterPageResult> {
-  const { userId: currentUser } = await getUserId();
+  const currentUser = await getUserId();
   const character = await getCharacterData(displayName);
 
   if (!character || "error" in character) {

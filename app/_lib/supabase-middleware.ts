@@ -1,10 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const PROTECTED_ROUTES = ["/account"];
+const AUTH_ROUTES = ["/login", "/signup"];
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
+  const pathname = request.nextUrl.pathname;
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,7 +19,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
@@ -29,51 +33,42 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
-
-  let response;
+  // For UI purposes
+  if (user) {
+    supabaseResponse.cookies.set("logged-in-as", user.email ?? "", {
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
+  }
 
   switch (true) {
-    case user &&
-      (pathname.startsWith("/login") || pathname.startsWith("/signup")):
+    // Logged in and trying to access an auth route
+    case user && AUTH_ROUTES.some((route) => pathname.startsWith(route)):
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = "/";
-      response = NextResponse.redirect(loginUrl);
-      break;
+      return NextResponse.redirect(loginUrl);
 
-    case !user && pathname.startsWith("/account/"):
+    // Not logged in and trying to access a protected route
+    case !user && PROTECTED_ROUTES.some((route) => pathname.startsWith(route)):
       const accountUrl = request.nextUrl.clone();
       accountUrl.pathname = "/";
-      response = NextResponse.redirect(accountUrl);
-      break;
+      return NextResponse.redirect(accountUrl);
 
+    // Redirect away from /account to /account/characters
     case pathname === "/account":
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = "/account/characters";
-      response = NextResponse.redirect(redirectUrl);
-      break;
+      return NextResponse.redirect(redirectUrl);
 
     default:
-      response = NextResponse.next({ request });
       break;
   }
 
-  const supabaseCookies = supabaseResponse.cookies.getAll();
-
-  for (const cookie of supabaseCookies) {
-    const { name, value, ...cookieOptions } = cookie;
-    response.cookies.set(name, value, cookieOptions);
-  }
-
-  return response;
+  return supabaseResponse;
 }

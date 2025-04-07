@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { contactFormAction } from "../_lib/contact";
+import { contactFormAction } from "../account/contact/actions";
 import { formSchema } from "../_schemas/Auth";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";

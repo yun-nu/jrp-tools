@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserId } from "@/app/_lib/actions-user";
+import { getUserId } from "@/app/_lib/auth";
 import { createClient as createServerClient } from "@/app/_lib/supabase-server";
 import {
   EmailAndConfirmation,
@@ -45,16 +45,16 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 }
 
 export async function deleteUserAction() {
-  const { userId: user } = await getUserId();
+  const userId = await getUserId();
 
-  if (!user) return { error: "User not found" };
+  if (!userId) return { error: "User not found" };
 
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { error } = await supabaseAdmin.auth.admin.deleteUser(user);
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
   if (error) return { error: "Could not delete account" };
 

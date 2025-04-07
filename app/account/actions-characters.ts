@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserId } from "../_lib/actions-user";
+import { getUserId } from "../_lib/auth";
 import { createClient } from "../_lib/supabase-server";
 import {
   ExistingCharacter,
@@ -35,7 +35,7 @@ export async function verifyDisplayNameAvailability(
 export async function addCharacterAction(
   characterData: Omit<NewCharacter, "userId">
 ): Promise<ActionResult> {
-  const { userId } = await getUserId();
+  const userId = await getUserId();
 
   const newCharacter = {
     ...characterData,
@@ -86,46 +86,35 @@ export async function editCharacterAction(
 
   const { data: parsedCharacterData } = parsed;
 
-  const { userId } = await getUserId();
   const supabase = await createClient();
 
-  if (userId === parsedCharacterData.userId) {
-    const { error } = await supabase
-      .from("characters")
-      .update(parsedCharacterData)
-      .eq("id", parsedCharacterData.id);
+  const { error } = await supabase
+    .from("characters")
+    .update(parsedCharacterData)
+    .eq("id", parsedCharacterData.id);
 
-    if (error) return { error: "Could not edit character" };
+  if (error) return { error: "Could not edit character" };
 
-    return {
-      success: "Character edited successfully",
-      displayName: parsedCharacterData.displayName,
-    };
-  }
-
-  return { error: "Unauthorized" };
+  return {
+    success: "Character edited successfully",
+    displayName: parsedCharacterData.displayName,
+  };
 }
 
-export async function deleteCharacterAction({
-  userId: characterUserId,
-  id: characterId,
-}: Pick<ExistingCharacter, "userId" | "id">) {
-  const { userId } = await getUserId();
+export async function deleteCharacterAction(
+  characterId: ExistingCharacter["id"]
+) {
   const supabase = await createClient();
 
-  if (userId === characterUserId) {
-    const { error } = await supabase
-      .from("characters")
-      .delete()
-      .eq("id", characterId);
-    if (error) {
-      return { error: "Could not delete character." };
-    }
-
-    return {
-      success: "Character deleted successfully",
-    };
+  const { error } = await supabase
+    .from("characters")
+    .delete()
+    .eq("id", characterId);
+  if (error) {
+    return { error: "Could not delete character." };
   }
 
-  return { error: "Unauthorized" };
+  return {
+    success: "Character deleted successfully",
+  };
 }
