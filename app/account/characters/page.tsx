@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 export default async function Page() {
   const userId = await getUserId();
 
-  if (!userId) return <MessageBox>User not authenticated.</MessageBox>;
+  if (!userId || typeof userId !== "string")
+    return <MessageBox>User not authenticated.</MessageBox>;
 
   const characters = await getCharacters(userId);
 

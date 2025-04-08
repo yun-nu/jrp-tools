@@ -5,15 +5,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { emailAndConfirmationSchema } from "../_schemas/Auth";
 import {
-  EmailAndConfirmation,
-  emailAndConfirmationSchema,
-} from "../_schemas/Auth";
-import {
-  ActionResult,
   actionReturnError,
   actionReturnSuccess,
 } from "../_utils/action-return";
+import { updateEmailAction } from "../account/settings/actions";
+import { signUpOTPAction } from "../signup/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
@@ -21,10 +19,7 @@ import { Form } from "./ui/Form";
 type EmailAndConfirmationProps = {
   btnDescription: string;
   isUpdate?: boolean;
-  action: ({
-    email,
-    emailConfirmation,
-  }: EmailAndConfirmation) => Promise<ActionResult>;
+  action: typeof signUpOTPAction | typeof updateEmailAction;
 };
 
 export function EmailAndConfirmationForm({
@@ -46,6 +41,7 @@ export function EmailAndConfirmationForm({
 
   const onSubmit = async () => {
     const result = await action(form.getValues());
+
     if (actionReturnError(result)) {
       setMessage(result.message);
       setError(result.errors || result.error);

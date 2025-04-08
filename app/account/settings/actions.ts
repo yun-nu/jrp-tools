@@ -21,9 +21,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 
   const supabase = await createServerClient();
 
-  const {
-    data: { email: parsedEmail },
-  } = parsed;
+  const { email: parsedEmail } = parsed.data;
 
   const { error } = await supabase.auth.updateUser(
     {
@@ -47,7 +45,7 @@ export async function updateEmailAction(input: EmailAndConfirmation) {
 export async function deleteUserAction() {
   const userId = await getUserId();
 
-  if (!userId) return { error: "User not found" };
+  if (!userId || typeof userId !== "string") return { error: "User not found" };
 
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

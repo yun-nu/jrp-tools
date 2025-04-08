@@ -8,9 +8,9 @@ import {
 import { ActionResult } from "../_utils/action-return";
 
 export async function signUpOTPAction(
-  email: EmailAndConfirmation["email"]
+  input: EmailAndConfirmation
 ): Promise<ActionResult> {
-  const parsed = emailAndConfirmationSchema.safeParse(email);
+  const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
     return {
