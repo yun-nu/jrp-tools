@@ -45,7 +45,7 @@ function Accordions() {
           </ul>
           <p className="mt-6">
             To login, use the the code that will be sent to the registered
-            email. Each login attempt will generate a new, expirable code.
+            email. Each login attempt will generate a new code.
           </p>
         </AccordionContent>
       </AccordionItem>
@@ -61,7 +61,7 @@ function Accordions() {
           <p>
             On the consent page, when prompted to login or choose an account to
             continue to this application, instead of &quot;JRP Tools&quot;, the
-            name shown might be:
+            name shown will be:
             <b className="block my-2">zesrktxbteiqseaumjpa.supabase.co</b>
           </p>
 

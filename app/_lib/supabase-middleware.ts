@@ -37,7 +37,7 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // For UI purposes
+  // For UI purposes (used in Header and Sidebar)
   if (user) {
     supabaseResponse.cookies.set("logged-in-as", user.email ?? "", {
       httpOnly: true,

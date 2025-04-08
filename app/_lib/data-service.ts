@@ -1,3 +1,4 @@
+import { metadata } from "./../not-found";
 import { User } from "@supabase/supabase-js";
 import { Character, ExistingCharacter } from "../_schemas/Character";
 import { ExistingThread } from "../_schemas/Thread";
@@ -61,20 +62,41 @@ export async function getCharacterData(
   return character;
 }
 
-export async function getCharacterPageData(
-  displayName: Character["displayName"]
-): Promise<CharacterPageResult> {
-  const currentUser = await getUserId();
-  const character = await getCharacterData(displayName);
+export async function getCharacterMetadata(
+  displayName: string
+): Promise<
+  { displayName: ExistingCharacter["displayName"] } | { error: string }
+> {
+  const supabase = await createClient();
+  const { data: characterMetadata, error } = await supabase
+    .from("characters")
+    .select("displayName")
+    .eq("displayName", displayName)
+    .single();
 
+  if (error) return { error: "Character not found" };
+
+  return characterMetadata;
+}
+
+export async function getCharacterPageData(
+  displayName: Character["displayName"],
+  pageType: "manage" | "public"
+): Promise<CharacterPageResult> {
+  let currentUser;
+
+  if (pageType === "manage") {
+    currentUser = await getUserId();
+  } else {
+    currentUser = null;
+  }
+
+  const character = await getCharacterData(displayName);
   if (!character || "error" in character) {
     return null;
   }
 
-  const isOwner = Boolean(currentUser) && currentUser === character.userId;
-
   const threads = await getThreads(character.id);
-
   if ("error" in threads) {
     return { error: "Could not load threads." };
   }
@@ -84,7 +106,7 @@ export async function getCharacterPageData(
 
   return {
     character,
-    isOwner,
+    isOwner: Boolean(currentUser) && currentUser === character.userId,
     ongoingThreads,
     finishedThreads,
   };

@@ -1,6 +1,9 @@
 import CharacterView from "@/app/_components/CharacterView";
 import MessageBox from "@/app/_components/MessageBox";
-import { getCharacterPageData } from "@/app/_lib/data-service";
+import {
+  getCharacterMetadata,
+  getCharacterPageData,
+} from "@/app/_lib/data-service";
 
 import { Metadata } from "next";
 
@@ -10,9 +13,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const displayName = (await params).displayName;
-  const pageData = await getCharacterPageData(displayName);
+  const metadata = await getCharacterMetadata(displayName);
 
-  if (!pageData || "error" in pageData || !pageData.isOwner)
+  if (!metadata || "error" in metadata)
     return {
       title: "Character page not found",
     };
@@ -25,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
-  const pageData = await getCharacterPageData(displayName);
+  const pageData = await getCharacterPageData(displayName, "manage");
 
   if (!pageData) return <MessageBox>Character page not found.</MessageBox>;
 
@@ -35,7 +38,9 @@ export default async function Page({ params }: Props) {
 
   if (!isOwner)
     return (
-      <MessageBox>You don&apos;t have permission to view this page.</MessageBox>
+      <MessageBox>
+        You don&apos;t have permission to access this page.
+      </MessageBox>
     );
 
   return (

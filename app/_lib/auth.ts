@@ -1,15 +1,17 @@
+import { User } from "@supabase/supabase-js";
 import { createClient } from "./supabase-server";
 
-export async function getUserId(): Promise<string> {
+export async function getUserId(): Promise<User["id"] | { error: string }> {
   const supabase = await createClient();
+
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
 
-  if (error) throw new Error("Error while fetching user.");
+  if (error) return { error: "Error while fetching user." };
 
-  if (!user) throw new Error("No authenticated user found.");
+  if (!user) return { error: "User not authenticated." };
 
   return user.id;
 }
