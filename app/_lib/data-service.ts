@@ -1,9 +1,8 @@
-import { metadata } from "./../not-found";
 import { User } from "@supabase/supabase-js";
 import { Character, ExistingCharacter } from "../_schemas/Character";
 import { ExistingThread } from "../_schemas/Thread";
-import { createClient } from "./supabase-server";
 import { getUserId } from "./auth";
+import { createClient } from "./supabase-server";
 
 interface CharacterPageData {
   character: ExistingCharacter;
@@ -81,11 +80,11 @@ export async function getCharacterMetadata(
 
 export async function getCharacterPageData(
   displayName: Character["displayName"],
-  pageType: "manage" | "public"
+  pageType: "management" | "public"
 ): Promise<CharacterPageResult> {
   let currentUser;
 
-  if (pageType === "manage") {
+  if (pageType === "management") {
     currentUser = await getUserId();
   } else {
     currentUser = null;
@@ -95,18 +94,18 @@ export async function getCharacterPageData(
   if (!character || "error" in character) {
     return null;
   }
+  const isOwner = Boolean(currentUser) && currentUser === character.userId;
 
   const threads = await getThreads(character.id);
   if ("error" in threads) {
     return { error: "Could not load threads." };
   }
-
   const ongoingThreads = threads.filter((thread) => !thread.isFinished);
   const finishedThreads = threads.filter((thread) => thread.isFinished);
 
   return {
     character,
-    isOwner: Boolean(currentUser) && currentUser === character.userId,
+    isOwner,
     ongoingThreads,
     finishedThreads,
   };

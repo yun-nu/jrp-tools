@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const displayName = (await params).displayName;
-  const pageData = await getCharacterPageData(displayName, "manage");
+  const pageData = await getCharacterPageData(displayName, "management");
 
   if (!pageData) return <MessageBox>Character page not found.</MessageBox>;
 

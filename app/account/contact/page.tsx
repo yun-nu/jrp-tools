@@ -35,7 +35,7 @@ export default function Page() {
 
       <Card>
         <CardHeader>
-          <CardTitle>SOS</CardTitle>
+          <CardTitle>Support</CardTitle>
           <CardDescription>
             For granular help with app-breaking issues, please use one of the
             following contact methods below.

@@ -44,8 +44,8 @@ function Accordions() {
             </li>
           </ul>
           <p className="mt-6">
-            To login, use the the code that will be sent to the registered
-            email. Each login attempt will generate a new code.
+            To login, use the the code that will be sent to the email address
+            you provided. Each login attempt will generate a new code.
           </p>
         </AccordionContent>
       </AccordionItem>

@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import Update from "../_components/Update";
+import { changelog } from "./_lib/changelog";
 
 export const metadata: Metadata = {
   title: "Updates - JRP Tools",
@@ -6,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <section className="h-full">{/* <Update01 /> */}</section>;
+  return <Update items={changelog} />;
 }
