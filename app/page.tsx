@@ -10,7 +10,7 @@ export default async function Home() {
   } = await supabase.auth.getSession();
 
   return (
-    <div className="h-full flex flex-col items-center justify-between pt-6 px-4 text-center">
+    <div className="h-full flex flex-col items-center justify-between sm:pt-6 px-4 text-center">
       <div className="custom-underline">
         <h1 className="text-5xl text-primary mb-10 tracking-tight font-normal">
           Thread tracking made simple

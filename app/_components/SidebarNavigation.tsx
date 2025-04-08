@@ -33,7 +33,7 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
       if (actionReturnSuccess(result)) {
         toast({
           description: result.success,
-          className: "bg-green-700",
+          variant: "success",
         });
         push("/");
       }

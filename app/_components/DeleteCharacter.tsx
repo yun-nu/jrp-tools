@@ -35,7 +35,7 @@ export default function DeleteCharacter({
       });
       return;
     } else {
-      toast({ description: result.success, className: "bg-green-700" });
+      toast({ description: result.success, variant: "success" });
       router.push(`/account/characters`);
     }
   };

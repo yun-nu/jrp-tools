@@ -40,7 +40,7 @@ export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
       return;
     }
     if (actionReturnSuccess(result)) {
-      toast({ description: result.success, className: "bg-green-700" });
+      toast({ description: result.success, variant: "success" });
       router.refresh();
     }
   };

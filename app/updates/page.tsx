@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Update from "../_components/Update";
+import Updates from "../_components/Updates";
 import { changelog } from "./_lib/changelog";
 
 export const metadata: Metadata = {
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <Update items={changelog} />;
+  return <Updates items={changelog} />;
 }

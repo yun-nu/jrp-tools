@@ -49,7 +49,7 @@ export default function DataTableRowActions({
       return;
     }
     if (actionReturnSuccess(result)) {
-      toast({ description: result.success, className: "bg-green-700" });
+      toast({ description: result.success, variant: "success" });
       refresh();
     }
   };
@@ -64,7 +64,7 @@ export default function DataTableRowActions({
       return;
     }
     if (actionReturnSuccess(result)) {
-      toast({ description: result.success, className: "bg-green-700" });
+      toast({ description: result.success, variant: "success" });
       refresh();
     }
   };

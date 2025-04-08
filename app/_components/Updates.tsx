@@ -35,20 +35,7 @@ function Content({ children }: { children: ReactNode }) {
   );
 }
 
-function UpdatesLayout({
-  number,
-  date,
-  children,
-}: HeadingProps & { children: ReactNode }) {
-  return (
-    <article className="max-w-screen-md h-full">
-      <Heading number={number} date={date} />
-      <Content>{children}</Content>
-    </article>
-  );
-}
-
-export default function Update({ items }: Props) {
+export default function Updates({ items }: Props) {
   return (
     <>
       {items.map((item) => (

@@ -78,7 +78,7 @@ export function ThreadForm({
       });
 
     if (actionReturnSuccess(result)) {
-      toast({ description: result.success, className: "bg-green-700" });
+      toast({ description: result.success, variant: "success" });
       form.reset();
       setOpen(false);
       router.refresh();

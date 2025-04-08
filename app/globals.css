@@ -33,11 +33,6 @@
     mask-repeat: no-repeat;
   }
 
-  .custom-underline svg {
-    fill: #000;
-    stroke: #000;
-  }
-
   .dots {
     width: 72px;
     height: 17.3px;
@@ -60,6 +55,12 @@
   @media screen and (max-width: 1024px) {
     .custom-underline::after {
       @apply w-full h-full top-[60%] left-0;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .custom-underline::after {
+      @apply top-[50%];
     }
   }
 }

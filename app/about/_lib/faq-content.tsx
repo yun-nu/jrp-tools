@@ -1,8 +1,8 @@
+import card from "@/public/card.jpg";
 import Image from "next/image";
 import { GiBullseye, GiFairyWand } from "react-icons/gi";
 import { ImQuestion } from "react-icons/im";
 import StyledLink from "../../_components/StyledLink";
-import card from "@/public/card.jpg";
 
 export const aboutFAQItems = [
   {
@@ -49,7 +49,7 @@ export const aboutFAQItems = [
           </p>
         </li>
 
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2 items-center text-center">
           <Image
             src={card}
             alt="Character Card sample"
@@ -109,7 +109,7 @@ export const aboutFAQItems = [
         </p>
         <p>
           This app is my vision of a thread tracker that is both easy to use and
-          to share, built within my current technical and financial limitations.
+          to share, built using the technical knowledge I&apos;ve gained so far.
         </p>
       </>
     ),
