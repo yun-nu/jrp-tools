@@ -3,10 +3,10 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 type SearchParams = {
-  searchParams: {
+  searchParams: Promise<{
     message?: string;
     code?: string;
-  };
+  }>;
 };
 
 export const metadata: Metadata = {
