@@ -58,7 +58,10 @@ export function EmailAndConfirmationForm({
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-8"
+        >
           <InputWithLabel
             fieldTitle={isUpdate ? "New Email" : "Email"}
             nameInSchema="email"
@@ -72,7 +75,7 @@ export function EmailAndConfirmationForm({
 
           {error ? <p className="mb-10 text-red-500 text-sm">{error}</p> : null}
 
-          <Button type="submit" className={`${isUpdate ? "w-fit" : "w-full"}`}>
+          <Button type="submit" className={`${isUpdate && "sm:w-fit"}`}>
             {btnDescription}
           </Button>
         </form>

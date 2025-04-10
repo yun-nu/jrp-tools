@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "../_hooks/useToast";
+import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
 import {
   Character,
   ExistingCharacter,
@@ -137,7 +138,7 @@ export function CharacterForm({
         <TextareaWithLabel
           fieldTitle="Blurb"
           nameInSchema="blurb"
-          maxLength={500}
+          maxLength={FORM_CONTACT_MAX_LENGTH}
         />
 
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />

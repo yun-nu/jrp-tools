@@ -3,13 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { contactFormAction } from "../account/contact/actions";
+import { toast } from "../_hooks/useToast";
+import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
 import { formSchema } from "../_schemas/Auth";
+import { contactFormAction } from "../account/contact/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { Form } from "./ui/Form";
-import { toast } from "../_hooks/useToast";
 
 export function ContactForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -33,7 +34,10 @@ export function ContactForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="gap-8 flex flex-col"
+      >
         <InputWithLabel
           fieldTitle="Name"
           nameInSchema="name"
@@ -42,9 +46,12 @@ export function ContactForm() {
         <TextareaWithLabel
           fieldTitle="Message"
           nameInSchema="message"
-          maxLength={2000}
+          maxLength={FORM_CONTACT_MAX_LENGTH}
+          className="max-w-full"
         />
-        <Button type="submit">Send</Button>
+        <Button type="submit" className="w-full sm:w-fit self-end">
+          Send message
+        </Button>
       </form>
     </Form>
   );

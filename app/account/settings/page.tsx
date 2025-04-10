@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   return (
-    <div className="flex flex-col gap-4 max-w-screen-md">
+    <div className="h-full flex flex-col gap-4 max-w-screen-md">
       <Card>
         <CardHeader>
           <CardTitle>Update email</CardTitle>

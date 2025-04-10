@@ -2,28 +2,27 @@
 export const changelog = [
   {
     number: "01",
-    date: "April, 2025",
+    date: "April 10th, 2025",
     content: (
       <>
         <p>
           This is the very first update, so let me start by saying thank you for
-          checking out JRP Tools!
+          checking out JRP Tools! If you've already signed up and are trying out
+          the app, an even bigger thank you!
         </p>
 
         <p>
-          If you've already signed up and is trying out the app, an even bigger
-          thank you! I'd like to take this opportunity to add a reminder that
-          this is an experimental app subject to changes, or even discontinuity.
-          In the chance of the latter, though, a proper announcement will be
-          made in advance to give users time to back up their threads. And by
-          that I don't mean manually by going full copy + paste, of course, as a
-          backup/export feature is at the top of the list of upcoming features.
+          I'd like to take this opportunity to remind you that this is an
+          experimental app, subject to changes — or in the worst-case scenario,
+          discontinuation. If it ever comes to that, a proper announcement will
+          be made in advance to give users time to back up their threads (using
+          the upcoming Backup feature).
         </p>
         <p>
-          The app's initial features are introduced in the About page, so
-          there's not a lot else to be said right now. Please don't hesitate to
-          report any bugs or issues you might stumble into. Suggestions and
-          contributions are also welcome!
+          The app's initial features are introduced on the About page, so please
+          check that out if you'd like to know more. And don't hesitate to
+          report any bugs or issues you might come across. Suggestions and
+          contributions are also very welcome!
         </p>
       </>
     ),

@@ -44,8 +44,8 @@ export const aboutFAQItems = [
           <p>
             One account can store multiple characters, each with their own
             unique display name. This leaves the choice to use the same
-            character page for multiple games, or to create a different page for
-            each game, up to the user.
+            character page for multiple games, or to create one page per game,
+            up to the user.
           </p>
         </li>
 
@@ -65,12 +65,11 @@ export const aboutFAQItems = [
             Easily share your threads, or keep them private
           </span>
           <p>
-            Characters can be either public or private. Public characters will
-            have their threads visible to anyone visiting their public-facing
-            page. Private characters&apos; threads are only visible to their
-            owner, meaning private characters don&apos;t have a public-facing
-            page. You can easily toggle between public and private states from
-            the edit button in the character card.
+            Characters can be either public or private. Public characters&apos;
+            threads will be visible to anyone visiting their public-facing page.
+            Private characters&apos; threads are only visible to their owner.
+            You can easily toggle between public and private states from the
+            edit button in the character card.
           </p>
           <p>
             As the name suggests, public-facing pages can be viewed by anyone
@@ -102,14 +101,15 @@ export const aboutFAQItems = [
           hopefully can be useful to a fellow roleplayer. HTML thread trackers
           are a lot of fun to build and customize, but also hard to keep up to
           date, and the code itself can become a monstrosity that&apos;s
-          difficult to maintain organized. Meanwhile, spreadsheet thread
+          difficult to maintain organized. On the other hand, spreadsheet thread
           trackers appeal more to me in the maintainability department, but they
-          still feel unnecessarily clunky, and limited in sorting or filtering
-          options.
+          still feel unnecessarily clunky and make the job of performing simple
+          filtering or sorting a bit too complex for the everyday user.
         </p>
         <p>
           This app is my vision of a thread tracker that is both easy to use and
-          to share, built using the technical knowledge I&apos;ve gained so far.
+          to share threads with, built using the technical knowledge I&apos;ve
+          gained so far.
         </p>
       </>
     ),

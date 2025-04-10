@@ -24,8 +24,8 @@ export default function Page() {
         <CardHeader>
           <CardTitle>Contact Form</CardTitle>
           <CardDescription>
-            For anything ranging from general suggestions to reporting bugs or
-            issues, feel free to drop me a message in the form below.
+            For anything from general suggestions to bug reports, feel free to
+            drop me a message using the form below.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -37,37 +37,42 @@ export default function Page() {
         <CardHeader>
           <CardTitle>Support</CardTitle>
           <CardDescription>
-            For granular help with app-breaking issues, please use one of the
-            following contact methods below.
+            If you&apos;re running into anything serious that&apos;s breaking
+            the app, don&apos;t hesitate to reach out through one of the contact
+            options below. I&apos;ll do my best to get back to you ASAP.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex gap-2 h-5 justify-evenly">
-            <Link
-              href="mailto:yunnu.dev@gmail.com"
-              className="flex gap-2 items-center"
-            >
-              <RiMailSendLine /> Email
-            </Link>
+        <CardContent className="flex flex-col xs:flex-row gap-4 sm:gap-2 justify-evenly h-full items-center">
+          <Link
+            href="mailto:yunnu.dev@gmail.com"
+            className="flex gap-2 items-center"
+          >
+            <RiMailSendLine /> Email
+          </Link>
 
-            <Separator orientation="vertical" />
+          <Separator
+            orientation="vertical"
+            className="h-0.5 w-full xs:h-6 xs:w-0.5"
+          />
 
-            <Link
-              href="https://www.dreamwidth.org/inbox/compose?user=yunnu"
-              className="flex gap-2 items-center"
-            >
-              <SiDreamstime className="text-red-500" /> Dreamwidth
-            </Link>
+          <Link
+            href="https://www.dreamwidth.org/inbox/compose?user=yunnu"
+            className="flex gap-2 items-center"
+          >
+            <SiDreamstime className="text-red-500" /> Dreamwidth
+          </Link>
 
-            <Separator orientation="vertical" />
+          <Separator
+            orientation="vertical"
+            className="h-0.5 w-full xs:h-6 xs:w-0.5"
+          />
 
-            <Link
-              href="https://plurk.com/positron"
-              className="flex gap-2 items-center"
-            >
-              <SiPlurk className="text-orange-600" /> Plurk
-            </Link>
-          </div>
+          <Link
+            href="https://plurk.com/positron"
+            className="flex gap-2 items-center"
+          >
+            <SiPlurk className="text-orange-600" /> Plurk
+          </Link>
         </CardContent>
       </Card>
     </div>

@@ -62,7 +62,7 @@ export default function DeleteCharacter({
           <AlertDialogAction
             type="button"
             onClick={handleDeleteCharacter}
-            className="bg-destructive hover:bg-destructive/80 text-primary"
+            className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
           >
             Delete
           </AlertDialogAction>

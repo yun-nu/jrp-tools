@@ -16,6 +16,7 @@ type Props = {
   nameInSchema: string;
   placeholder?: string;
   maxLength: number;
+  className?: string;
 };
 
 export default function TextareaWithLabel({
@@ -23,6 +24,7 @@ export default function TextareaWithLabel({
   nameInSchema,
   placeholder,
   maxLength,
+  className,
 }: Props) {
   const form = useFormContext();
   const textValue = form.watch(nameInSchema as string);
@@ -39,7 +41,7 @@ export default function TextareaWithLabel({
           <FormControl>
             <Textarea
               placeholder={placeholder}
-              className="max-w-xs min-h-32 resize"
+              className={`max-w-xs min-h-32 resize ${className}`}
               {...field}
             />
           </FormControl>

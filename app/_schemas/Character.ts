@@ -1,10 +1,16 @@
 import { z } from "zod";
+import {
+  FORM_BLURB_MAX_LENGTH,
+  FORM_NAMES_MAX_LENGTH,
+  FORM_URL_INVALID,
+  generateMaxMessage,
+} from "../_lib/consts";
 
 const baseCharacterSchema = z.object({
   displayName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
-    .max(30, { message: "Must be less than 30 characters long" })
+    .max(30, { message: generateMaxMessage(30) })
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Only letters, numbers, and underscores are allowed."
@@ -12,7 +18,9 @@ const baseCharacterSchema = z.object({
   characterName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
-    .max(50, { message: "Must be less than 50 characters long" })
+    .max(FORM_NAMES_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+    })
     .trim(),
   icon: z
     .union([
@@ -22,21 +30,21 @@ const baseCharacterSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   blurb: z
     .string()
-    .max(500, { message: "Must be less than 500 characters long" })
+    .max(500, { message: generateMaxMessage(FORM_BLURB_MAX_LENGTH) })
     .optional(),
   gameName: z
     .string()
-    .max(50, { message: "Must be less than 50 characters long" })
+    .max(50, { message: generateMaxMessage(FORM_NAMES_MAX_LENGTH) })
     .optional(),
   journalName: z
     .string()
-    .max(50, { message: "Must be less than 50 characters long" }),
+    .max(50, { message: generateMaxMessage(FORM_NAMES_MAX_LENGTH) }),
   journalLink: z
     .union([
       z
         .string()
         .url({
-          message: "Must be a valid URL starting with http:// or https://",
+          message: FORM_URL_INVALID,
         })
         .nullish(),
       z.literal(""),
@@ -47,7 +55,7 @@ const baseCharacterSchema = z.object({
       z
         .string()
         .url({
-          message: "Must be a valid URL starting with http:// or https://",
+          message: FORM_URL_INVALID,
         })
         .nullish(),
       z.literal(""),

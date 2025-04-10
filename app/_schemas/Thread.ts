@@ -1,4 +1,9 @@
 import { z } from "zod";
+import {
+  FORM_BLURB_MAX_LENGTH,
+  FORM_URL_INVALID,
+  generateMaxMessage,
+} from "../_lib/consts";
 
 const baseThreadSchema = z.object({
   date: z.date({
@@ -9,7 +14,7 @@ const baseThreadSchema = z.object({
       z
         .string()
         .url({
-          message: "Must be a valid URL starting with http:// or https://",
+          message: FORM_URL_INVALID,
         })
         .nullish(),
       z.literal(""),
@@ -17,11 +22,13 @@ const baseThreadSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   type: z
     .string()
-    .max(30, { message: "Must be less than 30 characters long" })
+    .max(30, { message: generateMaxMessage(30) })
     .optional(),
   blurb: z
     .string()
-    .max(500, { message: "Must be less than 500 characters long" })
+    .max(FORM_BLURB_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_BLURB_MAX_LENGTH),
+    })
     .optional(),
   isFinished: z.boolean(),
 });

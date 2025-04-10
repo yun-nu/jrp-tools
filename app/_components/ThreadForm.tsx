@@ -1,10 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toDate } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
+import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
 import { ExistingCharacter } from "../_schemas/Character";
 import {
   ExistingThread,
@@ -26,7 +28,6 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import { toDate } from "date-fns";
 
 type ThreadFormProps = {
   thread?: Thread;
@@ -106,8 +107,8 @@ export function ThreadForm({
         <TextareaWithLabel
           fieldTitle="Blurb"
           nameInSchema="blurb"
-          placeholder="Maximum of 500 characters"
-          maxLength={500}
+          placeholder={`Maximum of ${FORM_CONTACT_MAX_LENGTH} characters`}
+          maxLength={FORM_CONTACT_MAX_LENGTH}
         />
 
         <InputWithLabel

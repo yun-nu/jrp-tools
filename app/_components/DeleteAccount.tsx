@@ -36,7 +36,7 @@ export default function DeleteAccount() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"destructive"} className="w-fit">
+        <Button variant={"destructive"} className="w-full sm:w-fit">
           Delete account
         </Button>
       </AlertDialogTrigger>
@@ -55,7 +55,7 @@ export default function DeleteAccount() {
           <AlertDialogAction
             type="button"
             onClick={handleDeleteCharacter}
-            className="bg-destructive hover:bg-destructive/80 text-primary"
+            className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
           >
             Delete
           </AlertDialogAction>

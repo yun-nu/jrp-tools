@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
 
 export const emailAndConfirmationSchema = z
   .object({
@@ -27,7 +28,9 @@ export const formSchema = z.object({
   message: z
     .string()
     .min(1, { message: "Message can't be empty" })
-    .max(2000, { message: "Message must be less than 2000 characters long" }),
+    .max(FORM_CONTACT_MAX_LENGTH, {
+      message: `Message must be less than ${FORM_CONTACT_MAX_LENGTH} characters long`,
+    }),
 });
 
 export type ContactForm = z.infer<typeof formSchema>;

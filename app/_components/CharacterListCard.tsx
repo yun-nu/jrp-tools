@@ -25,7 +25,7 @@ export function CharacterListCard({
 
   return (
     <Card className={"w-[330px] sm:w-[380px] min-h-[235px] flex flex-col"}>
-      <CardHeader className="flex flex-row gap-3 space-y-0">
+      <CardHeader className="flex flex-row gap-3 space-y-0 items-center">
         {icon && (
           <Image
             width={50}
@@ -37,7 +37,7 @@ export function CharacterListCard({
         )}
         <div className="flex justify-between flex-1 items-center">
           <div className="flex flex-col gap-1">
-            <CardTitle>{characterName}</CardTitle>
+            <CardTitle className="break-words">{characterName}</CardTitle>
             <CardDescription>@ {displayName}</CardDescription>
           </div>
           {isPublic ? (
