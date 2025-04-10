@@ -38,14 +38,12 @@ export const aboutFAQItems = [
     content: (
       <ul className="space-y-8">
         <li className="flex flex-col gap-1">
-          <span className="font-semibold">
-            One account, multiple characters
-          </span>
+          <span className="font-semibold">One place for all your muses.</span>
           <p>
-            One account can store multiple characters, each with their own
-            unique display name. This leaves the choice to use the same
-            character page for multiple games, or to create one page per game,
-            up to the user.
+            You can store multiple characters under one account, each with a
+            unique display name. Whether you use a single character page to keep
+            threads from multiple games or create a new one for each game —
+            it&apos;s completely up to you.
           </p>
         </li>
 
@@ -61,15 +59,13 @@ export const aboutFAQItems = [
         </div>
 
         <li className="flex flex-col gap-2">
-          <span className="font-semibold">
-            Easily share your threads, or keep them private
-          </span>
+          <span className="font-semibold">Go public or stay private.</span>
           <p>
-            Characters can be either public or private. Public characters&apos;
-            threads will be visible to anyone visiting their public-facing page.
-            Private characters&apos; threads are only visible to their owner.
-            You can easily toggle between public and private states from the
-            edit button in the character card.
+            Characters can be set to either public or private. Threads for
+            public characters are visible to anyone visiting their public-facing
+            page, while private characters&apos; threads are only visible to
+            their owner. You can easily toggle between public and private using
+            the edit button on the character card.
           </p>
           <p>
             As the name suggests, public-facing pages can be viewed by anyone
@@ -78,12 +74,11 @@ export const aboutFAQItems = [
               href="http://jrp-tools.vercel.app/characters/test_character"
               type="new-window"
             >
-              view a sample
+              check out a sample
             </StyledLink>{" "}
-            for the test character pictured above. The private-facing page is
-            where threads can be managed, and can be accessed from the{" "}
-            <b>Thread Tracker</b> button in each character&apos;s card from the
-            character list.
+            using the test character shown above. The private-facing page is
+            where you can manage threads. It&apos;s accessible via the Thread
+            Tracker button on each character&apos;s card in your character list.
           </p>
         </li>
       </ul>
@@ -96,20 +91,19 @@ export const aboutFAQItems = [
     content: (
       <>
         <p>
-          This project came to be not only because I wanted to challenge myself
-          and grow as a developer, but also in an attempt to make a tool that
-          hopefully can be useful to a fellow roleplayer. HTML thread trackers
-          are a lot of fun to build and customize, but also hard to keep up to
-          date, and the code itself can become a monstrosity that&apos;s
-          difficult to maintain organized. On the other hand, spreadsheet thread
-          trackers appeal more to me in the maintainability department, but they
-          still feel unnecessarily clunky and make the job of performing simple
-          filtering or sorting a bit too complex for the everyday user.
+          This project came to life not just as a personal challenge to grow as
+          a developer, but also as an attempt to create a tool that might be
+          useful to fellow roleplayers. HTML thread trackers are a lot of fun to
+          build and customize, but they can be tough to keep updated, and the
+          code often turns into a monstrosity that&apos;s hard to maintain.
+          Spreadsheet trackers, on the other hand, are easier to manage, but
+          they tend to feel clunky and make simple tasks like filtering or
+          sorting more complicated than they need to be for the casual user.
         </p>
         <p>
-          This app is my vision of a thread tracker that is both easy to use and
-          to share threads with, built using the technical knowledge I&apos;ve
-          gained so far.
+          This app is my vision of a thread tracker that&apos;s both easy to use
+          and easy to share — built with the technical knowledge I&apos;ve
+          picked up along the way.
         </p>
       </>
     ),

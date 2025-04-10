@@ -20,7 +20,7 @@ type Props = {
 
 export default function FAQ({
   items,
-  className = "w-full h-full max-w-screen-lg",
+  className = "w-full h-full max-w-screen-md",
 }: Props) {
   return (
     <Accordion type="single" collapsible className={className}>
