@@ -1,34 +1,25 @@
-## JRP Tools
+## 🧵 JRP Tools
 
-First, run the development server:
+A lightweight, shareable thread tracker for Jornal-based Roleplay. Store your threads with just a few clicks. For players who want to track threads, not HTML tags or spreadsheet cells.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 👤 One account, multiple characters
+- 🔒 For each character page, choose between public or private
+- 📎 Easily link to public-facing pages for sharing
+- 🔍 Filter and search your threads
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/) – Frontend Framework
+- [Supabase](https://supabase.com/) – Auth + Backend
+- [shadcn/UI](https://ui.shadcn.com/) – UI Components
+- [Tailwind CSS](https://tailwindcss.com/) – Styling
 
-## Learn More
+## Contributions
 
-To learn more about Next.js, take a look at the following resources:
+Suggestions, feedback and PRs are welcome! If you're a fellow dev + roleplayer, I'd love to hear your thoughts and ideas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For anything from general suggestions to bug reports, feel free to use the contact form in the app. If you're having issues with the app, don't hesitate to reach out at [yunnu.dev@gmail.com](mailto:yunnu.dev@gmail.com).
