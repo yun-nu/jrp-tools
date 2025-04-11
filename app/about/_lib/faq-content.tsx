@@ -12,21 +12,21 @@ export const aboutFAQItems = [
     content: (
       <>
         <p>
-          As of initial release, JRP Tools is a minimalistic thread tracking
-          application for{" "}
-          <StyledLink href="https://tvtropes.org/pmwiki/pmwiki.php/Main/JournalRoleplay">
-            Journal-Based Roleplay
-          </StyledLink>
-          . While its main focus is on elements of the Dreamwidth role playing
-          community, it should be able to accommodate to other RP communities
-          that use similar concepts or platforms.
+          As of its initial release, JRP Tools is a minimalistic thread-tracking
+          application designed for Journal-Based Roleplay. While it primarily
+          caters to the Dreamwidth roleplaying community, it&apos;s flexible
+          enough to support other RP platforms that use similar structures or
+          concepts.{" "}
         </p>
-
         <p>
-          But why &quot;tools&quot; when it&apos;s just a thread tracker, you
-          ask...? Well, shareable Permissions page and CR Chart are two of the
-          more ambitious features I&apos;d like to implement going forward,
-          along with other minor features and QoL improvements to the whole app.
+          <em>
+            But why call it &quot;Tools&quot; when it&apos;s just a thread
+            tracker
+          </em>
+          , you ask...? Well, that&apos;s just the beginning! Shareable
+          Permissions and CR Chart are two of the more ambitious features I plan
+          to add in the future, along with smaller quality-of-life improvements
+          across the board.
         </p>
       </>
     ),

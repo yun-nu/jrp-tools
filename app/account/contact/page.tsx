@@ -9,7 +9,7 @@ import {
 import { Separator } from "@/app/_components/ui/Separator";
 import { Metadata } from "next";
 import Link from "next/link";
-import { RiMailSendLine } from "react-icons/ri";
+import { MdEmail } from "react-icons/md";
 import { SiDreamstime, SiPlurk } from "react-icons/si";
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function Page() {
             href="mailto:yunnu.dev@gmail.com"
             className="flex gap-2 items-center"
           >
-            <RiMailSendLine /> Email
+            <MdEmail /> Email
           </Link>
 
           <Separator
