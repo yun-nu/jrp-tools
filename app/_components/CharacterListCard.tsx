@@ -24,7 +24,11 @@ export function CharacterListCard({
     character || {};
 
   return (
-    <Card className={"xs:w-[380px] min-h-[235px] flex flex-col w-full"}>
+    <Card
+      className={
+        "xs:w-[380px] min-h-[210px] xs:min-h-[236px] flex flex-col w-full"
+      }
+    >
       <CardHeader className="p-4 xs:p-6 flex flex-row gap-3 space-y-0 items-center">
         {icon && (
           <Image
@@ -55,7 +59,7 @@ export function CharacterListCard({
           )}
         </div>
       </CardHeader>
-      <CardContent className="p-4 xs:p-6 grid gap-4 flex-1">
+      <CardContent className="p-4 pt-0 xs:p-6 xs:pt-0 grid gap-4 flex-1">
         <div className="text-sm flex flex-col gap-2">
           {journalName ? (
             <div className="flex gap-2 items-center">
@@ -70,7 +74,7 @@ export function CharacterListCard({
           ) : null}
         </div>
       </CardContent>
-      <CardFooter className="p-4 xs:p-6 justify-between gap-4">
+      <CardFooter className="p-4 pt-0 xs:p-6 xs:pt-0 justify-between gap-4">
         <Link
           href={`/account/characters/${displayName}`}
           className="px-4 py-2 text-sm border border-secondary-foreground bg-secondary rounded hover:bg-secondary/50 font-semibold xs:w-[50%] text-center"
