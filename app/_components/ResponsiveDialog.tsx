@@ -59,7 +59,7 @@ export function MobileDrawer({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
-      <DrawerContent className="max-h-[80vh]">
+      <DrawerContent className="max-h-[70vh]">
         <div className="p-4 overflow-y-auto">
           <DrawerHeader className="text-left px-0 py-6">
             <DrawerTitle>{title}</DrawerTitle>
