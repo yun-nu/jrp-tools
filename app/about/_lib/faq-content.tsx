@@ -3,6 +3,7 @@ import Image from "next/image";
 import { GiBullseye, GiFairyWand } from "react-icons/gi";
 import { ImQuestion } from "react-icons/im";
 import StyledLink from "../../_components/StyledLink";
+import { MdOutlinePrivacyTip } from "react-icons/md";
 
 export const aboutFAQItems = [
   {
@@ -79,6 +80,35 @@ export const aboutFAQItems = [
             using the test character shown above. The private-facing page is
             where you can manage threads. It&apos;s accessible via the Thread
             Tracker button on each character&apos;s card in your character list.
+          </p>
+        </li>
+      </ul>
+    ),
+  },
+  {
+    id: "privacy",
+    icon: <MdOutlinePrivacyTip className="h-6 w-6" />,
+    title: "User privacy",
+    content: (
+      <ul className="space-y-8">
+        <li className="flex flex-col gap-1">
+          <span className="font-semibold">RPer-first app.</span>
+          <p>
+            This is a small passion project, designed to be low-pressure and
+            user-first. Signing up is quick and easy: no personal info required
+            beyond a working email, which is only used to save your characters
+            and threads.
+          </p>
+        </li>
+
+        <li className="flex flex-col gap-1">
+          <span className="font-semibold">
+            This cookie jar holds 4 cookies.
+          </span>
+          <p>
+            They&apos;re used only to keep you logged in, remember your
+            preferences, and personalize the interface. RP Tools doesn&apos;t
+            track you, and it doesn&apos;t share your data. Ever.
           </p>
         </li>
       </ul>
