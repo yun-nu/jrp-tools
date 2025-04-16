@@ -87,7 +87,7 @@ export default function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="bg-muted px-2 sm:px-8"
+                      className="bg-muted px-2 sm:px-8 text-center"
                     >
                       {header.isPlaceholder
                         ? null
@@ -109,7 +109,10 @@ export default function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-2 sm:px-8">
+                    <TableCell
+                      key={cell.id}
+                      className="px-2 sm:px-8 text-center"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

@@ -35,7 +35,7 @@ export const threadsCols = (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="flex items-center gap-2 p-0"
+          className="flex items-center gap-2 p-0 mx-auto"
         >
           Date
           <ArrowUpDown className="h-4 w-4" />
@@ -61,7 +61,7 @@ export const threadsCols = (
     header: "Blurb",
     cell: ({ row }) => {
       return (
-        <div className="whitespace-pre-wrap break-words text-sm">
+        <div className="whitespace-pre-wrap break-words text-sm text-left">
           {row.getValue("blurb")}
         </div>
       );
