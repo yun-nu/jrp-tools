@@ -23,6 +23,7 @@ export default async function HeaderUser() {
         href="/account/characters"
         className="flex flex-col text-xs sm:flex-row sm:text-sm ml-auto gap-2 items-center hover:text-primary/80 transition-colors font-semibold"
         title="Your account"
+        prefetch={false}
       >
         <User className="w-5 h-5 sm:w-6 sm:h-6" /> {email}
       </Link>
