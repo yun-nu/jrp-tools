@@ -1,4 +1,4 @@
-import Link from "next/link";
+import StyledLink from "@/app/_components/StyledLink";
 
 export default function NotFound() {
   return (
@@ -6,13 +6,9 @@ export default function NotFound() {
       <h1 className="text-xl font-semibold">
         Something went wrong while trying to fetch threads.
       </h1>
-      <Link
-        href={"/account/characters"}
-        className="underline underline-offset-4"
-        prefetch={false}
-      >
+      <StyledLink type="self" href={"/account/characters"}>
         Return to character list
-      </Link>
+      </StyledLink>
     </div>
   );
 }
