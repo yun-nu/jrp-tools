@@ -72,7 +72,7 @@ export const aboutFAQItems = [
             As the name suggests, public-facing pages can be viewed by anyone
             with the link. You can{" "}
             <StyledLink
-              href="http://jrp-tools.vercel.app/characters/test_character"
+              href="http://jrp-tools.com/characters/test_character"
               type="new-window"
             >
               check out a sample

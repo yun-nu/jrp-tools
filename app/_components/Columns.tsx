@@ -4,12 +4,18 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, LinkIcon } from "lucide-react";
 import { ExistingThread } from "../_schemas/Thread";
+import CommentCountActions from "./CommentCountActions";
 import DataTableRowActions from "./DataTableRowActions";
 import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
 
-export const threadsCols: ColumnDef<ExistingThread>[] = [
+export const threadsCols = (
+  showActions: boolean
+): ColumnDef<ExistingThread>[] => [
   {
+    meta: {
+      showColumn: true,
+    },
     accessorKey: "date",
     cell: ({ row }) => {
       const date = row.getValue("date");
@@ -38,6 +44,9 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
     },
   },
   {
+    meta: {
+      showColumn: true,
+    },
     accessorKey: "type",
     header: "Type",
     cell: ({ row }) => (
@@ -45,6 +54,9 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
     ),
   },
   {
+    meta: {
+      showColumn: true,
+    },
     accessorKey: "blurb",
     header: "Blurb",
     cell: ({ row }) => {
@@ -56,6 +68,25 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
     },
   },
   {
+    meta: {
+      name: "# Comments",
+      showColumn: showActions,
+    },
+    accessorKey: "commentCount",
+    header: () => <span className="whitespace-nowrap"># Comments</span>,
+    cell: ({ row }) => {
+      return (
+        <div className="text-center">
+          <CommentCountActions row={row} />
+        </div>
+      );
+    },
+  },
+  {
+    meta: {
+      name: "Link",
+      showColumn: true,
+    },
     accessorKey: "URL",
     header: "Link",
     cell: ({ row }) => {
@@ -72,6 +103,9 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
     },
   },
   {
+    meta: {
+      showColumn: showActions,
+    },
     id: "actions",
     cell: ({ row }) => {
       const thread = row.original;
@@ -81,6 +115,5 @@ export const threadsCols: ColumnDef<ExistingThread>[] = [
         </div>
       );
     },
-    enableHiding: true,
   },
 ];

@@ -30,6 +30,13 @@ const baseThreadSchema = z.object({
       message: generateMaxMessage(FORM_BLURB_MAX_LENGTH),
     })
     .optional(),
+  commentCount: z.coerce
+    .number({ invalid_type_error: "Must be a valid number" })
+    .int()
+    .min(0)
+    .max(9999)
+    .nonnegative()
+    .default(0),
   isFinished: z.boolean(),
 });
 

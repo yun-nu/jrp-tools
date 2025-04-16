@@ -58,6 +58,7 @@ export function ThreadForm({
           url: "",
           isFinished: false,
           characterId: characterId,
+          commentCount: 0,
         },
   });
 
@@ -115,6 +116,12 @@ export function ThreadForm({
           fieldTitle="Thread Link"
           nameInSchema="url"
           placeholder="Must start with http:// or https://"
+        />
+
+        <InputWithLabel
+          fieldTitle="Comment count"
+          nameInSchema="commentCount"
+          placeholder="0"
         />
 
         <CheckboxWithText

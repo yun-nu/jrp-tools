@@ -4,7 +4,7 @@
   "private": true,
   "description": "Lightweight thread tracker for Journal-Based Roleplay",
   "author": "Yunnu (https://yunnu.dev)",
-  "homepage": "https://jrp-tools.vercel.app",
+  "homepage": "https://jrp-tools.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

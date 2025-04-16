@@ -1,4 +1,5 @@
 import { Table } from "@tanstack/react-table";
+import "@tanstack/table-core";
 import { SlidersHorizontal } from "lucide-react";
 import { Button } from "./ui/Button";
 import {
@@ -11,6 +12,18 @@ import {
 type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;
 };
+
+type CustomColumnMeta = {
+  name?: string;
+  showColumn?: boolean;
+};
+
+declare module "@tanstack/table-core" {
+  interface ColumnMeta<
+    TData extends import("@tanstack/table-core").RowData,
+    TValue
+  > extends CustomColumnMeta {}
+}
 
 export default function DataTableViewOptions<TData>({
   table,
@@ -26,10 +39,7 @@ export default function DataTableViewOptions<TData>({
       <DropdownMenuContent align="end">
         {table
           .getAllColumns()
-          .filter(
-            (column) =>
-              typeof column.accessorFn !== "undefined" && column.getCanHide()
-          )
+          .filter((column) => column.columnDef.meta?.showColumn)
           .map((column) => {
             return (
               <DropdownMenuCheckboxItem
@@ -38,7 +48,7 @@ export default function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                {column.id}
+                {column.columnDef.meta?.name ?? column.id}
               </DropdownMenuCheckboxItem>
             );
           })}

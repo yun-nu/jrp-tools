@@ -5,8 +5,11 @@ import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { toast } from "../_hooks/useToast";
+import { commonLinks, userLinks } from "../_lib/navigation";
 import { actionReturnSuccess } from "../_utils/action-return";
 import { signOutAction } from "../login/actions";
+import { NavigationMenu } from "./NavigationMenu";
+import { Separator } from "./ui/Separator";
 import {
   Sidebar,
   SidebarContent,
@@ -19,9 +22,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/Sidebar";
-import { NavigationMenu } from "./NavigationMenu";
-import { commonLinks, userLinks } from "../_lib/navigation";
-import { Separator } from "./ui/Separator";
 
 export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { push } = useRouter();

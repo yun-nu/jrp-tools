@@ -13,9 +13,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { ExistingCharacter } from "../_schemas/Character";
 import DataTableViewOptions from "./DataTableViewOptions";
-import ThreadDialog from "./ThreadDialog";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import {
@@ -47,6 +45,7 @@ export default function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     actions: showActions,
+    commentCount: showActions,
   });
 
   const table = useReactTable({

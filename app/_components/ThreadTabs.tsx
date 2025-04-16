@@ -17,18 +17,20 @@ type ThreadTabsProps = {
   ongoingThreads: ExistingThread[];
   finishedThreads: ExistingThread[];
   characterId?: ExistingCharacter["id"];
-  showTableActions?: boolean;
+  showTableActions: boolean;
 };
 
 export default function ThreadTabs({
   ongoingThreads,
   finishedThreads,
   characterId,
-  showTableActions: showActions,
+  showTableActions,
 }: ThreadTabsProps) {
+  const columns = threadsCols(showTableActions);
+
   return (
     <div className="mt-8 flex flex-col items-center justify-center lg:max-w-[80%] gap-y-8 w-full">
-      {showActions && characterId && (
+      {showTableActions && characterId && (
         <ThreadDialog characterId={characterId} mode="add" />
       )}
 
@@ -45,16 +47,16 @@ export default function ThreadTabs({
         </TabsList>
         <TabsContent value="ongoing">
           <DataTable
-            columns={threadsCols}
+            columns={columns}
             data={ongoingThreads}
-            showActions={showActions}
+            showActions={showTableActions}
           />
         </TabsContent>
         <TabsContent value="finished">
           <DataTable
-            columns={threadsCols}
+            columns={columns}
             data={finishedThreads}
-            showActions={showActions}
+            showActions={showTableActions}
           />
         </TabsContent>
       </Tabs>

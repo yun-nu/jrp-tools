@@ -1,5 +1,32 @@
+import StyledLink from "@/app/_components/StyledLink";
+
 /* eslint-disable react/no-unescaped-entities */
 export const changelog = [
+  {
+    number: "02",
+    date: "April 16th, 2025",
+    content: (
+      <>
+        <p>
+          Huge thanks to everyone who signed up early — and just two quick
+          heads-up!
+        </p>
+        <p>
+          JRP Tools now has a shiny new URL:{" "}
+          <StyledLink href="https://www.jrp-tools.com">
+            www.jrp-tools.com
+          </StyledLink>
+          ! This domain change shouldn't affect your experience, but if you were
+          logged in on the old URL, you might need to log in again.
+        </p>
+        <p>
+          Additionally, a column for comment count has been added to the thread
+          tracker table, along with an input field in the form. Big thanks to
+          Jessi for suggesting it!
+        </p>
+      </>
+    ),
+  },
   {
     number: "01",
     date: "April 10th, 2025",

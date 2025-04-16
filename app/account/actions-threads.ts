@@ -118,3 +118,25 @@ export async function duplicateThreadAction(
 
   return { error: "Could not duplicate thread" };
 }
+
+export async function updateCommentCountAction(
+  threadId: ExistingThread["id"],
+  updatedCount: ExistingThread["commentCount"]
+): Promise<ActionResult> {
+  if (updatedCount < 0) {
+    return { error: "Comment count cannot be negative" };
+  }
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("threads")
+    .update({ commentCount: updatedCount })
+    .eq("id", threadId);
+
+  if (error) return { error: "Could not update comment count" };
+
+  return {
+    success: "Comment count updated successfully",
+  };
+}
