@@ -21,6 +21,7 @@ export default function CommentCountActions({
 }) {
   const [count, setCount] = useState(row.getValue("commentCount") as number);
   const [open, setOpen] = useState(false);
+  const [inputValue, setInputValue] = useState(String(count));
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
@@ -28,8 +29,21 @@ export default function CommentCountActions({
       handleCommentCountChange();
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setInputValue(val);
+
+    if (val === "") return;
+
+    const parsed = parseInt(val);
+    if (!isNaN(parsed) && parsed >= 0) setCount(parsed);
+  };
+
   const handleCommentCountChange = async () => {
-    const result = await updateCommentCountAction(row.original.id, count);
+    const result = await updateCommentCountAction(
+      row.original.id,
+      count as number
+    );
     if (actionReturnSuccess(result)) {
       toast({
         description: result.success,
@@ -54,22 +68,25 @@ export default function CommentCountActions({
           <div className="flex items-center gap-2">
             <MinusCircle
               className="h-4 cursor-pointer hover:text-primary transition-colors"
-              onClick={() => setCount((prev) => Math.max(0, prev - 1))}
+              onClick={() => {
+                const newCount = Math.max(0, count - 1);
+                setCount(newCount);
+                setInputValue(String(newCount));
+              }}
             />
             <Input
-              type="text"
-              value={count}
-              onChange={(e) => {
-                const val = parseInt(e.target.value);
-                if (!isNaN(val) && val >= 0) {
-                  setCount(val);
-                }
-              }}
+              type="number"
+              value={inputValue}
+              onChange={(e) => handleInputChange(e)}
               className="w-12 h-8 text-center"
             />
             <PlusCircle
               className="h-4 cursor-pointer hover:text-primary transition-colors"
-              onClick={() => setCount((prev) => prev + 1)}
+              onClick={() => {
+                const newCount = count + 1;
+                setCount(newCount);
+                setInputValue(String(newCount));
+              }}
             />
           </div>
         </div>
