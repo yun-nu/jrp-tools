@@ -18,6 +18,7 @@ export default function StyledLink({
       className={`underline underline-offset-4 inline-flex gap-2 items-center w-fit ${className}`}
       target={type === "new-window" ? "_blank" : "_self"}
       rel="noopener noreferrer"
+      prefetch={false}
     >
       {children}
     </Link>

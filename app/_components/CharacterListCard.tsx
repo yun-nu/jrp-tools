@@ -49,6 +49,7 @@ export function CharacterListCard({
               href={`/characters/${displayName}`}
               title={`${characterName}'s public page`}
               target="_blank"
+              prefetch={false}
             >
               <Badge className="h-[22px]" variant={"default"}>
                 Public
@@ -79,6 +80,7 @@ export function CharacterListCard({
           href={`/account/characters/${displayName}`}
           className="px-4 py-2 text-sm border border-secondary-foreground bg-secondary rounded hover:bg-secondary/50 font-semibold xs:w-[50%] text-center"
           title={`${characterName}'s threads page`}
+          prefetch={false}
         >
           Thread tracker
         </Link>

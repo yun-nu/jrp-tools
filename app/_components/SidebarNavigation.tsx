@@ -46,7 +46,9 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="justify-center font-semibold">
-            <Link href="/">JRP Tools</Link>
+            <Link href="/" prefetch={false}>
+              JRP Tools
+            </Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             {isLoggedIn && <NavigationMenu links={userLinks} />}

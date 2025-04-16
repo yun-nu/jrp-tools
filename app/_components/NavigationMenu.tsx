@@ -20,7 +20,7 @@ export function NavigationMenu({ links, className }: NavigationMenuProps) {
       {links.map((item) => (
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton asChild onClick={() => setOpenMobile(false)}>
-            <Link href={item.url}>
+            <Link href={item.url} prefetch={false}>
               <item.icon />
               <span>{item.title}</span>
             </Link>

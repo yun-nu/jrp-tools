@@ -27,7 +27,9 @@ export default async function Home() {
           size="lg"
           className="border-2 border-foreground text-lg font-semibold"
         >
-          <Link href="/signup">Sign up</Link>
+          <Link href="/signup" prefetch={false}>
+            Sign up
+          </Link>
         </Button>
       )}
       <Footer />

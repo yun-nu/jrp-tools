@@ -9,6 +9,7 @@ export default function NotFound() {
       <Link
         href={"/account/characters"}
         className="underline underline-offset-4"
+        prefetch={false}
       >
         Return to character list
       </Link>

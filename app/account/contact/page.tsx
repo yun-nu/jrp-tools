@@ -43,36 +43,36 @@ export default function Page() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col xs:flex-row gap-4 sm:gap-2 justify-evenly h-full items-center">
-          <Link
+          <a
             href="mailto:yunnu.dev@gmail.com"
             className="flex gap-2 items-center"
           >
             <MdEmail /> Email
-          </Link>
+          </a>
 
           <Separator
             orientation="vertical"
             className="h-0.5 w-full xs:h-6 xs:w-0.5"
           />
 
-          <Link
+          <a
             href="https://www.dreamwidth.org/inbox/compose?user=yunnu"
             className="flex gap-2 items-center"
           >
             <SiDreamstime className="text-red-500" /> Dreamwidth
-          </Link>
+          </a>
 
           <Separator
             orientation="vertical"
             className="h-0.5 w-full xs:h-6 xs:w-0.5"
           />
 
-          <Link
+          <a
             href="https://plurk.com/positron"
             className="flex gap-2 items-center"
           >
             <SiPlurk className="text-orange-600" /> Plurk
-          </Link>
+          </a>
         </CardContent>
       </Card>
     </div>

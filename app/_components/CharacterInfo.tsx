@@ -74,12 +74,12 @@ export default function CharacterInfo({
             </div>
           )}
           {!isPublicPage && acLink && (
-            <Link
+            <a
               href={acLink ? acLink : "#"}
               className="flex items-center gap-2 underline underline-offset-4"
             >
               <LuGoal /> AC page
-            </Link>
+            </a>
           )}
         </div>
       </div>

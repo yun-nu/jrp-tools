@@ -11,7 +11,7 @@ export default async function HeaderUser() {
   if (!email)
     return (
       <Button asChild size="sm" className="font-semibold md:ml-auto">
-        <Link href="/login">
+        <Link href="/login" prefetch={false}>
           <PiSignInBold /> Log in
         </Link>
       </Button>
