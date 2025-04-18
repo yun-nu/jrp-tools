@@ -1,6 +1,5 @@
 import { FaGoogle } from "react-icons/fa6";
 import { signInGoogleAction } from "../login/actions";
-import { signUpOTPAction } from "../signup/actions";
 import { EmailAndConfirmationForm } from "./EmailAndConfirmationForm";
 import { Button } from "./ui/Button";
 import {
@@ -20,10 +19,7 @@ export function SignUpOTP() {
         <CardDescription>Sign up passwordlessly</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <EmailAndConfirmationForm
-          action={signUpOTPAction}
-          btnDescription="Sign up"
-        />
+        <EmailAndConfirmationForm btnDescription="Sign up" />
       </CardContent>
       <CardFooter>
         <Button type={"button"} onClick={signInGoogleAction} className="w-full">

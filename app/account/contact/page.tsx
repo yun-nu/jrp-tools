@@ -8,7 +8,6 @@ import {
 } from "@/app/_components/ui/Card";
 import { Separator } from "@/app/_components/ui/Separator";
 import { Metadata } from "next";
-import Link from "next/link";
 import { MdEmail } from "react-icons/md";
 import { SiDreamstime, SiPlurk } from "react-icons/si";
 
@@ -68,7 +67,7 @@ export default function Page() {
           />
 
           <a
-            href="https://plurk.com/positron"
+            href="https://www.plurk.com/jrp_tools"
             className="flex gap-2 items-center"
           >
             <SiPlurk className="text-orange-600" /> Plurk

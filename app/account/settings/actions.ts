@@ -9,38 +9,38 @@ import {
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
-export async function updateEmailAction(input: EmailAndConfirmation) {
-  const parsed = emailAndConfirmationSchema.safeParse(input);
+// export async function updateEmailAction(input: EmailAndConfirmation) {
+//   const parsed = emailAndConfirmationSchema.safeParse(input);
 
-  if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
-  }
+//   if (!parsed.success) {
+//     return {
+//       message: "Submission Failed",
+//       errors: parsed.error.flatten().fieldErrors,
+//     };
+//   }
 
-  const supabase = await createServerClient();
+//   const supabase = await createServerClient();
 
-  const { email: parsedEmail } = parsed.data;
+//   const { email: parsedEmail } = parsed.data;
 
-  const { error } = await supabase.auth.updateUser(
-    {
-      email: parsedEmail,
-    },
-    {
-      emailRedirectTo: `${process.env.ROOT_URL}/account/settings/email-confirmation`,
-    }
-  );
+//   const { error } = await supabase.auth.updateUser(
+//     {
+//       email: parsedEmail,
+//     },
+//     {
+//       emailRedirectTo: `${process.env.ROOT_URL}/account/settings/email-confirmation`,
+//     }
+//   );
 
-  if (error?.status === 422) return { error: "Email already in use" };
+//   if (error?.status === 422) return { error: "Email already in use" };
 
-  if (error) return { error: "Could not update email" };
+//   if (error) return { error: "Could not update email" };
 
-  return {
-    success:
-      "Change requested successfully. Please check both the new and old email addresses.",
-  };
-}
+//   return {
+//     success:
+//       "Change requested successfully. Please check both the new and old email addresses.",
+//   };
+// }
 
 export async function deleteUserAction() {
   const userId = await getUserId();

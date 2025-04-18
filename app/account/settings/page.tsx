@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/app/_components/ui/Card";
 import { Metadata } from "next";
-import { updateEmailAction } from "./actions";
 
 export const metadata: Metadata = {
   title: "Account Settings - JRP Tools",
@@ -29,11 +28,7 @@ export default async function Page() {
         </CardHeader>
 
         <CardContent className="flex flex-col gap-4">
-          <EmailAndConfirmationForm
-            action={updateEmailAction}
-            isUpdate
-            btnDescription="Update email"
-          />
+          <EmailAndConfirmationForm isUpdate btnDescription="Update email" />
         </CardContent>
       </Card>
 

@@ -56,10 +56,7 @@ export async function addCharacter(
   const parsed = newCharacterSchema.safeParse(newCharacter);
 
   if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid input data");
   }
 
   const { data: parsedCharacterData } = parsed;
@@ -86,10 +83,7 @@ export async function editCharacter(
   const parsed = existingCharacterSchema.safeParse(characterData);
 
   if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid input data");
   }
 
   const { data: parsedCharacterData } = parsed;

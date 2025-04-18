@@ -28,10 +28,7 @@ export async function addThread(threadData: NewThread): Promise<RequestResult> {
   const parsed = newThreadSchema.safeParse(threadData);
 
   if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid input data");
   }
 
   const { data: parsedThreadData } = parsed;
@@ -55,10 +52,7 @@ export async function editThread(
   const parsed = existingThreadSchema.safeParse(thread);
 
   if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid input data");
   }
 
   const { data: parsedThreadData } = parsed;
