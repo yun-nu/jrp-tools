@@ -4,7 +4,7 @@ import {
   FORM_NAMES_MAX_LENGTH,
   FORM_URL_INVALID,
   generateMaxMessage,
-} from "../_lib/consts";
+} from "../_utils/consts";
 
 const baseCharacterSchema = z.object({
   displayName: z
@@ -30,15 +30,19 @@ const baseCharacterSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   blurb: z
     .string()
-    .max(500, { message: generateMaxMessage(FORM_BLURB_MAX_LENGTH) })
+    .max(FORM_BLURB_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_BLURB_MAX_LENGTH),
+    })
     .optional(),
   gameName: z
     .string()
-    .max(50, { message: generateMaxMessage(FORM_NAMES_MAX_LENGTH) })
+    .max(FORM_NAMES_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+    })
     .optional(),
-  journalName: z
-    .string()
-    .max(50, { message: generateMaxMessage(FORM_NAMES_MAX_LENGTH) }),
+  journalName: z.string().max(FORM_NAMES_MAX_LENGTH, {
+    message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+  }),
   journalLink: z
     .union([
       z

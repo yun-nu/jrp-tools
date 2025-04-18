@@ -21,7 +21,7 @@ export default function DeleteCharacter({
 }: {
   character: ExistingCharacter;
 }) {
-  const { id, characterName } = character;
+  const { id: characterId, characterName } = character;
   const { mutate: deleteCharacter } = useDeleteCharacter();
 
   return (
@@ -45,7 +45,7 @@ export default function DeleteCharacter({
 
           <AlertDialogAction
             type="button"
-            onClick={() => deleteCharacter({ characterId: id })}
+            onClick={() => deleteCharacter({ characterId })}
             className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
           >
             Delete

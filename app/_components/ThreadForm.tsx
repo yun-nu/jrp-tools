@@ -2,22 +2,19 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toDate } from "date-fns";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "../_hooks/useToast";
-import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
+import { useAddThread } from "../_hooks/threads/useAddThread";
+import { useEditThread } from "../_hooks/threads/useEditThread";
+import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import { ExistingCharacter } from "../_schemas/Character";
 import {
   ExistingThread,
   existingThreadSchema,
   isExistingThread,
-  NewThread,
   newThreadSchema,
   Thread,
 } from "../_schemas/Thread";
-import { RequestError, RequestSuccess } from "../_utils/action-return";
-import { addThreadAction, editThreadAction } from "../account/actions-threads";
 import CheckboxWithText from "./CheckboxWithText";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 import { InputWithLabel } from "./InputWithLabel";
@@ -30,19 +27,14 @@ type ThreadFormProps = {
   thread?: Thread;
   characterId?: ExistingCharacter["id"];
   setOpen: (open: boolean) => void;
-  action: typeof addThreadAction | typeof editThreadAction;
 };
 
-export function ThreadForm({
-  thread,
-  characterId,
-  setOpen,
-  action,
-}: ThreadFormProps) {
-  const router = useRouter();
+export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
+  const { addThread, isAdding } = useAddThread(setOpen);
+  const { editThread, isEditing } = useEditThread(setOpen);
 
-  const isEditing = isExistingThread(thread ?? ({} as Thread));
-  const threadSchema = isEditing ? existingThreadSchema : newThreadSchema;
+  const isEditAction = isExistingThread(thread ?? ({} as Thread));
+  const threadSchema = isEditAction ? existingThreadSchema : newThreadSchema;
 
   const form = useForm<z.infer<typeof threadSchema>>({
     resolver: zodResolver(threadSchema),
@@ -59,29 +51,12 @@ export function ThreadForm({
         },
   });
 
-  const onSubmit = async () => {
-    let result;
+  const onSubmit = () => {
     const values = form.getValues();
 
-    if (isEditing && isExistingThread(thread))
-      result = await (action as typeof editThreadAction)(
-        values as ExistingThread,
-        thread.id
-      );
-    else result = await (action as typeof addThreadAction)(values as NewThread);
-
-    if (RequestError(result))
-      toast({
-        description: result.error || result.message,
-        variant: "destructive",
-      });
-
-    if (RequestSuccess(result)) {
-      toast({ description: result.success, variant: "success" });
-      form.reset();
-      setOpen(false);
-      router.refresh();
-    }
+    if (isEditAction && isExistingThread(thread))
+      editThread({ thread: values as ExistingThread });
+    if (!isEditAction) addThread({ threadData: values });
   };
 
   return (
@@ -105,8 +80,8 @@ export function ThreadForm({
         <TextareaWithLabel
           fieldTitle="Blurb"
           nameInSchema="blurb"
-          placeholder={`Maximum of ${FORM_CONTACT_MAX_LENGTH} characters`}
-          maxLength={FORM_CONTACT_MAX_LENGTH}
+          placeholder={`Maximum of ${FORM_BLURB_MAX_LENGTH} characters`}
+          maxLength={FORM_BLURB_MAX_LENGTH}
         />
 
         <InputWithLabel
@@ -125,7 +100,7 @@ export function ThreadForm({
           nameInSchema="isFinished"
           fieldTitle="Mark this thread as finished"
           description={`Threads are marked as ongoing by default. Check this option if ${
-            isEditing
+            isEditAction
               ? "you'd like to mark this thread as finished"
               : "you're adding an already finished thread"
           }.`}
@@ -136,10 +111,10 @@ export function ThreadForm({
           </DialogClose>
           <Button
             type="submit"
-            disabled={form.formState.isSubmitting}
+            disabled={isAdding || isEditing}
             className="sm:w-fit w-full"
           >
-            {isEditing ? "Save changes" : "Add thread"}
+            {isEditAction ? "Save changes" : "Add thread"}
           </Button>
         </DialogFooter>
       </form>

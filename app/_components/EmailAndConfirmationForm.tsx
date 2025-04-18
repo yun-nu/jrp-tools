@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { emailAndConfirmationSchema } from "../_schemas/Auth";
-import { RequestError, RequestSuccess } from "../_utils/action-return";
+import { RequestError, RequestSuccess } from "../_utils/return";
 import { updateEmailAction } from "../account/settings/actions";
 import { signUpOTPAction } from "../signup/actions";
 import { InputWithLabel } from "./InputWithLabel";

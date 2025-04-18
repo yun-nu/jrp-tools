@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
-import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
+import { FORM_CONTACT_MAX_LENGTH } from "../_utils/consts";
 import { formSchema } from "../_schemas/Auth";
 import { contactFormAction } from "../account/contact/actions";
 import { InputWithLabel } from "./InputWithLabel";

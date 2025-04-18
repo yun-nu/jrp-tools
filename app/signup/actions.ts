@@ -5,11 +5,11 @@ import {
   EmailAndConfirmation,
   emailAndConfirmationSchema,
 } from "../_schemas/Auth";
-import { ActionResult } from "../_utils/action-return";
+import { RequestResult } from "../_utils/return";
 
 export async function signUpOTPAction(
   input: EmailAndConfirmation
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {

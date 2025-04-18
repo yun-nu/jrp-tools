@@ -8,15 +8,11 @@ import {
   SquareCheckBig,
   Trash,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDuplicateThread } from "../_hooks/threads/useDuplicateThread";
+import { useToggleThreadFinished } from "../_hooks/threads/useToggleThreadFinished";
 import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
-import { RequestError, RequestSuccess } from "../_utils/action-return";
-import {
-  duplicateThreadAction,
-  toggleIsFinishedAction,
-} from "../account/actions-threads";
 import DeleteThread from "./DeleteThread";
 import ThreadDialog from "./ThreadDialog";
 import { Button } from "./ui/Button";
@@ -35,38 +31,9 @@ export default function DataTableRowActions({
 }) {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const { refresh } = useRouter();
 
-  const handleToggleThreadStatus = async () => {
-    const result = await toggleIsFinishedAction(thread);
-
-    if (RequestError(result)) {
-      toast({
-        description: result.error,
-        variant: "destructive",
-      });
-      return;
-    }
-    if (RequestSuccess(result)) {
-      toast({ description: result.success, variant: "success" });
-      refresh();
-    }
-  };
-
-  const handleDuplicateThread = async () => {
-    const result = await duplicateThreadAction(thread);
-    if (RequestError(result)) {
-      toast({
-        description: result.error,
-        variant: "destructive",
-      });
-      return;
-    }
-    if (RequestSuccess(result)) {
-      toast({ description: result.success, variant: "success" });
-      refresh();
-    }
-  };
+  const { mutate: toggleThreadFinished } = useToggleThreadFinished();
+  const { mutate: duplicateThread } = useDuplicateThread();
 
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(thread.url as string);
@@ -110,14 +77,20 @@ export default function DataTableRowActions({
               <Edit /> <span>Edit thread</span>
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem role="button" onClick={handleToggleThreadStatus}>
+          <DropdownMenuItem
+            role="button"
+            onClick={() => toggleThreadFinished({ thread })}
+          >
             <button className="flex gap-2">
               <SquareCheckBig /> Mark as{" "}
               {thread.isFinished ? "ongoing" : "finished"}
             </button>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <button className="flex gap-2" onClick={handleDuplicateThread}>
+            <button
+              className="flex gap-2"
+              onClick={() => duplicateThread({ thread })}
+            >
               <Copy /> Duplicate thread
             </button>
           </DropdownMenuItem>

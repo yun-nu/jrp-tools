@@ -5,7 +5,7 @@ import {
   NewCharacter,
   newCharacterSchema,
 } from "../_schemas/Character";
-import { ActionResult } from "../_utils/action-return";
+import { RequestResult } from "../_utils/return";
 import { createClient } from "./supabase-client";
 
 export async function getCharacters(
@@ -18,7 +18,7 @@ export async function getCharacters(
     .select("*")
     .eq("userId", userId);
 
-  if (error) throw Error("Could not fetch character list.");
+  if (error) throw new Error("Could not fetch character list.");
 
   return characters;
 }
@@ -41,7 +41,7 @@ export async function getCharacter(
 
 export async function addCharacter(
   characterData: Omit<NewCharacter, "userId">
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const supabase = createClient();
 
   const userId = await supabase.auth
@@ -82,7 +82,7 @@ export async function addCharacter(
 
 export async function editCharacter(
   characterData: ExistingCharacter
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const parsed = existingCharacterSchema.safeParse(characterData);
 
   if (!parsed.success) {

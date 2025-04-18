@@ -1,20 +1,15 @@
-import { updateCommentCount } from "@/app/_lib/service-threads";
+import { editThread as apiEditThread } from "@/app/_lib/service-threads";
 import { ExistingThread } from "@/app/_schemas/Thread";
 import { RequestSuccess } from "@/app/_utils/return";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../useToast";
 
-type UpdateCommentCountParams = {
-  threadId: number;
-  updatedCount: ExistingThread["commentCount"];
-};
-
-export function useUpdateCommentCount() {
+export function useEditThread(setOpen: (open: boolean) => void) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: ({ threadId, updatedCount }: UpdateCommentCountParams) =>
-      updateCommentCount(threadId, updatedCount),
+  const { mutate: editThread, isPending: isEditing } = useMutation({
+    mutationFn: ({ thread }: { thread: ExistingThread }) =>
+      apiEditThread(thread),
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
         toast({
@@ -25,6 +20,8 @@ export function useUpdateCommentCount() {
         queryClient.invalidateQueries({
           queryKey: ["threads"],
         });
+
+        setOpen(false);
       }
     },
 
@@ -36,5 +33,5 @@ export function useUpdateCommentCount() {
     },
   });
 
-  return mutation;
+  return { editThread, isEditing };
 }

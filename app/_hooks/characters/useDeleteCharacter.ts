@@ -1,18 +1,14 @@
+import { deleteCharacter } from "@/app/_lib/service-characters";
 import { ExistingCharacter } from "@/app/_schemas/Character";
-import { RequestSuccess } from "@/app/_utils/action-return";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { RequestSuccess } from "@/app/_utils/return";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../useToast";
-import { deleteCharacter } from "@/app/_lib/apiCharacters";
-
-type DeleteCharacterParams = {
-  characterId: ExistingCharacter["id"];
-};
 
 export function useDeleteCharacter() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: ({ characterId }: DeleteCharacterParams) =>
+    mutationFn: ({ characterId }: { characterId: ExistingCharacter["id"] }) =>
       deleteCharacter(characterId),
 
     onSuccess: (result) => {

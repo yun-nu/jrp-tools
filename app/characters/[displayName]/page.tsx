@@ -3,7 +3,7 @@ import MessageBox from "@/app/_components/MessageBox";
 import {
   getCharacterMetadata,
   getCharacterPageData,
-} from "@/app/_lib/data-service-server";
+} from "@/app/_lib/service-server";
 
 import { Metadata } from "next";
 

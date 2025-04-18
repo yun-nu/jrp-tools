@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
+import { FORM_CONTACT_MAX_LENGTH } from "../_utils/consts";
 
 export const emailAndConfirmationSchema = z
   .object({

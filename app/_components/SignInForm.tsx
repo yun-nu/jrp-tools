@@ -7,7 +7,7 @@ import { FaGoogle } from "react-icons/fa6";
 import { z } from "zod";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
-import { RequestError } from "../_utils/action-return";
+import { RequestError } from "../_utils/return";
 import {
   signInGoogleAction,
   signInOTPAction,

@@ -1,18 +1,30 @@
-"use server";
-
 import { toDate } from "date-fns";
-import { createClient } from "../_lib/supabase-server";
+import { ExistingCharacter } from "../_schemas/Character";
 import {
   ExistingThread,
   existingThreadSchema,
   NewThread,
   newThreadSchema,
 } from "../_schemas/Thread";
-import { ActionResult } from "../_utils/action-return";
+import { RequestResult } from "../_utils/return";
+import { createClient } from "./supabase-client";
 
-export async function addThreadAction(
-  threadData: NewThread
-): Promise<ActionResult> {
+export async function getThreads(
+  characterId: ExistingCharacter["id"]
+): Promise<ExistingThread[] | Error> {
+  const supabase = createClient();
+
+  const { data: threads, error } = await supabase
+    .from("threads")
+    .select("*")
+    .eq("characterId", characterId);
+
+  if (error) throw new Error("Could not fetch threads.");
+
+  return threads;
+}
+
+export async function addThread(threadData: NewThread): Promise<RequestResult> {
   const parsed = newThreadSchema.safeParse(threadData);
 
   if (!parsed.success) {
@@ -23,25 +35,24 @@ export async function addThreadAction(
   }
 
   const { data: parsedThreadData } = parsed;
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error } = await supabase
     .from("threads")
     .insert(parsedThreadData)
     .select();
 
-  if (error) return { error: "Could not add new thread" };
+  if (error) throw new Error("Could not add new thread");
 
   return {
     success: "Thread added successfully",
   };
 }
 
-export async function editThreadAction(
-  threadData: ExistingThread,
-  threadId: ExistingThread["id"]
-): Promise<ActionResult> {
-  const parsed = existingThreadSchema.safeParse(threadData);
+export async function editThread(
+  thread: ExistingThread
+): Promise<RequestResult> {
+  const parsed = existingThreadSchema.safeParse(thread);
 
   if (!parsed.success) {
     return {
@@ -57,84 +68,82 @@ export async function editThreadAction(
   const { error } = await supabase
     .from("threads")
     .update(parsedThreadData)
-    .eq("id", threadId);
+    .eq("id", parsedThreadData.id);
 
-  if (error) return { error: "Could not edit thread" };
+  if (error) throw new Error("Could not edit thread");
 
   return {
     success: "Thread edited successfully",
   };
 }
 
-export async function deleteThreadAction(
+export async function deleteThread(
   threadId: ExistingThread["id"]
-): Promise<ActionResult> {
-  const supabase = await createClient();
+): Promise<RequestResult> {
+  const supabase = createClient();
 
   const { error } = await supabase.from("threads").delete().eq("id", threadId);
 
-  if (error) return { error: "Could not delete thread" };
+  if (error) throw new Error("Could not delete thread");
 
   return {
     success: "Thread deleted successfully",
   };
 }
 
-export async function toggleIsFinishedAction(
+export async function toggleThreadFinished(
   thread: ExistingThread
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const statusToggledThread = {
     ...thread,
     isFinished: !thread.isFinished,
   };
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error } = await supabase
     .from("threads")
     .update(statusToggledThread)
     .eq("id", thread.id);
-  if (error) return { error: "Could not change thread status" };
+  if (error) throw new Error("Could not change thread status");
 
   return {
     success: "Thread status changed successfully",
   };
 }
 
-export async function duplicateThreadAction(
+export async function duplicateThread(
   thread: ExistingThread
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const duplicatedThread = {
     ...thread,
     id: undefined,
     date: toDate(thread.date),
   };
 
-  const result = await addThreadAction(duplicatedThread);
+  const result = await addThread(duplicatedThread);
   if ("success" in result)
     return {
       success: "Thread duplicated successfully",
     };
 
-  return { error: "Could not duplicate thread" };
+  throw new Error("Could not duplicate thread");
 }
 
-export async function updateCommentCountAction(
+export async function updateCommentCount(
   threadId: ExistingThread["id"],
   updatedCount: ExistingThread["commentCount"]
-): Promise<ActionResult> {
-  if (updatedCount < 0) {
-    return { error: "Comment count cannot be negative" };
-  }
+): Promise<RequestResult> {
+  if (updatedCount < 0) throw new Error("Comment count cannot be negative");
 
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { error } = await supabase
     .from("threads")
     .update({ commentCount: updatedCount })
     .eq("id", threadId);
 
-  if (error) return { error: "Could not update comment count" };
+  if (error) throw new Error("Could not update comment count");
 
   return {
     success: "Comment count updated successfully",

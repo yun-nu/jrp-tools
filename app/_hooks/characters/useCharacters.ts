@@ -1,4 +1,4 @@
-import { getCharacters } from "@/app/_lib/apiCharacters";
+import { getCharacters } from "@/app/_lib/service-characters";
 import { ExistingCharacter } from "@/app/_schemas/Character";
 import { User } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";

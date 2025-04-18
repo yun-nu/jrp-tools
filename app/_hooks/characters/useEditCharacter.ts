@@ -1,19 +1,15 @@
-import { editCharacter } from "@/app/_lib/apiCharacters";
+import { editCharacter as apiEditCharacter } from "@/app/_lib/service-characters";
 import { ExistingCharacter } from "@/app/_schemas/Character";
-import { RequestSuccess } from "@/app/_utils/action-return";
+import { RequestSuccess } from "@/app/_utils/return";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../useToast";
-
-type EditCharacterParams = {
-  characterData: ExistingCharacter;
-};
 
 export function useEditCharacter(setOpen: (open: boolean) => void) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: ({ characterData }: EditCharacterParams) =>
-      editCharacter(characterData),
+  const { mutate: editCharacter, isPending: isEditing } = useMutation({
+    mutationFn: ({ characterData }: { characterData: ExistingCharacter }) =>
+      apiEditCharacter(characterData),
 
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
@@ -38,5 +34,5 @@ export function useEditCharacter(setOpen: (open: boolean) => void) {
     },
   });
 
-  return mutation;
+  return { editCharacter, isEditing };
 }

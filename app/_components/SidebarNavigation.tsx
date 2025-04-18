@@ -6,7 +6,7 @@ import { startTransition } from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { toast } from "../_hooks/useToast";
 import { commonLinks, userLinks } from "../_lib/navigation";
-import { RequestSuccess } from "../_utils/action-return";
+import { RequestSuccess } from "../_utils/return";
 import { signOutAction } from "../login/actions";
 import { NavigationMenu } from "./NavigationMenu";
 import { Separator } from "./ui/Separator";

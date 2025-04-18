@@ -1,11 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
-import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
-import { RequestError, RequestSuccess } from "../_utils/action-return";
-import { deleteThreadAction } from "../account/actions-threads";
+import { useDeleteThread } from "../_hooks/threads/useDeleteThread";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,23 +21,8 @@ type Props = {
 };
 
 export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
-  const router = useRouter();
   const { id: threadId } = thread;
-
-  const handleDeleteThread = async () => {
-    const result = await deleteThreadAction(threadId);
-    if (RequestError(result)) {
-      toast({
-        description: result.error,
-        variant: "destructive",
-      });
-      return;
-    }
-    if (RequestSuccess(result)) {
-      toast({ description: result.success, variant: "success" });
-      router.refresh();
-    }
-  };
+  const { mutate: deleteThread } = useDeleteThread();
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -56,7 +38,7 @@ export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             type="button"
-            onClick={handleDeleteThread}
+            onClick={() => deleteThread({ threadId })}
             className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
           >
             Delete

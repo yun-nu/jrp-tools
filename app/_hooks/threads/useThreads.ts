@@ -1,4 +1,4 @@
-import { getThreads } from "@/app/_lib/apiThreads";
+import { getThreads } from "@/app/_lib/service-threads";
 import { ExistingCharacter } from "@/app/_schemas/Character";
 import { ExistingThread } from "@/app/_schemas/Thread";
 import { useQuery } from "@tanstack/react-query";

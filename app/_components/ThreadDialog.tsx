@@ -5,7 +5,6 @@ import { FaUserPlus } from "react-icons/fa6";
 import { useIsMobile } from "../_hooks/useIsMobile";
 import { ExistingCharacter } from "../_schemas/Character";
 import { Thread } from "../_schemas/Thread";
-import { addThreadAction, editThreadAction } from "../account/actions-threads";
 import { DesktopDialog, MobileDrawer } from "./ResponsiveDialog";
 import { ThreadForm } from "./ThreadForm";
 import { Button } from "./ui/Button";
@@ -66,13 +65,11 @@ export default function ThreadDialog(props: ThreadDialogProps) {
           Add new thread
         </Button>
       ),
-      action: addThreadAction,
     },
 
     edit: {
       title: "Edit thread",
       description: "Edit thread information",
-      action: editThreadAction,
     },
   };
 
@@ -92,7 +89,6 @@ export default function ThreadDialog(props: ThreadDialogProps) {
     >
       <ThreadForm
         setOpen={setIsOpen}
-        action={currentContent.action}
         characterId={characterId}
         thread={thread}
       />

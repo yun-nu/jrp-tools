@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useAddCharacter } from "../_hooks/characters/useAddCharacter";
 import { useEditCharacter } from "../_hooks/characters/useEditCharacter";
-import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
+import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import {
   Character,
   ExistingCharacter,
@@ -27,11 +27,11 @@ type CharacterFormProps = {
 };
 
 export function CharacterForm({ setOpen, character }: CharacterFormProps) {
-  const { mutate: addCharacter } = useAddCharacter(setOpen);
-  const { mutate: editCharacter } = useEditCharacter(setOpen);
+  const { addCharacter, isAdding } = useAddCharacter(setOpen);
+  const { editCharacter, isEditing } = useEditCharacter(setOpen);
 
-  const isEditing = isExistingCharacter(character ?? ({} as Character));
-  const characterSchema = isEditing
+  const isEditAction = isExistingCharacter(character ?? ({} as Character));
+  const characterSchema = isEditAction
     ? existingCharacterSchema
     : newCharacterSchema;
 
@@ -53,9 +53,9 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
 
   const onSubmit = () => {
     const values = form.getValues();
-    if (isEditing && isExistingCharacter(character))
+    if (isEditAction && isExistingCharacter(character))
       editCharacter({ characterData: values as ExistingCharacter });
-    if (!isEditing) addCharacter({ characterData: values });
+    if (!isEditAction) addCharacter({ characterData: values });
   };
 
   return (
@@ -85,7 +85,7 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
         <TextareaWithLabel
           fieldTitle="Blurb"
           nameInSchema="blurb"
-          maxLength={FORM_CONTACT_MAX_LENGTH}
+          maxLength={FORM_BLURB_MAX_LENGTH}
         />
 
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
@@ -117,10 +117,10 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
           </DialogClose>
           <Button
             type="submit"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            disabled={!form.formState.isValid || isAdding || isEditing}
             className="sm:w-fit w-full"
           >
-            {isEditing ? "Save changes" : "Add character"}
+            {isEditAction ? "Save changes" : "Add character"}
           </Button>
         </DialogFooter>
       </form>

@@ -3,7 +3,7 @@ import {
   FORM_BLURB_MAX_LENGTH,
   FORM_URL_INVALID,
   generateMaxMessage,
-} from "../_lib/consts";
+} from "../_utils/consts";
 
 const baseThreadSchema = z.object({
   date: z.date({

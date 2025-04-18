@@ -3,12 +3,12 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
-import { ActionResult } from "../_utils/action-return";
+import { RequestResult } from "../_utils/return";
 import { cookies } from "next/headers";
 
 export async function signInOTPAction({
   email,
-}: Pick<SignInOTP, "email">): Promise<ActionResult> {
+}: Pick<SignInOTP, "email">): Promise<RequestResult> {
   const parsed = signInOTPSchema.pick({ email: true }).safeParse({ email });
 
   if (!parsed.success) {
@@ -40,7 +40,7 @@ export async function signInOTPAction({
 
 export async function verifyOTPLoginAction(
   data: SignInOTP
-): Promise<ActionResult> {
+): Promise<RequestResult> {
   const parsed = signInOTPSchema.safeParse(data);
 
   if (!parsed.success) {
