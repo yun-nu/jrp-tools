@@ -21,8 +21,8 @@ export default function CharacterView({
   const { threads, isLoading, error } = useThreads(character.id);
 
   if (isLoading) return <LoadingDots text="Loading threads" />;
-  if (error || !threads || "error" in threads)
-    return <MessageBox>Could not load threads</MessageBox>;
+  if (error || !threads || !Array.isArray(threads))
+    return <MessageBox>{error?.message}</MessageBox>;
 
   const ongoingThreads = (threads ?? []).filter((thread) => !thread.isFinished);
   const finishedThreads = (threads ?? []).filter((thread) => thread.isFinished);
