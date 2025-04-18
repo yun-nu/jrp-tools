@@ -3,7 +3,7 @@ export type ActionResult =
   | { message: string; errors: Record<string, string[]> }
   | { success: string; displayName?: string };
 
-export function actionReturnError(result: ActionResult): result is {
+export function RequestError(result: ActionResult): result is {
   error: string;
   errors: string;
   message: string;
@@ -11,7 +11,7 @@ export function actionReturnError(result: ActionResult): result is {
   return "error" in result;
 }
 
-export function actionReturnSuccess(result: ActionResult): result is {
+export function RequestSuccess(result: ActionResult): result is {
   success: string;
   displayName?: string;
 } {

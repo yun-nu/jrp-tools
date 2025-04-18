@@ -1,6 +1,6 @@
 import { Skeleton } from "@/app/_components/ui/Skeleton";
 
-export default async function Loading() {
+export default function LoadingCards() {
   return (
     <div className="flex flex-col gap-12 lg:flex-row sm:justify-center sm:mt-16">
       {Array.from({ length: 3 }).map((_, i) => (

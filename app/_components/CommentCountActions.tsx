@@ -3,16 +3,11 @@
 import { Row } from "@tanstack/react-table";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { useState } from "react";
+import { useUpdateCommentCount } from "../_hooks/threads/useUpdateCommentCount";
 import { ExistingThread } from "../_schemas/Thread";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
-import { updateCommentCountAction } from "../account/actions-threads";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
-import { toast } from "../_hooks/useToast";
 
 export default function CommentCountActions({
   row,
@@ -23,10 +18,15 @@ export default function CommentCountActions({
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState(String(count));
 
+  const { mutate: updateCommentCount } = useUpdateCommentCount();
+
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
     if (!open && count !== row.getValue("commentCount"))
-      handleCommentCountChange();
+      updateCommentCount({
+        threadId: row.original.id,
+        updatedCount: count,
+      });
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,25 +37,6 @@ export default function CommentCountActions({
 
     const parsed = parseInt(val);
     if (!isNaN(parsed) && parsed >= 0) setCount(parsed);
-  };
-
-  const handleCommentCountChange = async () => {
-    const result = await updateCommentCountAction(
-      row.original.id,
-      count as number
-    );
-    if (actionReturnSuccess(result)) {
-      toast({
-        description: result.success,
-        variant: "success",
-      });
-    }
-    if (actionReturnError(result)) {
-      toast({
-        description: result.error || result.message,
-        variant: "destructive",
-      });
-    }
   };
 
   return (

@@ -1,11 +1,19 @@
-import { ExistingCharacter } from "../_schemas/Character";
-import { CharacterListCard } from "./CharacterListCard";
+"use client";
 
-export default function CharacterList({
-  characters,
-}: {
-  characters: ExistingCharacter[];
-}) {
+import { User } from "@supabase/supabase-js";
+import { useCharacters } from "../_hooks/characters/useCharacters";
+import { CharacterListCard } from "./CharacterListCard";
+import MessageBox from "./MessageBox";
+import LoadingCards from "./LoadingCards";
+
+export default function CharacterList({ userId }: { userId: User["id"] }) {
+  const { characters, error, isLoading } = useCharacters(userId);
+
+  if (isLoading) return <LoadingCards />;
+
+  if (!Array.isArray(characters) || error)
+    return <MessageBox>{error?.message}</MessageBox>;
+
   if (!characters.length)
     return (
       <p className="text-center">

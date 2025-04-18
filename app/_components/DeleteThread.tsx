@@ -4,10 +4,7 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
+import { RequestError, RequestSuccess } from "../_utils/action-return";
 import { deleteThreadAction } from "../account/actions-threads";
 import {
   AlertDialog,
@@ -32,14 +29,14 @@ export default function DeleteThread({ thread, isOpen, setIsOpen }: Props) {
 
   const handleDeleteThread = async () => {
     const result = await deleteThreadAction(threadId);
-    if (actionReturnError(result)) {
+    if (RequestError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
     }
-    if (actionReturnSuccess(result)) {
+    if (RequestSuccess(result)) {
       toast({ description: result.success, variant: "success" });
       router.refresh();
     }

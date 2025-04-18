@@ -7,7 +7,7 @@ import { FaGoogle } from "react-icons/fa6";
 import { z } from "zod";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
-import { actionReturnError } from "../_utils/action-return";
+import { RequestError } from "../_utils/action-return";
 import {
   signInGoogleAction,
   signInOTPAction,
@@ -45,7 +45,7 @@ export default function SignInForm() {
       if (!isLastStep) {
         const email = form.getValues("email");
         const resultStep1 = await signInOTPAction({ email });
-        if (actionReturnError(resultStep1)) {
+        if (RequestError(resultStep1)) {
           form.setError("email", {
             message: resultStep1.error || resultStep1.message,
           });
@@ -53,7 +53,7 @@ export default function SignInForm() {
         } else return next();
       }
       const resultStep2 = await verifyOTPLoginAction(form.getValues());
-      if (actionReturnError(resultStep2))
+      if (RequestError(resultStep2))
         form.setError("OTPCode", { message: resultStep2.error });
     });
   };

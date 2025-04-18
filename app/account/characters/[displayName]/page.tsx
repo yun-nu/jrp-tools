@@ -3,7 +3,7 @@ import MessageBox from "@/app/_components/MessageBox";
 import {
   getCharacterMetadata,
   getCharacterPageData,
-} from "@/app/_lib/data-service";
+} from "@/app/_lib/data-service-server";
 
 import { Metadata } from "next";
 
@@ -34,7 +34,7 @@ export default async function Page({ params }: Props) {
 
   if ("error" in pageData) return <MessageBox>{pageData.error}</MessageBox>;
 
-  const { character, ongoingThreads, finishedThreads, isOwner } = pageData;
+  const { character, isOwner } = pageData;
 
   if (!isOwner)
     return (
@@ -43,12 +43,5 @@ export default async function Page({ params }: Props) {
       </MessageBox>
     );
 
-  return (
-    <CharacterView
-      character={character}
-      ongoingThreads={ongoingThreads}
-      finishedThreads={finishedThreads}
-      showTableActions
-    />
-  );
+  return <CharacterView character={character} showTableActions />;
 }

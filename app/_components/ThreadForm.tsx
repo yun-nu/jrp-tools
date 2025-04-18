@@ -16,10 +16,7 @@ import {
   newThreadSchema,
   Thread,
 } from "../_schemas/Thread";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
+import { RequestError, RequestSuccess } from "../_utils/action-return";
 import { addThreadAction, editThreadAction } from "../account/actions-threads";
 import CheckboxWithText from "./CheckboxWithText";
 import DatePickerWithLabel from "./DatePickerWithLabel";
@@ -73,13 +70,13 @@ export function ThreadForm({
       );
     else result = await (action as typeof addThreadAction)(values as NewThread);
 
-    if (actionReturnError(result))
+    if (RequestError(result))
       toast({
         description: result.error || result.message,
         variant: "destructive",
       });
 
-    if (actionReturnSuccess(result)) {
+    if (RequestSuccess(result)) {
       toast({ description: result.success, variant: "success" });
       form.reset();
       setOpen(false);

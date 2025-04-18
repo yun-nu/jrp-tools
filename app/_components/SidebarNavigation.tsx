@@ -6,7 +6,7 @@ import { startTransition } from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { toast } from "../_hooks/useToast";
 import { commonLinks, userLinks } from "../_lib/navigation";
-import { actionReturnSuccess } from "../_utils/action-return";
+import { RequestSuccess } from "../_utils/action-return";
 import { signOutAction } from "../login/actions";
 import { NavigationMenu } from "./NavigationMenu";
 import { Separator } from "./ui/Separator";
@@ -30,7 +30,7 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
   const handleSignOut = () => {
     startTransition(async () => {
       const result = await signOutAction();
-      if (actionReturnSuccess(result)) {
+      if (RequestSuccess(result)) {
         toast({
           description: result.success,
           variant: "success",

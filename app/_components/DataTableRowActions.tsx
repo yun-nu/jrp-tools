@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Copy,
   Edit,
@@ -10,10 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
+import { RequestError, RequestSuccess } from "../_utils/action-return";
 import {
   duplicateThreadAction,
   toggleIsFinishedAction,
@@ -41,14 +40,14 @@ export default function DataTableRowActions({
   const handleToggleThreadStatus = async () => {
     const result = await toggleIsFinishedAction(thread);
 
-    if (actionReturnError(result)) {
+    if (RequestError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
     }
-    if (actionReturnSuccess(result)) {
+    if (RequestSuccess(result)) {
       toast({ description: result.success, variant: "success" });
       refresh();
     }
@@ -56,14 +55,14 @@ export default function DataTableRowActions({
 
   const handleDuplicateThread = async () => {
     const result = await duplicateThreadAction(thread);
-    if (actionReturnError(result)) {
+    if (RequestError(result)) {
       toast({
         description: result.error,
         variant: "destructive",
       });
       return;
     }
-    if (actionReturnSuccess(result)) {
+    if (RequestSuccess(result)) {
       toast({ description: result.success, variant: "success" });
       refresh();
     }

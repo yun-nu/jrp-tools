@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
 import { ThemeProvider } from "./_components/ui/ThemeProvider";
 import { Toaster } from "./_components/ui/Toaster";
 import "./globals.css";
+import QueryProvider from "./_providers/QueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,25 +33,27 @@ export default async function RootLayout({
         className={`${inter.className} antialiased h-screen`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <SidebarNavigation isLoggedIn={!!email} />
-            <SidebarInset>
-              <main className="w-full h-full flex flex-col">
-                <Header />
-                <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
-                  {children}
-                </div>
-              </main>
-              <Toaster />
-            </SidebarInset>
-          </SidebarProvider>
-        </ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider defaultOpen={defaultOpen}>
+              <SidebarNavigation isLoggedIn={!!email} />
+              <SidebarInset>
+                <main className="w-full h-full flex flex-col">
+                  <Header />
+                  <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
+                    {children}
+                  </div>
+                </main>
+                <Toaster />
+              </SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -6,10 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { emailAndConfirmationSchema } from "../_schemas/Auth";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
+import { RequestError, RequestSuccess } from "../_utils/action-return";
 import { updateEmailAction } from "../account/settings/actions";
 import { signUpOTPAction } from "../signup/actions";
 import { InputWithLabel } from "./InputWithLabel";
@@ -42,12 +39,12 @@ export function EmailAndConfirmationForm({
   const onSubmit = async () => {
     const result = await action(form.getValues());
 
-    if (actionReturnError(result)) {
+    if (RequestError(result)) {
       setMessage(result.message);
       setError(result.errors || result.error);
       return;
     }
-    if (actionReturnSuccess(result)) {
+    if (RequestSuccess(result)) {
       setMessage(result.success);
       setError("");
       router.refresh();

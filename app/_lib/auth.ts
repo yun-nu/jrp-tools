@@ -1,8 +1,8 @@
 import { User } from "@supabase/supabase-js";
-import { createClient } from "./supabase-server";
+import { createClient as createServerClient } from "./supabase-server";
 
 export async function getUserId(): Promise<User["id"] | { error: string }> {
-  const supabase = await createClient();
+  const supabase = await createServerClient();
 
   const {
     data: { user },

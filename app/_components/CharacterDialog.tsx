@@ -4,10 +4,6 @@ import { useState } from "react";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
 import { useIsMobile } from "../_hooks/useIsMobile";
 import { Character } from "../_schemas/Character";
-import {
-  addCharacterAction,
-  editCharacterAction,
-} from "../account/actions-characters";
 import { CharacterForm } from "./CharacterForm";
 import { DesktopDialog, MobileDrawer } from "./ResponsiveDialog";
 import { Button } from "./ui/Button";
@@ -48,7 +44,6 @@ export default function CharacterDialog({
           Add new character
         </Button>
       ),
-      action: addCharacterAction,
     },
     edit: {
       title: `Edit ${characterName}`,
@@ -58,7 +53,6 @@ export default function CharacterDialog({
           <FaUserEdit />
         </Button>
       ),
-      action: editCharacterAction,
     },
   };
 
@@ -74,11 +68,7 @@ export default function CharacterDialog({
       description={currentContent.description}
       trigger={currentContent.trigger}
     >
-      <CharacterForm
-        character={character}
-        action={currentContent.action}
-        setOpen={setOpen}
-      />
+      <CharacterForm character={character} setOpen={setOpen} />
     </DialogComponent>
   );
 }

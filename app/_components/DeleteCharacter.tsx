@@ -1,10 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import { FaUserMinus } from "react-icons/fa";
-import { toast } from "../_hooks/useToast";
+import { useDeleteCharacter } from "../_hooks/characters/useDeleteCharacter";
 import { ExistingCharacter } from "../_schemas/Character";
-import { actionReturnError } from "../_utils/action-return";
-import { deleteCharacterAction } from "../account/actions-characters";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,21 +22,7 @@ export default function DeleteCharacter({
   character: ExistingCharacter;
 }) {
   const { id, characterName } = character;
-  const router = useRouter();
-
-  const handleDeleteCharacter = async () => {
-    const result = await deleteCharacterAction(id);
-    if (actionReturnError(result)) {
-      toast({
-        description: result.error,
-        variant: "destructive",
-      });
-      return;
-    } else {
-      toast({ description: result.success, variant: "success" });
-      router.push(`/account/characters`);
-    }
-  };
+  const { mutate: deleteCharacter } = useDeleteCharacter();
 
   return (
     <AlertDialog>
@@ -61,7 +45,7 @@ export default function DeleteCharacter({
 
           <AlertDialogAction
             type="button"
-            onClick={handleDeleteCharacter}
+            onClick={() => deleteCharacter({ characterId: id })}
             className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
           >
             Delete

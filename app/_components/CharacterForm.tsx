@@ -1,10 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "../_hooks/useToast";
+import { useAddCharacter } from "../_hooks/characters/useAddCharacter";
+import { useEditCharacter } from "../_hooks/characters/useEditCharacter";
 import { FORM_CONTACT_MAX_LENGTH } from "../_lib/consts";
 import {
   Character,
@@ -14,15 +13,7 @@ import {
   NewCharacter,
   newCharacterSchema,
 } from "../_schemas/Character";
-import {
-  actionReturnError,
-  actionReturnSuccess,
-} from "../_utils/action-return";
-import {
-  addCharacterAction,
-  editCharacterAction,
-  verifyDisplayNameAvailability,
-} from "../account/actions-characters";
+
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
@@ -33,16 +24,11 @@ import { Form } from "./ui/Form";
 type CharacterFormProps = {
   setOpen: (open: boolean) => void;
   character?: Character;
-  action: typeof addCharacterAction | typeof editCharacterAction;
 };
 
-export function CharacterForm({
-  setOpen,
-  character,
-  action,
-}: CharacterFormProps) {
-  const [isValidDisplayName, setIsValidDisplayName] = useState(false);
-  const { refresh } = useRouter();
+export function CharacterForm({ setOpen, character }: CharacterFormProps) {
+  const { mutate: addCharacter } = useAddCharacter(setOpen);
+  const { mutate: editCharacter } = useEditCharacter(setOpen);
 
   const isEditing = isExistingCharacter(character ?? ({} as Character));
   const characterSchema = isEditing
@@ -65,49 +51,11 @@ export function CharacterForm({
     },
   });
 
-  const onSubmit = async () => {
-    let result;
+  const onSubmit = () => {
     const values = form.getValues();
-
     if (isEditing && isExistingCharacter(character))
-      result = await (action as typeof editCharacterAction)(
-        values as ExistingCharacter
-      );
-    else
-      result = await (action as typeof addCharacterAction)(
-        values as NewCharacter
-      );
-
-    if (actionReturnError(result)) {
-      toast({
-        description: result.error || result.message,
-        variant: "destructive",
-      });
-      return;
-    }
-    if (actionReturnSuccess(result)) {
-      toast({ description: result.success, variant: "success" });
-      form.reset();
-      refresh();
-      setOpen(false);
-    }
-  };
-
-  const handleVerifyAvailability = async () => {
-    const result = await verifyDisplayNameAvailability(
-      form.getValues("displayName"),
-      character?.displayName
-    );
-    if (result.taken) {
-      setIsValidDisplayName(false);
-      form.setError("displayName", {
-        message: result.error,
-      });
-    }
-    if (!result.taken) {
-      setIsValidDisplayName(true);
-      form.clearErrors("displayName");
-    }
+      editCharacter({ characterData: values as ExistingCharacter });
+    if (!isEditing) addCharacter({ characterData: values });
   };
 
   return (
@@ -120,7 +68,6 @@ export function CharacterForm({
           fieldTitle="Display Name"
           nameInSchema="displayName"
           description="Required. This is the unique username for your character. Can only contain alphanumeric characters and underscores."
-          onBlur={handleVerifyAvailability}
         />
         <InputWithLabel
           fieldTitle="Character Name"
@@ -170,7 +117,7 @@ export function CharacterForm({
           </DialogClose>
           <Button
             type="submit"
-            disabled={!isValidDisplayName || form.formState.isSubmitting}
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
             className="sm:w-fit w-full"
           >
             {isEditing ? "Save changes" : "Add character"}
