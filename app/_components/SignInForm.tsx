@@ -47,7 +47,7 @@ export default function SignInForm() {
         const resultStep1 = await signInOTPAction({ email });
         if (RequestError(resultStep1)) {
           form.setError("email", {
-            message: resultStep1.error || resultStep1.message,
+            message: resultStep1.error,
           });
           return;
         } else return next();

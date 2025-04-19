@@ -1,14 +1,11 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
-import { RequestResult } from "../_utils/return";
-import { cookies } from "next/headers";
 
-export async function signInOTPAction({
-  email,
-}: Pick<SignInOTP, "email">): Promise<RequestResult> {
+export async function signInOTPAction({ email }: Pick<SignInOTP, "email">) {
   const parsed = signInOTPSchema.pick({ email: true }).safeParse({ email });
 
   if (!parsed.success) {
@@ -38,9 +35,7 @@ export async function signInOTPAction({
   return { success: "Logged in successfully" };
 }
 
-export async function verifyOTPLoginAction(
-  data: SignInOTP
-): Promise<RequestResult> {
+export async function verifyOTPLoginAction(data: SignInOTP) {
   const parsed = signInOTPSchema.safeParse(data);
 
   if (!parsed.success) {

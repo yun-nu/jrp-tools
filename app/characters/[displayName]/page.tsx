@@ -35,18 +35,11 @@ export default async function Page({ params }: Props) {
       <MessageBox>{pageData?.error || "Character page not found"}.</MessageBox>
     );
 
-  const { character, ongoingThreads, finishedThreads } = pageData;
+  const { character } = pageData;
 
   if (!pageData.character.isPublic) {
     return <MessageBox>This character page is set to private.</MessageBox>;
   }
 
-  return (
-    <CharacterView
-      character={character}
-      finishedThreads={finishedThreads}
-      ongoingThreads={ongoingThreads}
-      isPublicPage
-    />
-  );
+  return <CharacterView character={character} isPublicPage />;
 }
