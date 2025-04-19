@@ -48,6 +48,8 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           isFinished: false,
           characterId: characterId,
           commentCount: 0,
+          threadPartner: "",
+          usedForAc: false,
         },
   });
 
@@ -94,6 +96,12 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           fieldTitle="Comment count"
           nameInSchema="commentCount"
           placeholder="0"
+        />
+
+        <InputWithLabel
+          fieldTitle="Character(s)"
+          nameInSchema="threadPartner"
+          placeholder="Thread partner(s)"
         />
 
         <CheckboxWithText

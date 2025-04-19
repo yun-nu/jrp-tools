@@ -104,6 +104,12 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
           description="Must start with http:// or https://"
         />
 
+        {/* <InputWithLabel
+          fieldTitle="AC Length"
+          nameInSchema="acLength"
+          description="If provided, threads will be automatically be marked as AC length when the comment count is reached."
+        /> */}
+
         <CheckboxWithText
           nameInSchema="isPublic"
           fieldTitle="Make character profile public"

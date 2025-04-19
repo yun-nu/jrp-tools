@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   FORM_BLURB_MAX_LENGTH,
+  FORM_NAMES_MAX_LENGTH,
   FORM_URL_INVALID,
   generateMaxMessage,
 } from "../_utils/consts";
@@ -38,6 +39,13 @@ const baseThreadSchema = z.object({
     .nonnegative()
     .default(0),
   isFinished: z.boolean(),
+  threadPartner: z
+    .string()
+    .max(FORM_NAMES_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+    })
+    .optional(),
+  usedForAc: z.boolean().default(false),
 });
 
 export const newThreadSchema = baseThreadSchema.extend({

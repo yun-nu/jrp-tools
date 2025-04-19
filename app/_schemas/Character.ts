@@ -67,6 +67,7 @@ const baseCharacterSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   isPublic: z.boolean(),
   isActive: z.boolean(),
+  acLength: z.number().int().nonnegative().nullish(),
 });
 
 export const newCharacterSchema = baseCharacterSchema.extend({

@@ -69,6 +69,17 @@ export const threadsCols = (
   },
   {
     meta: {
+      name: "Characters",
+      showColumn: true,
+    },
+    accessorKey: "threadPartner",
+    header: "Characters",
+    cell: ({ row }) => {
+      return <div>{row.getValue("threadPartner")}</div>;
+    },
+  },
+  {
+    meta: {
       name: "# Comments",
       showColumn: showActions,
     },

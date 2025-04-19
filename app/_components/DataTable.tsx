@@ -12,6 +12,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
+import { CircleX } from "lucide-react";
 import { useState } from "react";
 import DataTableViewOptions from "./DataTableViewOptions";
 import { Button } from "./ui/Button";
@@ -47,6 +48,7 @@ export default function DataTable<TData, TValue>({
     actions: showActions,
     commentCount: showActions,
   });
+  const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
     data,
@@ -62,20 +64,46 @@ export default function DataTable<TData, TValue>({
       sorting,
       columnFilters,
       columnVisibility,
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: (row, columnId, filterValue) => {
+      const terms: string[] = filterValue
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean);
+
+      console.log(terms);
+
+      const fieldsToSearch = ["type", "blurb", "threadPartner"];
+
+      return terms.every((term) =>
+        fieldsToSearch.some((field) => {
+          const value = row.getValue(field);
+          return String(value ?? "")
+            .toLowerCase()
+            .includes(term);
+        })
+      );
     },
   });
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4">
-        <Input
-          className="text-sm max-w-[170px] xs:max-w-[230px] sm:max-w-[300px]"
-          placeholder="Search blurb column"
-          value={(table.getColumn("blurb")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("blurb")?.setFilterValue(event.target.value)
-          }
-        />
+      <div className="flex items-center justify-between gap-2 py-4">
+        <div className="flex items-center gap-2 xs:gap-4 w-full">
+          <Input
+            className="text-sm max-w-[170px] xs:max-w-[230px] sm:max-w-[300px]"
+            placeholder="Search..."
+            value={globalFilter ?? ""}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+          />
+          <CircleX
+            size={24}
+            className="cursor-pointer hover:text-primary transition-colors"
+            onClick={() => setGlobalFilter("")}
+          />
+        </div>
         <DataTableViewOptions table={table} />
       </div>
       <div className="rounded-md border">
