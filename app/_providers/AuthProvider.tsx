@@ -1,14 +1,14 @@
 "use client";
 
+import { User } from "@supabase/supabase-js";
 import {
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from "react";
 import { createClient } from "../_lib/supabase-client";
-import { User } from "@supabase/supabase-js";
 
 interface AuthContextType {
   user: User | null;

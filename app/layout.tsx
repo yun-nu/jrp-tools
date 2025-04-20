@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import Header from "./_components/Header";
 import { SidebarNavigation } from "./_components/SidebarNavigation";
 import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
