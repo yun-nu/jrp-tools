@@ -1,14 +1,18 @@
+"use client";
+
 import { User } from "lucide-react";
 import Link from "next/link";
 import { PiSignInBold } from "react-icons/pi";
+import { useAuth } from "../_providers/AuthProvider";
 import { Button } from "./ui/Button";
-import { cookies } from "next/headers";
+import { Skeleton } from "./ui/Skeleton";
 
-export default async function HeaderUser() {
-  const cookieStore = cookies();
-  const email = (await cookieStore).get("logged-in-as")?.value;
+export default function HeaderUser() {
+  const { user, isLoading } = useAuth();
 
-  if (!email)
+  if (isLoading) return <Skeleton className="ml-auto h-4 w-36" />;
+
+  if (!user)
     return (
       <Button asChild size="sm" className="font-semibold md:ml-auto">
         <Link href="/login" prefetch={false}>
@@ -25,7 +29,7 @@ export default async function HeaderUser() {
         title="Your account"
         prefetch={false}
       >
-        <User className="w-5 h-5 sm:w-6 sm:h-6" /> {email}
+        <User className="w-5 h-5 sm:w-6 sm:h-6" /> {user.email}
       </Link>
     </div>
   );

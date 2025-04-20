@@ -3,8 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useSignUpOTP } from "../_hooks/useSignupOTP";
-import { useUpdateEmail } from "../_hooks/useUpdateEmail";
+import { useSignUpOTP } from "../_hooks/auth/useSignupOTP";
+import { useUpdateEmail } from "../_hooks/auth/useUpdateEmail";
 import { emailAndConfirmationSchema } from "../_schemas/Auth";
 import { InputWithLabel } from "./InputWithLabel";
 import { Button } from "./ui/Button";

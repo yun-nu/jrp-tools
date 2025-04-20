@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import HeaderUser from "./HeaderUser";
 import TooltipWrapper from "./TooltipWrapper";
 import { ModeToggle } from "./ui/ModeToggle";

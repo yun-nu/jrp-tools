@@ -28,7 +28,7 @@ export const changelog = [
           just keep in mind I might not be able to reply immediately.
         </p>
 
-        <p>
+        <div>
           Now, onto the updates:
           <ul className="list-disc list-inside space-y-2">
             <li>
@@ -44,7 +44,7 @@ export const changelog = [
               the search bar — it'll show you all threads that match.
             </li>
           </ul>
-        </p>
+        </div>
         <p>
           That's about it for this update! As always, feel free to reach out if
           you run into any bugs, have suggestions, or just want to share

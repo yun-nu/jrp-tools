@@ -1,14 +1,7 @@
-import Link from "next/link";
 import Footer from "./_components/Footer";
-import { Button } from "./_components/ui/Button";
-import { createClient } from "./_lib/supabase-server";
+import SignUpButton from "./_components/SignUpButton";
 
 export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
   return (
     <div className="h-full flex flex-col items-center justify-between sm:pt-6 px-4 text-center">
       <div className="custom-underline">
@@ -20,18 +13,7 @@ export default async function Home() {
         Lightweight thread tracker for journal-based roleplay. Store and share
         your threads with just a few clicks.
       </p>
-      {!session && (
-        <Button
-          asChild
-          variant="link"
-          size="lg"
-          className="border-2 border-foreground text-lg font-semibold"
-        >
-          <Link href="/signup" prefetch={false}>
-            Sign up
-          </Link>
-        </Button>
-      )}
+      <SignUpButton />
       <Footer />
     </div>
   );

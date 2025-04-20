@@ -1,6 +1,5 @@
 "use server";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "../_lib/supabase-server";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
@@ -58,22 +57,6 @@ export async function verifyOTPLoginAction(data: SignInOTP) {
   if (error?.status === 403) return { error: "Expired or invalid code." };
 
   redirect("/account/characters");
-}
-
-export async function signOutAction() {
-  const supabase = await createClient();
-
-  const { error } = await supabase.auth.signOut();
-  if (error) return { error: error.message };
-
-  const cookieStore = await cookies();
-  const allCookies = cookieStore.getAll();
-
-  for (const { name } of allCookies) {
-    await cookieStore.set(name, "", { maxAge: -1, path: "/" });
-  }
-
-  return { success: "Logged out successfully" };
 }
 
 export async function signInGoogleAction() {

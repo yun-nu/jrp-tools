@@ -8,6 +8,7 @@ import { ThemeProvider } from "./_components/ui/ThemeProvider";
 import { Toaster } from "./_components/ui/Toaster";
 import "./globals.css";
 import QueryProvider from "./_providers/QueryProvider";
+import { AuthProvider } from "./_providers/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +22,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const defaultOpen = !cookieStore.get("sidebar_state")
-    ? true
-    : cookieStore.get("sidebar_state")?.value === "true";
-  const email = cookieStore.get("logged-in-as")?.value;
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -40,18 +35,20 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider defaultOpen={defaultOpen}>
-              <SidebarNavigation isLoggedIn={!!email} />
-              <SidebarInset>
-                <main className="w-full h-full flex flex-col">
-                  <Header />
-                  <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
-                    {children}
-                  </div>
-                </main>
-                <Toaster />
-              </SidebarInset>
-            </SidebarProvider>
+            <AuthProvider>
+              <SidebarProvider>
+                <SidebarNavigation />
+                <SidebarInset>
+                  <main className="w-full h-full flex flex-col">
+                    <Header />
+                    <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
+                      {children}
+                    </div>
+                  </main>
+                  <Toaster />
+                </SidebarInset>
+              </SidebarProvider>
+            </AuthProvider>
           </ThemeProvider>
         </QueryProvider>
       </body>

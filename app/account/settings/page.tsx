@@ -9,6 +9,8 @@ import {
 } from "@/app/_components/ui/Card";
 import { Metadata } from "next";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Account Settings - JRP Tools",
   description: "Your account settings",

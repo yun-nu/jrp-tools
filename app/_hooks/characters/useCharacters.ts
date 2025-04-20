@@ -10,7 +10,9 @@ export function useCharacters(userId: User["id"]) {
     error,
   } = useQuery<ExistingCharacter[] | Error>({
     queryKey: ["characters", userId],
-    queryFn: () => getCharacters(userId),
+    queryFn: () => {
+      return getCharacters(userId);
+    },
     enabled: !!userId,
   });
 

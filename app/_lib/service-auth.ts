@@ -66,3 +66,12 @@ export async function updateEmail(
     email: parsedEmail,
   };
 }
+
+export async function signOut() {
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error("Error signing out.");
+
+  return { success: "Logged out successfully" };
+}

@@ -2,6 +2,8 @@ import MessageBox from "@/app/_components/MessageBox";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-static";
+
 type SearchParams = {
   searchParams: Promise<{
     message?: string;

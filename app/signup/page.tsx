@@ -9,6 +9,8 @@ import {
   AccordionTrigger,
 } from "../_components/ui/Accordion";
 
+export const dynamic = "force-static";
+
 export const metadata: Metadata = {
   title: "Sign up - JRP Tools",
   description: "Sign up to JRP Tools",

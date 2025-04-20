@@ -6,6 +6,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/Sidebar";
+import { useAuth } from "../_providers/AuthProvider";
+import { Skeleton } from "./ui/Skeleton";
 
 interface NavigationMenuProps {
   links: NavLink[];
@@ -14,17 +16,22 @@ interface NavigationMenuProps {
 
 export function NavigationMenu({ links, className }: NavigationMenuProps) {
   const { setOpenMobile } = useSidebar();
+  const { isLoading } = useAuth();
 
   return (
     <SidebarMenu className={className}>
       {links.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild onClick={() => setOpenMobile(false)}>
-            <Link href={item.url} prefetch={false}>
-              <item.icon />
-              <span>{item.title}</span>
-            </Link>
-          </SidebarMenuButton>
+          {isLoading ? (
+            <Skeleton key={item.title} className="h-10 w-[160px]" />
+          ) : (
+            <SidebarMenuButton asChild onClick={() => setOpenMobile(false)}>
+              <Link href={item.url} prefetch={false}>
+                <item.icon />
+                <span>{item.title}</span>
+              </Link>
+            </SidebarMenuButton>
+          )}
         </SidebarMenuItem>
       ))}
     </SidebarMenu>

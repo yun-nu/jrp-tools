@@ -6,8 +6,8 @@ import { startTransition } from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { toast } from "../_hooks/useToast";
 import { commonLinks, userLinks } from "../_lib/navigation";
+import { useAuth } from "../_providers/AuthProvider";
 import { RequestSuccess } from "../_utils/return";
-import { signOutAction } from "../login/actions";
 import { NavigationMenu } from "./NavigationMenu";
 import { Separator } from "./ui/Separator";
 import {
@@ -22,24 +22,13 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "./ui/Sidebar";
+import { useSignOut } from "../_hooks/auth/useSignOut";
 
-export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
+export function SidebarNavigation() {
   const { push } = useRouter();
   const { setOpenMobile } = useSidebar();
-
-  const handleSignOut = () => {
-    startTransition(async () => {
-      const result = await signOutAction();
-      if (RequestSuccess(result)) {
-        toast({
-          description: result.success,
-          variant: "success",
-        });
-        push("/");
-      }
-    });
-    setOpenMobile(false);
-  };
+  const { user } = useAuth();
+  const { mutate: signOut } = useSignOut(push, setOpenMobile);
 
   return (
     <Sidebar collapsible="icon" variant="inset">
@@ -51,11 +40,11 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
             </Link>
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            {isLoggedIn && <NavigationMenu links={userLinks} />}
+            {user && <NavigationMenu links={userLinks} />}
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {isLoggedIn && <Separator className="h-[1px] bg-secondary" />}
+        {user && <Separator className="h-[1px] bg-secondary" />}
 
         <SidebarGroup>
           <SidebarGroupContent>
@@ -64,14 +53,14 @@ export function SidebarNavigation({ isLoggedIn }: { isLoggedIn: boolean }) {
         </SidebarGroup>
       </SidebarContent>
 
-      {isLoggedIn && (
+      {user && (
         <SidebarFooter>
           <SidebarMenu>
             <SidebarMenuItem className="flex justify-center">
               <SidebarMenuButton
                 variant="default"
                 className="border border-destructive w-fit px-4 font-semibold"
-                onClick={handleSignOut}
+                onClick={() => signOut()}
               >
                 <PiSignOutBold />
                 Sign out

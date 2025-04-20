@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateEmail } from "../_lib/service-auth";
-import { EmailAndConfirmation } from "../_schemas/Auth";
-import { RequestSuccess } from "../_utils/return";
-import { toast } from "./useToast";
+import { updateEmail } from "../../_lib/service-auth";
+import { EmailAndConfirmation } from "../../_schemas/Auth";
+import { RequestSuccess } from "../../_utils/return";
+import { toast } from "../useToast";
 
 export function useUpdateEmail(reset: () => void) {
   const mutation = useMutation({

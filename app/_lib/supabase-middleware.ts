@@ -37,16 +37,6 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // For UI purposes (used in Header and Sidebar)
-  if (user) {
-    supabaseResponse.cookies.set("logged-in-as", user.email ?? "", {
-      httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-    });
-  }
-
   switch (true) {
     // Logged in and trying to access an auth route
     case user && AUTH_ROUTES.some((route) => pathname.startsWith(route)):

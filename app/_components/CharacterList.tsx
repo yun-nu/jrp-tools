@@ -1,15 +1,24 @@
 "use client";
 
-import { User } from "@supabase/supabase-js";
 import { useCharacters } from "../_hooks/characters/useCharacters";
+import { useAuth } from "../_providers/AuthProvider";
 import { CharacterListCard } from "./CharacterListCard";
-import MessageBox from "./MessageBox";
 import LoadingCards from "./LoadingCards";
+import MessageBox from "./MessageBox";
 
-export default function CharacterList({ userId }: { userId: User["id"] }) {
-  const { characters, error, isLoading } = useCharacters(userId);
+export default function CharacterList() {
+  const { user, isLoading: userLoading } = useAuth();
+  const {
+    characters,
+    error,
+    isLoading: charactersLoading,
+  } = useCharacters(user?.id ?? "");
 
-  if (isLoading) return <LoadingCards />;
+  if (charactersLoading || userLoading) return <LoadingCards />;
+
+  if (!user) {
+    return <MessageBox>User not authenticated.</MessageBox>;
+  }
 
   if (!Array.isArray(characters) || error)
     return <MessageBox>{error?.message}</MessageBox>;
