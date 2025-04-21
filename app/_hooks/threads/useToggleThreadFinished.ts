@@ -1,4 +1,4 @@
-import { toggleThreadFinished } from "@/app/_lib/service-threads";
+import { toggleThreadFinished as apiToggleThreadFinished } from "@/app/_lib/service-threads";
 import { ExistingThread } from "@/app/_schemas/Thread";
 import { RequestSuccess } from "@/app/_utils/return";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,9 +7,9 @@ import { toast } from "../useToast";
 export function useToggleThreadFinished() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const { mutate: toggleThreadFinished, isPending: isToggling } = useMutation({
     mutationFn: ({ thread }: { thread: ExistingThread }) =>
-      toggleThreadFinished(thread),
+      apiToggleThreadFinished(thread),
 
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
@@ -32,5 +32,5 @@ export function useToggleThreadFinished() {
     },
   });
 
-  return mutation;
+  return { toggleThreadFinished, isToggling };
 }

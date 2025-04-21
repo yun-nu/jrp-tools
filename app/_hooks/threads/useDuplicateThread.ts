@@ -1,4 +1,4 @@
-import { duplicateThread } from "@/app/_lib/service-threads";
+import { duplicateThread as apiDuplicateThread } from "@/app/_lib/service-threads";
 import { ExistingThread } from "@/app/_schemas/Thread";
 import { RequestSuccess } from "@/app/_utils/return";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,9 +7,9 @@ import { toast } from "../useToast";
 export function useDuplicateThread() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const { mutate: duplicateThread, isPending: isDuplicating } = useMutation({
     mutationFn: ({ thread }: { thread: ExistingThread }) =>
-      duplicateThread(thread),
+      apiDuplicateThread(thread),
 
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
@@ -32,5 +32,5 @@ export function useDuplicateThread() {
     },
   });
 
-  return mutation;
+  return { duplicateThread, isDuplicating };
 }

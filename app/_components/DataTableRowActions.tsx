@@ -32,8 +32,8 @@ export default function DataTableRowActions({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  const { mutate: toggleThreadFinished } = useToggleThreadFinished();
-  const { mutate: duplicateThread } = useDuplicateThread();
+  const { toggleThreadFinished, isToggling } = useToggleThreadFinished();
+  const { duplicateThread, isDuplicating } = useDuplicateThread();
 
   const handleCopyUrl = () => {
     navigator.clipboard.writeText(thread.url as string);
@@ -77,11 +77,12 @@ export default function DataTableRowActions({
               <Edit /> <span>Edit thread</span>
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            role="button"
-            onClick={() => toggleThreadFinished({ thread })}
-          >
-            <button className="flex gap-2">
+          <DropdownMenuItem>
+            <button
+              className="flex gap-2"
+              onClick={() => toggleThreadFinished({ thread })}
+              disabled={isToggling}
+            >
               <SquareCheckBig /> Mark as{" "}
               {thread.isFinished ? "ongoing" : "finished"}
             </button>
@@ -90,6 +91,7 @@ export default function DataTableRowActions({
             <button
               className="flex gap-2"
               onClick={() => duplicateThread({ thread })}
+              disabled={isDuplicating}
             >
               <Copy /> Duplicate thread
             </button>
