@@ -73,8 +73,6 @@ export default function DataTable<TData, TValue>({
         .split(/\s+/)
         .filter(Boolean);
 
-      console.log(terms);
-
       const fieldsToSearch = ["type", "blurb", "threadPartner"];
 
       return terms.every((term) =>

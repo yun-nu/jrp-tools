@@ -8,6 +8,7 @@ import MessageBox from "./MessageBox";
 
 export default function CharacterList() {
   const { user, isLoading: userLoading } = useAuth();
+
   const {
     characters,
     error,

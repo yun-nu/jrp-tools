@@ -1,24 +1,24 @@
 import { signOut } from "@/app/_lib/service-auth";
-import { RequestSuccess } from "@/app/_utils/return";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "../useToast";
 
 export function useSignOut(
   push: (url: string) => void,
   setOpenMobile: (open: boolean) => void
 ) {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation({
     mutationFn: () => signOut(),
 
     onSuccess: (result) => {
-      if (RequestSuccess(result)) {
-        toast({
-          description: result.success,
-          variant: "success",
-        });
-      }
+      toast({
+        description: result.success,
+        variant: "success",
+      });
       push("/");
       setOpenMobile(false);
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
 
     onError: (err) => {

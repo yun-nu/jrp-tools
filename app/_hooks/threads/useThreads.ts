@@ -12,6 +12,7 @@ export function useThreads(characterId: ExistingCharacter["id"]) {
     queryKey: ["threads", characterId],
     queryFn: () => getThreads(characterId),
     enabled: !!characterId,
+    refetchOnWindowFocus: false,
   });
 
   return { isLoading, threads, error };

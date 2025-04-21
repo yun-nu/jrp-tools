@@ -1,18 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { startTransition } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa6";
 import { z } from "zod";
+import { useLoginOTP } from "../_hooks/auth/useLoginOTP";
+import { useVerifyOTP } from "../_hooks/auth/useVerifyOTP";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
+import { signInGoogle } from "../_lib/service-auth";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
 import { RequestError } from "../_utils/return";
-import {
-  signInGoogleAction,
-  signInOTPAction,
-  verifyOTPLoginAction,
-} from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
@@ -25,8 +23,13 @@ import {
   CardTitle,
 } from "./ui/Card";
 import { Form } from "./ui/Form";
+import { signInGoogleAction } from "../login/action";
 
 export default function SignInForm() {
+  const router = useRouter();
+  const { login } = useLoginOTP();
+  const { verifyOTP, isLoggingIn } = useVerifyOTP();
+
   const form = useForm<z.infer<typeof signInOTPSchema>>({
     resolver: zodResolver(signInOTPSchema),
     defaultValues: {
@@ -40,22 +43,25 @@ export default function SignInForm() {
     <SignInOTPStep2 email={form.getValues("email")} key={2} />,
   ]);
 
-  const onSubmit = () => {
-    startTransition(async () => {
-      if (!isLastStep) {
-        const email = form.getValues("email");
-        const resultStep1 = await signInOTPAction({ email });
-        if (RequestError(resultStep1)) {
-          form.setError("email", {
-            message: resultStep1.error,
-          });
-          return;
-        } else return next();
-      }
-      const resultStep2 = await verifyOTPLoginAction(form.getValues());
-      if (RequestError(resultStep2))
-        form.setError("OTPCode", { message: resultStep2.error });
-    });
+  const onSubmit = async () => {
+    if (!isLastStep) {
+      const email = form.getValues("email");
+      const resultStep1 = await login({ email });
+      if (!resultStep1.success) {
+        form.setError("email", {
+          message: resultStep1.error,
+        });
+        return;
+      } else return next();
+    }
+
+    const resultStep2 = await verifyOTP(form.getValues());
+    if (RequestError(resultStep2)) {
+      form.setError("OTPCode", { message: resultStep2.error });
+      return;
+    }
+
+    router.push("/account/characters");
   };
 
   return (
@@ -70,7 +76,7 @@ export default function SignInForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {step}
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full" disabled={isLoggingIn}>
               Submit
             </Button>
           </form>
