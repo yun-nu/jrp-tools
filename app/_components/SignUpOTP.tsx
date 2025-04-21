@@ -1,5 +1,5 @@
 import { FaGoogle } from "react-icons/fa6";
-import { signInGoogleAction } from "../login/actions";
+import { signInGoogleAction } from "../login/action";
 import { EmailAndConfirmationForm } from "./EmailAndConfirmationForm";
 import { Button } from "./ui/Button";
 import {
