@@ -27,12 +27,12 @@ export function EmailAndConfirmationForm({
     },
   });
 
-  const { mutate: signUpOtp } = useSignUpOTP(form.reset);
-  const { mutate: updateEmail } = useUpdateEmail(form.reset);
+  const { signUpOTP, isSigningUp } = useSignUpOTP(form.reset);
+  const { updateEmail, isUpdating } = useUpdateEmail(form.reset);
 
   const onSubmit = () => {
     if (isUpdate) updateEmail({ input: form.getValues() });
-    else signUpOtp({ input: form.getValues() });
+    else signUpOTP({ input: form.getValues() });
   };
 
   return (
@@ -51,7 +51,11 @@ export function EmailAndConfirmationForm({
             nameInSchema="emailConfirmation"
           />
 
-          <Button type="submit" className={`${isUpdate && "sm:w-fit"}`}>
+          <Button
+            type="submit"
+            className={`${isUpdate && "sm:w-fit"}`}
+            disabled={isSigningUp || isUpdating}
+          >
             {btnDescription}
           </Button>
         </form>

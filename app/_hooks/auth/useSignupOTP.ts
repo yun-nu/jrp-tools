@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { signUpOTP } from "../../_lib/service-auth";
+import { signUpOTP as apiSignUpOTP } from "../../_lib/service-auth";
 import { EmailAndConfirmation } from "../../_schemas/Auth";
 import { RequestSuccess } from "../../_utils/return";
 import { toast } from "../useToast";
 
 export function useSignUpOTP(reset: () => void) {
-  const mutation = useMutation({
+  const { mutate: signUpOTP, isPending: isSigningUp } = useMutation({
     mutationFn: ({ input }: { input: EmailAndConfirmation }) =>
-      signUpOTP(input),
+      apiSignUpOTP(input),
 
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
@@ -29,5 +29,5 @@ export function useSignUpOTP(reset: () => void) {
     },
   });
 
-  return mutation;
+  return { signUpOTP, isSigningUp };
 }
