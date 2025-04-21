@@ -12,12 +12,12 @@ export function useVerifyOTP() {
       verifyOTPLogin({ email, OTPCode }),
     onSuccess: (result) => {
       if (RequestSuccess(result)) {
+        queryClient.setQueryData(["user"], result.user);
+
         toast({
           description: result.success,
           variant: "success",
         });
-
-        queryClient.setQueryData(["user"], result.user);
       }
     },
     onError: (err) => {

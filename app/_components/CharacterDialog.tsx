@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
 import { useIsMobile } from "../_hooks/useIsMobile";
+import { useAuth } from "../_providers/AuthProvider";
 import { Character } from "../_schemas/Character";
 import { CharacterForm } from "./CharacterForm";
 import { DesktopDialog, MobileDrawer } from "./ResponsiveDialog";
@@ -29,9 +30,11 @@ export default function CharacterDialog({
   mode = character ? "edit" : "add",
 }: CharacterDialogProps) {
   const { characterName } = character || {};
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
-
   const isMobile = useIsMobile();
+
+  if (!user) return;
 
   const dialogContent = {
     add: {

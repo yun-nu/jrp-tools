@@ -27,7 +27,7 @@ import { Form } from "./ui/Form";
 export default function SignInForm() {
   const router = useRouter();
   const { login } = useLoginOTP();
-  const { verifyOTP, isLoggingIn } = useVerifyOTP();
+  const { verifyOTP } = useVerifyOTP();
 
   const form = useForm<z.infer<typeof signInOTPSchema>>({
     resolver: zodResolver(signInOTPSchema),
