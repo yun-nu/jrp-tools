@@ -1,8 +1,9 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { toast } from "../_hooks/useToast";
 
-import { deleteUserAction } from "../account/settings/actions";
+import { deleteAccountAction } from "../account/settings/actions";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,23 +16,11 @@ import {
   AlertDialogTrigger,
 } from "./ui/AlertDialog";
 import { Button } from "./ui/Button";
+import { useDeleteAccount } from "../_hooks/auth/useDeleteAccount";
 
 export default function DeleteAccount() {
-  const router = useRouter();
-
-  const handleDeleteCharacter = async () => {
-    const result = await deleteUserAction();
-    if (result.error) {
-      toast({
-        description: result.error,
-        variant: "destructive",
-      });
-      return;
-    } else {
-      toast({ description: result.success });
-      router.push(`/account`);
-    }
-  };
+  const { push } = useRouter();
+  const { deleteAccount, isDeleting } = useDeleteAccount(push);
 
   return (
     <AlertDialog>
@@ -54,8 +43,9 @@ export default function DeleteAccount() {
 
           <AlertDialogAction
             type="button"
-            onClick={handleDeleteCharacter}
+            onClick={() => deleteAccount()}
             className="bg-destructive hover:bg-destructive/80 text-destructive-foreground"
+            disabled={isDeleting}
           >
             Delete
           </AlertDialogAction>

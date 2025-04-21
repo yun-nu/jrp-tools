@@ -2,7 +2,7 @@
 
 import { Row } from "@tanstack/react-table";
 import { MinusCircle, PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useUpdateCommentCount } from "../_hooks/threads/useUpdateCommentCount";
 import { ExistingThread } from "../_schemas/Thread";
 import { Button } from "./ui/Button";
@@ -29,7 +29,7 @@ export default function CommentCountActions({
       });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setInputValue(val);
 
@@ -44,7 +44,10 @@ export default function CommentCountActions({
       <PopoverTrigger asChild className="w-12">
         <Button variant="outline">{count}</Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit">
+      <PopoverContent
+        className="w-fit"
+        onKeyDown={(e) => e.key === "Enter" && handleOpenChange(false)}
+      >
         <div className="grid gap-4">
           <div className="flex items-center gap-2">
             <MinusCircle

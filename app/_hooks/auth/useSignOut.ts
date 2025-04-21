@@ -12,13 +12,14 @@ export function useSignOut(
     mutationFn: () => signOut(),
 
     onSuccess: (result) => {
+      queryClient.setQueryData(["user"], null);
+      push("/");
+      setOpenMobile(false);
       toast({
         description: result.success,
         variant: "success",
       });
-      push("/");
-      setOpenMobile(false);
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.clear();
     },
 
     onError: (err) => {

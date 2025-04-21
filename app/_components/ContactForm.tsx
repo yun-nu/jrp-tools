@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "../_hooks/useToast";
-import { FORM_CONTACT_MAX_LENGTH } from "../_utils/consts";
 import { formSchema } from "../_schemas/Auth";
+import { FORM_CONTACT_MAX_LENGTH } from "../_utils/consts";
 import { contactFormAction } from "../account/contact/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
@@ -24,7 +24,7 @@ export function ContactForm() {
   const onSubmit = async () => {
     const result = await contactFormAction(form.getValues());
     if (result.messageId) {
-      toast({ description: "Message sent successfully" });
+      toast({ description: "Message sent successfully", variant: "success" });
       form.reset();
     }
 
@@ -49,7 +49,11 @@ export function ContactForm() {
           maxLength={FORM_CONTACT_MAX_LENGTH}
           className="max-w-full"
         />
-        <Button type="submit" className="w-full sm:w-fit self-end">
+        <Button
+          type="submit"
+          className="w-full sm:w-fit self-end"
+          disabled={form.formState.isSubmitting}
+        >
           Send message
         </Button>
       </form>

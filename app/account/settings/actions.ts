@@ -1,13 +1,13 @@
 "use server";
 
-import { getUserId } from "@/app/_lib/auth";
+import { getUserId } from "@/app/_lib/service-server";
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
-export async function deleteUserAction() {
+export async function deleteAccountAction() {
   const userId = await getUserId();
 
-  if (!userId || typeof userId !== "string") return { error: "User not found" };
+  if (!userId || typeof userId !== "string") throw new Error("User not found");
 
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,7 +16,7 @@ export async function deleteUserAction() {
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
 
-  if (error) return { error: "Could not delete account" };
+  if (error) throw new Error("Could not delete account");
 
   const cookieStore = await cookies();
   const allCookies = cookieStore.getAll();

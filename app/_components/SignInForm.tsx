@@ -8,9 +8,9 @@ import { z } from "zod";
 import { useLoginOTP } from "../_hooks/auth/useLoginOTP";
 import { useVerifyOTP } from "../_hooks/auth/useVerifyOTP";
 import { useMultiStepForm } from "../_hooks/useMultistepForm";
-import { signInGoogle } from "../_lib/service-auth";
 import { SignInOTP, signInOTPSchema } from "../_schemas/Auth";
 import { RequestError } from "../_utils/return";
+import { signInGoogleAction } from "../login/actions";
 import { InputWithLabel } from "./InputWithLabel";
 import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
@@ -23,7 +23,6 @@ import {
   CardTitle,
 } from "./ui/Card";
 import { Form } from "./ui/Form";
-import { signInGoogleAction } from "../login/action";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -76,7 +75,11 @@ export default function SignInForm() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {step}
-            <Button type="submit" className="w-full" disabled={isLoggingIn}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={form.formState.isSubmitting}
+            >
               Submit
             </Button>
           </form>

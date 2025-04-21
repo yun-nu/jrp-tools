@@ -17,9 +17,7 @@ export default function CharacterList() {
 
   if (charactersLoading || userLoading) return <LoadingCards />;
 
-  if (!user) {
-    return <MessageBox>User not authenticated.</MessageBox>;
-  }
+  if (!user) return;
 
   if (!Array.isArray(characters) || error)
     return <MessageBox>{error?.message}</MessageBox>;

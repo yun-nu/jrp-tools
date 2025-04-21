@@ -15,6 +15,7 @@ export function useCharacters(userId: User["id"]) {
     },
     enabled: !!userId,
     refetchOnWindowFocus: false,
+    staleTime: Infinity,
   });
 
   return { isLoading, characters, error };

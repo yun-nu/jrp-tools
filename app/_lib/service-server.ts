@@ -1,10 +1,25 @@
+import { User } from "@supabase/supabase-js";
 import { Character, ExistingCharacter } from "../_schemas/Character";
-import { getUserId } from "./auth";
 import { createClient } from "./supabase-server";
 
 interface CharacterPageData {
   character: ExistingCharacter;
   isOwner: boolean;
+}
+
+export async function getUserId(): Promise<User["id"] | { error: string }> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) return { error: "Error while fetching user." };
+
+  if (!user) return { error: "User not authenticated." };
+
+  return user.id;
 }
 
 type CharacterPageResult = CharacterPageData | { error: string } | null;

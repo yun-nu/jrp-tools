@@ -4,7 +4,6 @@ import {
   getCharacterMetadata,
   getCharacterPageData,
 } from "@/app/_lib/service-server";
-
 import { Metadata } from "next";
 
 type Props = {

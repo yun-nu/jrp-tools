@@ -5,11 +5,27 @@ import {
   SignInOTP,
   signInOTPSchema,
 } from "../_schemas/Auth";
-import { RequestResult } from "../_utils/return";
 
-export async function signUpOTP(
-  input: EmailAndConfirmation
-): Promise<RequestResult & { email: string }> {
+export async function getCurrentUser() {
+  const supabase = createClient();
+
+  const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+  if (sessionError) {
+    throw new Error("Error getting session");
+  }
+
+  if (!sessionData.session) return null;
+
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) throw new Error("Error getting user");
+
+  return userData.user;
+}
+
+export async function signUpOTP(input: EmailAndConfirmation) {
   const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
@@ -67,10 +83,7 @@ export async function verifyOTPLogin(inputData: SignInOTP) {
   const parsed = signInOTPSchema.safeParse(inputData);
 
   if (!parsed.success) {
-    return {
-      message: "Submission Failed",
-      errors: parsed.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid input");
   }
 
   const supabase = await createClient();
@@ -88,9 +101,7 @@ export async function verifyOTPLogin(inputData: SignInOTP) {
   return { success: "Logged in successfully", user: data.user };
 }
 
-export async function updateEmail(
-  input: EmailAndConfirmation
-): Promise<RequestResult & { email: string }> {
+export async function updateEmail(input: EmailAndConfirmation) {
   const parsed = emailAndConfirmationSchema.safeParse(input);
 
   if (!parsed.success) {
@@ -127,17 +138,5 @@ export async function signOut() {
   const { error } = await supabase.auth.signOut();
   if (error) throw new Error("Error signing out.");
 
-  return { success: "Logged out successfully" };
-}
-
-export async function signInGoogle() {
-  const supabase = createClient();
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      redirectTo: `${process.env.ROOT_URL}/api/auth/callback`,
-    },
-  });
-
-  if (error) throw new Error("Could not login");
+  return { success: "Signed out successfully" };
 }
