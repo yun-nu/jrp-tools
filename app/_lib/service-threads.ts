@@ -143,3 +143,21 @@ export async function updateCommentCount(
     success: "Comment count updated successfully",
   };
 }
+
+export async function toggleUsedForAc(
+  threadId: ExistingThread["id"],
+  updatedState: boolean
+): Promise<RequestResult> {
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from("threads")
+    .update({ usedForAc: updatedState })
+    .eq("id", threadId);
+
+  if (error) throw new Error("Could not toggle thread state");
+
+  return {
+    success: "Thread marked as used for AC",
+  };
+}

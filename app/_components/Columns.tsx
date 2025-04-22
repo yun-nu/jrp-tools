@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { ArrowUpDown, LinkIcon } from "lucide-react";
 import { ExistingThread } from "../_schemas/Thread";
+import CheckboxUsedForAc from "./CheckboxUsedForAc";
 import CommentCountActions from "./CommentCountActions";
 import DataTableRowActions from "./DataTableRowActions";
 import StyledLink from "./StyledLink";
@@ -91,6 +92,17 @@ export const threadsCols = (
           <CommentCountActions row={row} />
         </div>
       );
+    },
+  },
+  {
+    meta: {
+      name: "Used for AC",
+      showColumn: showActions,
+    },
+    accessorKey: "usedForAc",
+    header: () => <span className="whitespace-nowrap">Used for AC</span>,
+    cell: ({ row }) => {
+      return <CheckboxUsedForAc row={row} />;
     },
   },
   {

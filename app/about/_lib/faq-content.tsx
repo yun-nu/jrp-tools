@@ -103,11 +103,10 @@ export const aboutFAQItems = [
 
         <li className="flex flex-col gap-1">
           <span className="font-semibold">
-            This cookie jar holds 4 cookies.
+            This cookie jar holds 2 cookies.
           </span>
           <p>
-            They&apos;re used only to keep you logged in, remember your
-            preferences, and personalize the interface. RP Tools doesn&apos;t
+            They&apos;re used only to keep you logged in. JRP Tools doesn&apos;t
             track you, and it doesn&apos;t share your data. Ever.
           </p>
         </li>

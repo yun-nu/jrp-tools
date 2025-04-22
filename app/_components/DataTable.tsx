@@ -47,6 +47,7 @@ export default function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     actions: showActions,
     commentCount: showActions,
+    usedForAc: showActions,
   });
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -137,7 +138,7 @@ export default function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      className="px-2 sm:px-8 text-center"
+                      className="px-2 sm:px-8 text-center [&:has([role=checkbox])]:pr-4"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
