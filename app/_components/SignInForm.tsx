@@ -25,9 +25,9 @@ import {
 import { Form } from "./ui/Form";
 
 export default function SignInForm() {
-  const router = useRouter();
+  const { push } = useRouter();
   const { login } = useLoginOTP();
-  const { verifyOTP } = useVerifyOTP();
+  const { verifyOTP } = useVerifyOTP(push);
 
   const form = useForm<z.infer<typeof signInOTPSchema>>({
     resolver: zodResolver(signInOTPSchema),
@@ -59,8 +59,6 @@ export default function SignInForm() {
       form.setError("OTPCode", { message: resultStep2.error });
       return;
     }
-
-    router.push("/account/characters");
   };
 
   return (
