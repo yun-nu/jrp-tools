@@ -17,11 +17,13 @@ export function useToggleUsedForAc() {
       return apiToggleUsedForAc(threadId, updatedState);
     },
 
-    onSuccess: (result) => {
+    onSuccess: (result, { updatedState }) => {
       if (RequestSuccess(result)) {
         toast({
-          description: result.success,
-          variant: "success",
+          description: updatedState
+            ? result.success
+            : "Thread unchecked for AC",
+          variant: updatedState ? "success" : "alert",
         });
 
         queryClient.invalidateQueries({

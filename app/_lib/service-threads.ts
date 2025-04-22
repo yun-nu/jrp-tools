@@ -158,6 +158,6 @@ export async function toggleUsedForAc(
   if (error) throw new Error("Could not toggle thread state");
 
   return {
-    success: "Thread marked as used for AC",
+    success: "Thread checked as used for AC",
   };
 }
