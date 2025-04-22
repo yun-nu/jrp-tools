@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { SiPlurk } from "react-icons/si";
+import StyledLink from "./StyledLink";
 
 type HeadingProps = {
   number: string;
@@ -38,6 +40,13 @@ function Content({ children }: { children: ReactNode }) {
 export default function Updates({ items }: Props) {
   return (
     <div className="flex flex-col gap-8 items-center justify-start w-full h-full max-w-screen-md">
+      <div className="text-sm flex items-center justify-center gap-2 h-12 px-4 py-2 border border-input rounded bg-card w-[80%]">
+        <SiPlurk className="text-orange-500" /> For quick updates and
+        announcements, check out{" "}
+        <StyledLink href="https://plurk.com/jrp_tools">
+          JRP Tools on plurk
+        </StyledLink>
+      </div>
       {items.map((item) => (
         <article key={item.number} className="w-full">
           <Heading number={item.number} date={item.date} />
