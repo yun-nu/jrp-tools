@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Character list - JRP Tools",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <section className="flex flex-col gap-12 items-center">
       <CharacterDialog mode="add" />

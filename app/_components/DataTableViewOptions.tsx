@@ -8,6 +8,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
+import useLocalStorage from "../_hooks/useLocalStorage";
+import { useEffect } from "react";
 
 type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;
@@ -28,6 +30,21 @@ declare module "@tanstack/table-core" {
 export default function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const tableColumns = table
+    .getAllColumns()
+    .filter((column) => column.columnDef.meta?.showColumn);
+  const [visibleColumns, setVisibleColumns] = useLocalStorage(
+    "selectedColumns",
+    tableColumns.filter((col) => col.getIsVisible()).map((col) => col.id)
+  );
+
+  useEffect(() => {
+    tableColumns.forEach((column) => {
+      column.toggleVisibility(visibleColumns.includes(column.id));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleColumns]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,21 +54,24 @@ export default function DataTableViewOptions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {table
-          .getAllColumns()
-          .filter((column) => column.columnDef.meta?.showColumn)
-          .map((column) => {
-            return (
-              <DropdownMenuCheckboxItem
-                key={column.id}
-                className="capitalize"
-                checked={column.getIsVisible()}
-                onCheckedChange={(value) => column.toggleVisibility(!!value)}
-              >
-                {column.columnDef.meta?.name ?? column.id}
-              </DropdownMenuCheckboxItem>
-            );
-          })}
+        {tableColumns.map((column) => {
+          return (
+            <DropdownMenuCheckboxItem
+              key={column.id}
+              className="capitalize"
+              checked={visibleColumns.includes(column.id)}
+              onCheckedChange={(checked) => {
+                checked
+                  ? setVisibleColumns([...visibleColumns, column.id])
+                  : setVisibleColumns(
+                      visibleColumns.filter((id) => id !== column.id)
+                    );
+              }}
+            >
+              {column.columnDef.meta?.name ?? column.id}
+            </DropdownMenuCheckboxItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );

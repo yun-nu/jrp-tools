@@ -9,6 +9,6 @@ export const metadata: Metadata = {
   description: "JRP Tools Changelog",
 };
 
-export default async function Page() {
+export default function Page() {
   return <Updates items={changelog} />;
 }

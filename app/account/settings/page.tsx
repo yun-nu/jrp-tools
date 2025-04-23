@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "Your account settings",
 };
 
-export default async function Page() {
+export default function Page() {
   return (
     <div className="h-full flex flex-col gap-4 max-w-screen-md">
       <Card>

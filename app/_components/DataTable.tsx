@@ -154,7 +154,7 @@ export default function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No data found.
+                  No threads found.
                 </TableCell>
               </TableRow>
             )}

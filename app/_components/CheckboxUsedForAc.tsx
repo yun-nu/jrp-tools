@@ -19,5 +19,11 @@ export default function CheckboxUsedForAc({
     toggleUsedForAc({ threadId: row.original.id, updatedState: checked });
   };
 
-  return <Checkbox checked={checked} onCheckedChange={handleCheckedChange} />;
+  return (
+    <Checkbox
+      className="sm:h-5 sm:w-5"
+      checked={checked}
+      onCheckedChange={handleCheckedChange}
+    />
+  );
 }

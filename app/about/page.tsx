@@ -9,6 +9,6 @@ export const metadata: Metadata = {
   description: "About JRP Tools",
 };
 
-export default async function Page() {
+export default function Page() {
   return <FAQ items={aboutFAQItems} />;
 }
