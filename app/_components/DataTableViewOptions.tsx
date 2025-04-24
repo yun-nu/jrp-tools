@@ -1,6 +1,6 @@
 import { Table } from "@tanstack/react-table";
 import "@tanstack/table-core";
-import { SlidersHorizontal } from "lucide-react";
+import { RotateCcw, SlidersHorizontal } from "lucide-react";
 import { Button } from "./ui/Button";
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
 } from "./ui/DropdownMenu";
 import useLocalStorage from "../_hooks/useLocalStorage";
 import { useEffect } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/Tooltip";
 
 type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;
@@ -46,33 +47,46 @@ export default function DataTableViewOptions<TData>({
   }, [visibleColumns]);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          <SlidersHorizontal />
-          Columns
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {tableColumns.map((column) => {
-          return (
-            <DropdownMenuCheckboxItem
-              key={column.id}
-              className="capitalize"
-              checked={visibleColumns.includes(column.id)}
-              onCheckedChange={(checked) => {
-                checked
-                  ? setVisibleColumns([...visibleColumns, column.id])
-                  : setVisibleColumns(
-                      visibleColumns.filter((id) => id !== column.id)
-                    );
-              }}
-            >
-              {column.columnDef.meta?.name ?? column.id}
-            </DropdownMenuCheckboxItem>
-          );
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex gap-2 sm:gap-4 items-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">
+            <SlidersHorizontal />
+            Columns
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          {tableColumns.map((column) => {
+            return (
+              <DropdownMenuCheckboxItem
+                key={column.id}
+                className="capitalize"
+                checked={visibleColumns.includes(column.id)}
+                onCheckedChange={(checked) => {
+                  checked
+                    ? setVisibleColumns([...visibleColumns, column.id])
+                    : setVisibleColumns(
+                        visibleColumns.filter((id) => id !== column.id)
+                      );
+                }}
+              >
+                {column.columnDef.meta?.name ?? column.id}
+              </DropdownMenuCheckboxItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <RotateCcw
+            size={24}
+            className="hidden sm:block cursor-pointer hover:text-primary transition-colors"
+            onClick={() => setVisibleColumns(tableColumns.map((col) => col.id))}
+          />
+        </TooltipTrigger>
+        <TooltipContent>Reset column visibility</TooltipContent>
+      </Tooltip>
+    </div>
   );
 }

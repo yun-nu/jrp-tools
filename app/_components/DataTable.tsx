@@ -25,6 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/Tooltip";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -97,11 +98,16 @@ export default function DataTable<TData, TValue>({
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
-          <CircleX
-            size={24}
-            className="cursor-pointer hover:text-primary transition-colors"
-            onClick={() => setGlobalFilter("")}
-          />
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <CircleX
+                size={24}
+                className="cursor-pointer hover:text-primary transition-colors"
+                onClick={() => setGlobalFilter("")}
+              />
+            </TooltipTrigger>
+            <TooltipContent>Clear search</TooltipContent>
+          </Tooltip>
         </div>
         <DataTableViewOptions table={table} />
       </div>
