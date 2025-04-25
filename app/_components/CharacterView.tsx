@@ -36,6 +36,7 @@ export default function CharacterView({
         finishedThreads={finishedThreads}
         showTableActions={showTableActions}
         characterId={character.id}
+        acLength={character.acLength}
       />
     </section>
   );

@@ -16,7 +16,7 @@ type Props = {
   nameInSchema: string;
   description?: string;
   placeholder?: string;
-  onBlur?: () => void;
+  type?: "text" | "number";
 };
 
 export function InputWithLabel({
@@ -24,7 +24,7 @@ export function InputWithLabel({
   nameInSchema,
   description,
   placeholder,
-  onBlur,
+  type = "text",
 }: Props) {
   const form = useFormContext();
 
@@ -49,9 +49,9 @@ export function InputWithLabel({
                   id={fieldTitle}
                   className="w-full max-w-xs text-sm"
                   placeholder={placeholder}
-                  value={field.value}
+                  value={field.value ?? ""}
                   onChange={(e) => field.onChange(e.target.value)}
-                  onBlur={onBlur}
+                  type={type}
                 />
               </FormControl>
             </div>

@@ -81,7 +81,7 @@ export default function DataTableViewOptions<TData>({
         <TooltipTrigger asChild>
           <RotateCcw
             size={24}
-            className="hidden sm:block cursor-pointer hover:text-primary transition-colors"
+            className="hidden sm:block cursor-pointer hover:text-muted-foreground transition-colors"
             onClick={() => setVisibleColumns(tableColumns.map((col) => col.id))}
           />
         </TooltipTrigger>

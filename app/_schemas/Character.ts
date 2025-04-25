@@ -67,7 +67,20 @@ const baseCharacterSchema = z.object({
     .transform((val) => val?.replace(/\s+/g, "")),
   isPublic: z.boolean(),
   isActive: z.boolean(),
-  acLength: z.number().int().nonnegative().nullish(),
+  acLength: z
+    .union([
+      z
+        .string()
+        .trim()
+        .transform((val) => (val === "" ? null : Number(val))),
+      z.number(),
+    ])
+    .refine(
+      (val) =>
+        val === null || (Number.isInteger(val) && val >= 1 && val <= 300),
+      { message: "Must be a number between 1 and 300" }
+    )
+    .nullable(),
 });
 
 export const newCharacterSchema = baseCharacterSchema.extend({

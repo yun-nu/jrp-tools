@@ -14,9 +14,11 @@ import {
 } from "@tanstack/react-table";
 import { CircleX } from "lucide-react";
 import { useState } from "react";
+import { ExistingCharacter } from "../_schemas/Character";
 import DataTableViewOptions from "./DataTableViewOptions";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
+import { Switch } from "./ui/Switch";
 import {
   Table,
   TableBody,
@@ -26,17 +28,21 @@ import {
   TableRow,
 } from "./ui/Table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/Tooltip";
+import { Label } from "./ui/Label";
+import useLocalStorage from "../_hooks/useLocalStorage";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   showActions?: boolean;
+  acLength: ExistingCharacter["acLength"];
 }
 
 export default function DataTable<TData, TValue>({
   columns,
   data,
   showActions = false,
+  acLength,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -51,6 +57,12 @@ export default function DataTable<TData, TValue>({
     usedForAc: showActions,
   });
   const [globalFilter, setGlobalFilter] = useState("");
+  // const [highlightAcLength, setHighlightAcLength] = useState(false);
+
+  const [highlightAcLength, setHighlightAcLength] = useLocalStorage(
+    "highlightAcLength",
+    false
+  );
 
   const table = useReactTable({
     data,
@@ -102,7 +114,7 @@ export default function DataTable<TData, TValue>({
             <TooltipTrigger asChild>
               <CircleX
                 size={24}
-                className="cursor-pointer hover:text-primary transition-colors"
+                className="cursor-pointer hover:text-muted-foreground transition-colors"
                 onClick={() => setGlobalFilter("")}
               />
             </TooltipTrigger>
@@ -140,6 +152,13 @@ export default function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className={
+                    acLength &&
+                    parseInt(row.getValue("commentCount")) >= acLength &&
+                    highlightAcLength
+                      ? "bg-green-700/30"
+                      : ""
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -167,23 +186,38 @@ export default function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="flex items-center justify-between space-x-2 py-4">
+        <div className="flex items-center space-x-2">
+          <Switch
+            className="h-4 w-9"
+            thumbClassName="h-3 w-3"
+            id="highlight-ac-length"
+            onCheckedChange={() => setHighlightAcLength(!highlightAcLength)}
+            checked={highlightAcLength}
+          />
+          <Label htmlFor="highlight-ac-length" className="text-sm font-normal">
+            Highlight AC length threads
+          </Label>
+        </div>
+
+        <div className="flex items-center justify-end space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

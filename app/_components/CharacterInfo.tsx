@@ -1,12 +1,10 @@
-import React from "react";
-import { Character } from "../_schemas/Character";
 import Image from "next/image";
+import { Character } from "../_schemas/Character";
 
 import { FaAt } from "react-icons/fa6";
 import { LuGoal } from "react-icons/lu";
 import { MdPublic } from "react-icons/md";
 import { RiHomeHeartLine } from "react-icons/ri";
-import Link from "next/link";
 import StyledLink from "./StyledLink";
 
 export default function CharacterInfo({
@@ -26,6 +24,7 @@ export default function CharacterInfo({
     journalLink,
     isPublic,
     icon,
+    acLength,
   } = character || {};
 
   return (
@@ -73,13 +72,19 @@ export default function CharacterInfo({
               <RiHomeHeartLine /> Played at: {gameName}
             </div>
           )}
-          {!isPublicPage && acLink && (
-            <a
-              href={acLink ? acLink : "#"}
-              className="flex items-center gap-2 underline underline-offset-4"
-            >
-              <LuGoal /> AC page
-            </a>
+
+          {!isPublicPage && (
+            <div className="flex-col sm:flex-row flex justify-between gap-2">
+              {acLink && (
+                <a
+                  href={acLink ? acLink : "#"}
+                  className="flex items-center gap-2 underline underline-offset-4"
+                >
+                  <LuGoal /> AC page
+                </a>
+              )}
+              {acLength && <span>AC Length: {acLength} comments</span>}
+            </div>
           )}
         </div>
       </div>

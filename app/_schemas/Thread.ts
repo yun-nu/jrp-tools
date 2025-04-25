@@ -41,8 +41,8 @@ const baseThreadSchema = z.object({
   isFinished: z.boolean(),
   threadPartner: z
     .string()
-    .max(FORM_NAMES_MAX_LENGTH, {
-      message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+    .max(100, {
+      message: generateMaxMessage(100),
     })
     .optional(),
   usedForAc: z.boolean().default(false),

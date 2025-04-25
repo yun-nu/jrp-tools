@@ -18,6 +18,7 @@ type ThreadTabsProps = {
   finishedThreads: ExistingThread[];
   characterId?: ExistingCharacter["id"];
   showTableActions: boolean;
+  acLength: ExistingCharacter["acLength"];
 };
 
 export default function ThreadTabs({
@@ -25,6 +26,7 @@ export default function ThreadTabs({
   finishedThreads,
   characterId,
   showTableActions,
+  acLength,
 }: ThreadTabsProps) {
   const columns = threadsCols(showTableActions);
 
@@ -50,6 +52,7 @@ export default function ThreadTabs({
             columns={columns}
             data={ongoingThreads}
             showActions={showTableActions}
+            acLength={acLength}
           />
         </TabsContent>
         <TabsContent value="finished">
@@ -57,6 +60,7 @@ export default function ThreadTabs({
             columns={columns}
             data={finishedThreads}
             showActions={showTableActions}
+            acLength={acLength}
           />
         </TabsContent>
       </Tabs>

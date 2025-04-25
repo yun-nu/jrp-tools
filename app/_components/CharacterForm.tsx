@@ -48,6 +48,7 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
       icon: "",
       isPublic: false,
       isActive: true,
+      acLength: null,
     },
   });
 
@@ -104,11 +105,12 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
           description="Must start with http:// or https://"
         />
 
-        {/* <InputWithLabel
+        <InputWithLabel
           fieldTitle="AC Length"
           nameInSchema="acLength"
           description="If provided, threads will be automatically be marked as AC length when the comment count is reached."
-        /> */}
+          type="number"
+        />
 
         <CheckboxWithText
           nameInSchema="isPublic"
