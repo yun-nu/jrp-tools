@@ -1,13 +1,12 @@
+import { LucideIcon } from "lucide-react";
 import { ReactNode } from "react";
+import { Button } from "./ui/Button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/Tooltip";
-import { IconType } from "react-icons/lib";
-import { LucideIcon } from "lucide-react";
-import { Button } from "./ui/Button";
 
 type TooltipWrapperProps = {
   text: string;
@@ -45,7 +44,7 @@ export function TooltipWrapperButton({
 }: TooltipWrapperButtonProps) {
   return (
     <TooltipWrapper text={text} side={side}>
-      <Button onClick={onClick} variant={"outline"}>
+      <Button onClick={onClick} variant={"outline"} className="w-fit">
         <Icon className="cursor-pointer hover:text-muted-foreground transition-colors" />
       </Button>
     </TooltipWrapper>

@@ -4,6 +4,90 @@ import { SiPlurk } from "react-icons/si";
 /* eslint-disable react/no-unescaped-entities */
 export const changelog = [
   {
+    number: "04",
+    date: "April 29th, 2025",
+    content: (
+      <>
+        <p>
+          The logic shift from the client side to the server side saga
+          continues! This update includes some internal tweaks aimed at
+          improving performance and long-term maintainability. It also comes
+          with some handy new features to make tracking AC proofs easier!
+        </p>
+        <p>
+          <b>Heads up:</b> These changes may cause users to be logged out of the
+          app. Sorry for the inconvenience, and thank you (again) for your
+          patience as things evolve under the hood.
+        </p>
+        <div>
+          Without further ado, these are the new features:
+          <ul className="mt-4 list-disc list-inside space-y-4">
+            <li>
+              <b>Activity Range Filter</b>
+              <p>
+                This new filter lets you find threads with a specific number of
+                comments within a selected date range. It also works with the
+                Search bar, so you can narrow things down even further: for
+                example, searching for a specific type of thread or blurb while
+                also filtering by activity and time period.
+              </p>
+            </li>
+            <li>
+              <b>Used for AC Column</b>
+              <p>
+                A new column has been added to help track whether a thread is
+                being used for Activity Checks.
+              </p>
+            </li>
+            <li>
+              <b>Sticky Column Preferences</b>
+              <p>
+                The table now remembers which columns you've toggled on or off
+                across the app! Column visibility settings are stored in your
+                browser's local storage, so they'll only stick around if you're
+                using the same browser you set them in. Also, keep in mind that
+                searches still reference hidden columns, even if they're not
+                visible!
+              </p>
+            </li>
+            <li>
+              <b>AC Length Highlighting</b>
+              <p>
+                Threads that meet or exceed the AC length will now be
+                highlighted in green automatically — a quick way to spot which
+                threads are ready to be turned in for AC.
+              </p>
+              <p className="mt-4">A few things to note:</p>
+              <ul className="ml-4 space-y-2">
+                <li>
+                  - This feature is not enabled by default, it only works if
+                  you've set an AC length for the character.{" "}
+                </li>
+                <li>
+                  - Highlighting is per thread, not cumulative. So if the AC
+                  Length is set to 10, only threads with 10 or more comments
+                  will be highlighted, it doesn't add up across multiple
+                  threads.{" "}
+                </li>
+                <li>
+                  - You can toggle the highlighting on or off using the switch
+                  at the bottom of the table. As with column settings, your
+                  preference is saved in your browser, so it sticks around as
+                  long as you're using the same one.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <p>
+          That's about it for this update! As always, feel free to reach out if
+          you run into any bugs, have suggestions, or just want to share
+          feedback, I really appreciate all of it!
+        </p>
+      </>
+    ),
+  },
+  {
     number: "03",
     date: "April 19th, 2025",
     content: (

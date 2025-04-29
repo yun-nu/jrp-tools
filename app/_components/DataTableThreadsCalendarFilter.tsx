@@ -71,7 +71,7 @@ export default function DataTableThreadsCalendarFilter<TData>({
   };
 
   return (
-    <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 items-center justify-items-start">
+    <div className="w-full flex items-center justify-between gap-2 sm:gap-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

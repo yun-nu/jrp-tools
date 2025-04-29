@@ -96,6 +96,7 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           fieldTitle="Comment count"
           nameInSchema="commentCount"
           placeholder="0"
+          type="number"
         />
 
         <InputWithLabel

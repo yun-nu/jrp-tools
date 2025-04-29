@@ -5,15 +5,33 @@ import { SidebarNavigation } from "./_components/SidebarNavigation";
 import { SidebarInset, SidebarProvider } from "./_components/ui/Sidebar";
 import { ThemeProvider } from "./_components/ui/ThemeProvider";
 import { Toaster } from "./_components/ui/Toaster";
-import "./globals.css";
-import QueryProvider from "./_providers/QueryProvider";
 import { AuthProvider } from "./_providers/AuthProvider";
+import QueryProvider from "./_providers/QueryProvider";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JRP Tools",
-  description: "Lightweight thread tracker for journal-based roleplay",
+  title: "JRP Tools — Thread Tracker for Journal-Based Roleplay",
+  description:
+    "Lightweight thread tracker for journal-based roleplay. Store and share your threads with just a few clicks.",
+  openGraph: {
+    title: "JRP Tools — Thread Tracker for Journal-Based Roleplay",
+    description:
+      "Lightweight thread tracker for journal-based roleplay. Store and share your threads with just a few clicks.",
+    url: "https://www.jrp-tools.com/",
+    siteName: "JRP Tools",
+    images: [
+      {
+        url: "https://www.jrp-tools.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "RP Tools Open Graph Image",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default async function RootLayout({

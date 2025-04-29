@@ -105,7 +105,7 @@ export default function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex items-end sm:items-center justify-between gap-4 py-6 flex-col-reverse sm:flex-row">
-        <div className="flex items-center gap-2 xs:gap-4 w-full">
+        <div className="flex items-center gap-2 sm:gap-4 w-full">
           <Input
             className="text-sm w-full sm:max-w-[300px]"
             placeholder="Search..."
@@ -151,6 +151,7 @@ export default function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                   className={
                     acLength &&
+                    showActions &&
                     parseInt(row.getValue("commentCount")) >= acLength &&
                     highlightAcLength
                       ? "bg-green-700/30"
@@ -196,7 +197,7 @@ export default function DataTable<TData, TValue>({
           />
         )}
 
-        <div className="flex items-center justify-end space-x-2 w-full sm:w-fit">
+        <div className="flex items-center justify-end space-x-2 w-full">
           <Button
             variant="outline"
             size="sm"
