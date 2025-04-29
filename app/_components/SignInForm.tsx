@@ -110,6 +110,7 @@ function SignInOTPStep2({ email }: Pick<SignInOTP, "email">) {
         fieldTitle={`Enter the 6-digit code`}
         nameInSchema="OTPCode"
         description={`Sent to: ${email}`}
+        type="number"
       />
     </>
   );

@@ -2,7 +2,7 @@
 
 import { Table } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, CircleX } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useNumberInput } from "../_hooks/useNumberImput";
@@ -11,6 +11,7 @@ import { Calendar } from "./ui/Calendar";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
+import { TooltipWrapperButton } from "./TooltipWrappers";
 
 type DataThreadCalendarFilterProps<TData> = {
   table: Table<TData>;
@@ -30,20 +31,20 @@ export default function DataTableThreadsCalendarFilter<TData>({
   const [open, setOpen] = useState(false);
   const {
     value: inputValue,
+    setValue: setInputValue,
     number: count,
     handleChange,
   } = useNumberInput(minComments);
 
   const now = new Date();
-  const { year, month, day } = {
-    year: now.getFullYear(),
-    month: now.getMonth(),
-    day: now.getDate(),
+  const initialSelectedState = {
+    from: new Date(now.getFullYear(), now.getMonth(), 1),
+    to: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
   };
-  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>({
-    from: new Date(year, month, 1),
-    to: new Date(year, month, day),
-  });
+
+  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
+    initialSelectedState
+  );
 
   const handleDateRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);
@@ -70,7 +71,7 @@ export default function DataTableThreadsCalendarFilter<TData>({
   };
 
   return (
-    <div className="grid gap-2">
+    <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 items-center justify-items-start">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -108,7 +109,6 @@ export default function DataTableThreadsCalendarFilter<TData>({
               onKeyDown={(e) =>
                 e.key === "Enter" && handleDateRangeChange(selectedRange)
               }
-              autoFocus
             />
           </div>
           <Calendar
@@ -116,6 +116,7 @@ export default function DataTableThreadsCalendarFilter<TData>({
             defaultMonth={selectedRange?.from}
             selected={selectedRange}
             onSelect={setSelectedRange}
+            autoFocus
           />
           <Button
             className="w-full"
@@ -125,6 +126,18 @@ export default function DataTableThreadsCalendarFilter<TData>({
           </Button>
         </PopoverContent>
       </Popover>
+
+      <TooltipWrapperButton
+        icon={CircleX}
+        onClick={() => {
+          setDateRange(undefined);
+          setSelectedRange(initialSelectedState);
+          setInputValue("1");
+          table.getColumn("commentCount")?.setFilterValue(undefined);
+          table.getColumn("date")?.setFilterValue(undefined);
+        }}
+        text="Reset activity range search"
+      ></TooltipWrapperButton>
     </div>
   );
 }

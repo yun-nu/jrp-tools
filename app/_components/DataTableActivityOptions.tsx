@@ -29,25 +29,14 @@ export default function DataTableActivityOptions<TData>({
   setHighlightAcLength,
 }: DataTableActivityProps<TData>) {
   return (
-    <div className="flex flex-col gap-2 sm:gap-4">
-      <div className="flex items-center gap-4">
-        <DataTableThreadsCalendarFilter
-          table={table}
-          minComments={minComments}
-          setMinComments={setMinComments}
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-        />
-        <TooltipWrapperButton
-          icon={CircleX}
-          onClick={() => {
-            setDateRange(undefined);
-            table.getColumn("commentCount")?.setFilterValue(undefined);
-            table.getColumn("date")?.setFilterValue(undefined);
-          }}
-          text="Reset activity range search"
-        ></TooltipWrapperButton>
-      </div>
+    <div className="flex flex-col gap-6 items-center sm:items-start">
+      <DataTableThreadsCalendarFilter
+        table={table}
+        minComments={minComments}
+        setMinComments={setMinComments}
+        dateRange={dateRange}
+        setDateRange={setDateRange}
+      />
 
       <div className="flex items-center space-x-2">
         <Switch

@@ -103,11 +103,11 @@ export default function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between gap-2 py-4">
+    <>
+      <div className="flex items-end sm:items-center justify-between gap-4 py-6 flex-col-reverse sm:flex-row">
         <div className="flex items-center gap-2 xs:gap-4 w-full">
           <Input
-            className="text-sm max-w-[170px] xs:max-w-[230px] sm:max-w-[300px]"
+            className="text-sm w-full sm:max-w-[300px]"
             placeholder="Search..."
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
@@ -183,7 +183,7 @@ export default function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-between space-x-2 py-4">
+      <div className="flex items-center sm:items-start justify-between gap-6 py-6 flex-col-reverse sm:flex-row">
         {showActions && (
           <DataTableActivityOptions
             table={table}
@@ -196,12 +196,13 @@ export default function DataTable<TData, TValue>({
           />
         )}
 
-        <div className="flex items-center ml-auto justify-end space-x-2">
+        <div className="flex items-center justify-end space-x-2 w-full sm:w-fit">
           <Button
             variant="outline"
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
+            className="w-full sm:w-fit"
           >
             Previous
           </Button>
@@ -210,11 +211,12 @@ export default function DataTable<TData, TValue>({
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
+            className="w-full sm:w-fit"
           >
             Next
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
