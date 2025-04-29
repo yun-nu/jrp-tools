@@ -1,6 +1,9 @@
 import { Table } from "@tanstack/react-table";
 import "@tanstack/table-core";
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
+import { useEffect } from "react";
+import useLocalStorage from "../_hooks/useLocalStorage";
+import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
 import {
   DropdownMenu,
@@ -8,9 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
-import useLocalStorage from "../_hooks/useLocalStorage";
-import { useEffect } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/Tooltip";
 
 type DataTableViewOptionsProps<TData> = {
   table: Table<TData>;
@@ -77,16 +77,11 @@ export default function DataTableViewOptions<TData>({
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <RotateCcw
-            size={24}
-            className="hidden sm:block cursor-pointer hover:text-muted-foreground transition-colors"
-            onClick={() => setVisibleColumns(tableColumns.map((col) => col.id))}
-          />
-        </TooltipTrigger>
-        <TooltipContent>Reset column visibility</TooltipContent>
-      </Tooltip>
+      <TooltipWrapperButton
+        icon={RotateCcw}
+        onClick={() => setVisibleColumns(tableColumns.map((col) => col.id))}
+        text={"Reset column visibility"}
+      />
     </div>
   );
 }

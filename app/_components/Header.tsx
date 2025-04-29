@@ -1,5 +1,5 @@
 import HeaderUser from "./HeaderUser";
-import TooltipWrapper from "./TooltipWrapper";
+import { TooltipWrapper } from "./TooltipWrappers";
 import { ModeToggle } from "./ui/ModeToggle";
 import { Separator } from "./ui/Separator";
 import { SidebarTrigger } from "./ui/Sidebar";

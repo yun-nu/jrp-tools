@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaUserEdit, FaUserPlus } from "react-icons/fa";
-import { useIsMobile } from "../_hooks/useIsMobile";
+import { useScreenSize } from "../_hooks/useScreenSize";
 import { useAuth } from "../_providers/AuthProvider";
 import { Character } from "../_schemas/Character";
 import { CharacterForm } from "./CharacterForm";
@@ -32,7 +32,8 @@ export default function CharacterDialog({
   const { characterName } = character || {};
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
-  const isMobile = useIsMobile();
+
+  const screenSize = useScreenSize();
 
   if (!user) return;
 
@@ -61,7 +62,8 @@ export default function CharacterDialog({
 
   const currentContent = dialogContent[mode];
 
-  const DialogComponent = isMobile ? MobileDrawer : DesktopDialog;
+  const DialogComponent =
+    screenSize === "mobile" ? MobileDrawer : DesktopDialog;
 
   return (
     <DialogComponent

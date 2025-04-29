@@ -14,11 +14,14 @@ import {
 } from "@tanstack/react-table";
 import { CircleX } from "lucide-react";
 import { useState } from "react";
+import { DateRange } from "react-day-picker";
+import useLocalStorage from "../_hooks/useLocalStorage";
 import { ExistingCharacter } from "../_schemas/Character";
+import DataTableActivityOptions from "./DataTableActivityOptions";
 import DataTableViewOptions from "./DataTableViewOptions";
+import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
-import { Switch } from "./ui/Switch";
 import {
   Table,
   TableBody,
@@ -27,9 +30,6 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/Table";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/Tooltip";
-import { Label } from "./ui/Label";
-import useLocalStorage from "../_hooks/useLocalStorage";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -57,12 +57,14 @@ export default function DataTable<TData, TValue>({
     usedForAc: showActions,
   });
   const [globalFilter, setGlobalFilter] = useState("");
-  // const [highlightAcLength, setHighlightAcLength] = useState(false);
 
   const [highlightAcLength, setHighlightAcLength] = useLocalStorage(
     "highlightAcLength",
     false
   );
+
+  const [minComments, setMinComments] = useState(1);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   const table = useReactTable({
     data,
@@ -81,7 +83,7 @@ export default function DataTable<TData, TValue>({
       globalFilter,
     },
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: (row, columnId, filterValue) => {
+    globalFilterFn: (row, _, filterValue) => {
       const terms: string[] = filterValue
         .toLowerCase()
         .split(/\s+/)
@@ -101,7 +103,7 @@ export default function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex items-center justify-between gap-2 py-4">
         <div className="flex items-center gap-2 xs:gap-4 w-full">
           <Input
@@ -110,20 +112,15 @@ export default function DataTable<TData, TValue>({
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
           />
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <CircleX
-                size={24}
-                className="cursor-pointer hover:text-muted-foreground transition-colors"
-                onClick={() => setGlobalFilter("")}
-              />
-            </TooltipTrigger>
-            <TooltipContent>Clear search</TooltipContent>
-          </Tooltip>
+          <TooltipWrapperButton
+            icon={CircleX}
+            onClick={() => setGlobalFilter("")}
+            text={"Clear search"}
+          />
         </div>
         <DataTableViewOptions table={table} />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -187,20 +184,19 @@ export default function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="flex items-center space-x-2">
-          <Switch
-            className="h-4 w-9"
-            thumbClassName="h-3 w-3"
-            id="highlight-ac-length"
-            onCheckedChange={() => setHighlightAcLength(!highlightAcLength)}
-            checked={highlightAcLength}
+        {showActions && (
+          <DataTableActivityOptions
+            table={table}
+            dateRange={dateRange}
+            minComments={minComments}
+            setDateRange={setDateRange}
+            setMinComments={setMinComments}
+            highlightAcLength={highlightAcLength}
+            setHighlightAcLength={setHighlightAcLength}
           />
-          <Label htmlFor="highlight-ac-length" className="text-sm font-normal">
-            Highlight AC length threads
-          </Label>
-        </div>
+        )}
 
-        <div className="flex items-center justify-end space-x-2">
+        <div className="flex items-center ml-auto justify-end space-x-2">
           <Button
             variant="outline"
             size="sm"

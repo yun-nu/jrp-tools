@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { format } from "date-fns";
+import { format, startOfDay } from "date-fns";
 import { ArrowUpDown, LinkIcon } from "lucide-react";
 import { ExistingThread } from "../_schemas/Thread";
 import CheckboxUsedForAc from "./CheckboxUsedForAc";
@@ -42,6 +42,24 @@ export const threadsCols = (
           <ArrowUpDown className="h-4 w-4" />
         </Button>
       );
+    },
+    filterFn: (row, columnId, filterValue) => {
+      // Returns all rows if no date range is selected
+      if (!filterValue?.from && !filterValue?.to) return true;
+
+      const rowDate = startOfDay(new Date(row.getValue(columnId)));
+
+      // Check if the row date is before the start of the range
+      if (filterValue.from && rowDate < startOfDay(filterValue.from)) {
+        return false;
+      }
+
+      // Check if the row date is after the end of the range
+      if (filterValue.to && rowDate > startOfDay(filterValue.to)) {
+        return false;
+      }
+
+      return true;
     },
   },
   {
@@ -92,6 +110,10 @@ export const threadsCols = (
           <CommentCountActions row={row} />
         </div>
       );
+    },
+    filterFn: (row, columnId, filterValue) => {
+      const value = Number(row.getValue(columnId));
+      return value >= filterValue;
     },
   },
   {

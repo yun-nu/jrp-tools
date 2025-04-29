@@ -31,7 +31,7 @@ export default function ThreadTabs({
   const columns = threadsCols(showTableActions);
 
   return (
-    <div className="mt-8 flex flex-col items-center justify-center lg:max-w-[80%] gap-y-8 w-full">
+    <div className="mt-8 flex flex-col items-center justify-center 2xl:max-w-[85%]  gap-y-8 w-full">
       {showTableActions && characterId && (
         <ThreadDialog characterId={characterId} mode="add" />
       )}

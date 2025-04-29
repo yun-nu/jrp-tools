@@ -2,12 +2,12 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { FaUserPlus } from "react-icons/fa6";
-import { useIsMobile } from "../_hooks/useIsMobile";
 import { ExistingCharacter } from "../_schemas/Character";
 import { Thread } from "../_schemas/Thread";
 import { DesktopDialog, MobileDrawer } from "./ResponsiveDialog";
 import { ThreadForm } from "./ThreadForm";
 import { Button } from "./ui/Button";
+import { useScreenSize } from "../_hooks/useScreenSize";
 
 interface ThreadDialogBaseProps {
   mode: "add" | "edit";
@@ -54,7 +54,7 @@ export default function ThreadDialog(props: ThreadDialogProps) {
   const isOpen = isControlled ? props.isOpen : internalOpen;
   const setIsOpen = isControlled ? props.setIsOpen : setInternalOpen;
 
-  const isMobile = useIsMobile();
+  const screenSize = useScreenSize();
 
   const dialogContent = {
     add: {
@@ -75,7 +75,8 @@ export default function ThreadDialog(props: ThreadDialogProps) {
 
   const currentContent = dialogContent[mode];
 
-  const DialogComponent = isMobile ? MobileDrawer : DesktopDialog;
+  const DialogComponent =
+    screenSize === "mobile" ? MobileDrawer : DesktopDialog;
 
   return (
     <DialogComponent

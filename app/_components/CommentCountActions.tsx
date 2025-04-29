@@ -2,8 +2,9 @@
 
 import { Row } from "@tanstack/react-table";
 import { MinusCircle, PlusCircle } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useUpdateCommentCount } from "../_hooks/threads/useUpdateCommentCount";
+import { useNumberInput } from "../_hooks/useNumberImput";
 import { ExistingThread } from "../_schemas/Thread";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
@@ -14,9 +15,14 @@ export default function CommentCountActions({
 }: {
   row: Row<ExistingThread>;
 }) {
-  const [count, setCount] = useState(row.getValue("commentCount") as number);
+  const {
+    value: inputValue,
+    setValue: setInputValue,
+    number: count,
+    setNumber: setCount,
+    handleChange,
+  } = useNumberInput(row.getValue("commentCount") as number);
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(String(count));
 
   const { mutate: updateCommentCount } = useUpdateCommentCount();
 
@@ -27,16 +33,6 @@ export default function CommentCountActions({
         threadId: row.original.id,
         updatedCount: count,
       });
-  };
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setInputValue(val);
-
-    if (val === "") return;
-
-    const parsed = parseInt(val);
-    if (!isNaN(parsed) && parsed >= 0) setCount(parsed);
   };
 
   return (
@@ -61,7 +57,7 @@ export default function CommentCountActions({
             <Input
               type="number"
               value={inputValue}
-              onChange={(e) => handleInputChange(e)}
+              onChange={handleChange}
               className="w-12 h-8 text-center"
             />
             <PlusCircle

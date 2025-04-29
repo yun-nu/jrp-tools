@@ -38,12 +38,12 @@ export default async function RootLayout({
               <SidebarProvider>
                 <SidebarNavigation />
                 <SidebarInset>
-                  <main className="w-full h-full flex flex-col">
+                  <div className="w-full h-full flex flex-col">
                     <Header />
                     <div className="flex h-full justify-center items-center py-10 px-4 sm:px-8">
                       {children}
                     </div>
-                  </main>
+                  </div>
                   <Toaster />
                 </SidebarInset>
               </SidebarProvider>
