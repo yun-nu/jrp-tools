@@ -11,8 +11,6 @@ import { Metadata } from "next";
 import { MdEmail } from "react-icons/md";
 import { SiDreamstime, SiPlurk } from "react-icons/si";
 
-export const dynamic = "force-static";
-
 export const metadata: Metadata = {
   title: "Contact - JRP Tools",
   description: "Offer general suggestions, report issues or get support",

@@ -35,6 +35,7 @@ export default function CharacterView({
         ongoingThreads={ongoingThreads}
         finishedThreads={finishedThreads}
         showTableActions={showTableActions}
+        characterDisplayName={character.displayName}
         characterId={character.id}
         acLength={character.acLength}
       />
