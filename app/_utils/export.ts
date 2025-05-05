@@ -3,16 +3,15 @@ import { ExistingThread } from "../_schemas/Thread";
 
 export function exportThreadsToCSV(
   threads: ExistingThread[],
-  status: "finished" | "ongoing",
+  status: ExistingThread["status"],
   displayName: string
 ) {
+  const capitalizedStatus = status.charAt(0).toUpperCase() + status.slice(1);
+
   const csvContent =
     "data:text/csv;charset=utf-8," +
-    `Character: ${displayName} - ${
-      status === "finished" ? "Finished Threads" : "Ongoing threads"
-    }\n` +
+    `Character: ${displayName} - ${capitalizedStatus} threads\n` +
     threads
-      .filter((row) => row.isFinished === (status === "finished"))
       .map((row) => {
         return `
         Date: ${String(row.date).split("T")[0]}

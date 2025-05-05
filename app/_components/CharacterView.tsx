@@ -24,16 +24,12 @@ export default function CharacterView({
   if (error || !threads || !Array.isArray(threads))
     return <MessageBox>{error?.message}</MessageBox>;
 
-  const ongoingThreads = (threads ?? []).filter((thread) => !thread.isFinished);
-  const finishedThreads = (threads ?? []).filter((thread) => thread.isFinished);
-
   return (
     <section className="w-full h-full flex flex-col items-center">
       <CharacterHeader character={character} isPublicPage={isPublicPage} />
 
       <ThreadTabs
-        ongoingThreads={ongoingThreads}
-        finishedThreads={finishedThreads}
+        threads={threads}
         showTableActions={showTableActions}
         characterDisplayName={character.displayName}
         characterId={character.id}

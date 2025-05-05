@@ -15,8 +15,7 @@ import ThreadMenuOptions from "./ThreadMenuOptions";
 import { Separator } from "./ui/Separator";
 
 type ThreadTabsProps = {
-  ongoingThreads: ExistingThread[];
-  finishedThreads: ExistingThread[];
+  threads: ExistingThread[];
   characterId?: ExistingCharacter["id"];
   characterDisplayName: ExistingCharacter["displayName"];
   showTableActions: boolean;
@@ -24,13 +23,22 @@ type ThreadTabsProps = {
 };
 
 export default function ThreadTabs({
-  ongoingThreads,
-  finishedThreads,
+  threads,
   characterId,
   characterDisplayName,
   showTableActions,
   acLength,
 }: ThreadTabsProps) {
+  const ongoingThreads = (threads ?? []).filter(
+    (thread) => thread.status === "ongoing"
+  );
+  const finishedThreads = (threads ?? []).filter(
+    (thread) => thread.status === "finished"
+  );
+  const droppedThreads = (threads ?? []).filter(
+    (thread) => thread.status === "dropped"
+  );
+
   const columns = threadsCols(showTableActions);
 
   return (
@@ -42,6 +50,7 @@ export default function ThreadTabs({
             characterDisplayName={characterDisplayName}
             ongoingThreads={ongoingThreads}
             finishedThreads={finishedThreads}
+            droppedThreads={droppedThreads}
           />
         </div>
       )}
@@ -49,12 +58,15 @@ export default function ThreadTabs({
       <Separator />
 
       <Tabs defaultValue="ongoing" className="w-full">
-        <TabsList className="grid md:max-w-[50%] m-auto grid-cols-2">
+        <TabsList className="grid md:max-w-[50%] m-auto grid-cols-3">
           <TabsTrigger value="ongoing">
             <h2>Ongoing</h2>
           </TabsTrigger>
           <TabsTrigger value="finished">
             <h2>Finished</h2>
+          </TabsTrigger>
+          <TabsTrigger value="dropped">
+            <h2>Dropped</h2>
           </TabsTrigger>
         </TabsList>
         <TabsContent value="ongoing">
@@ -69,6 +81,14 @@ export default function ThreadTabs({
           <DataTable
             columns={columns}
             data={finishedThreads}
+            showActions={showTableActions}
+            acLength={acLength}
+          />
+        </TabsContent>
+        <TabsContent value="dropped">
+          <DataTable
+            columns={columns}
+            data={droppedThreads}
             showActions={showTableActions}
             acLength={acLength}
           />

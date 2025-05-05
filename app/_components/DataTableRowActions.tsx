@@ -2,15 +2,18 @@
 
 import {
   Copy,
+  DropletOff,
+  Droplets,
   Edit,
   LinkIcon,
   MoreHorizontal,
   SquareCheckBig,
+  SquarePlay,
   Trash,
 } from "lucide-react";
-import { useState } from "react";
+import { createElement, useState } from "react";
 import { useDuplicateThread } from "../_hooks/threads/useDuplicateThread";
-import { useToggleThreadFinished } from "../_hooks/threads/useToggleThreadFinished";
+import { useToggleThreadStatus } from "../_hooks/threads/useToggleThreadFinished";
 import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
 import DeleteThread from "./DeleteThread";
@@ -32,7 +35,7 @@ export default function DataTableRowActions({
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  const { toggleThreadFinished, isToggling } = useToggleThreadFinished();
+  const { toggleThreadStatus, isToggling } = useToggleThreadStatus();
   const { duplicateThread, isDuplicating } = useDuplicateThread();
 
   const handleCopyUrl = () => {
@@ -41,6 +44,25 @@ export default function DataTableRowActions({
       description: "URL copied to clipboard",
     });
   };
+
+  const statusActions = [
+    {
+      show: (status: string) => status !== "dropped",
+      drop: false,
+      getIcon: (status: string) =>
+        status === "ongoing" ? SquareCheckBig : SquarePlay,
+      getLabel: (status: string) =>
+        `Mark as ${status === "ongoing" ? "finished" : "ongoing"}`,
+    },
+    {
+      show: (status: string) => status !== "finished",
+      drop: true,
+      getIcon: (status: string) =>
+        status === "ongoing" ? DropletOff : SquarePlay,
+      getLabel: (status: string) =>
+        `Mark as ${status === "dropped" ? "ongoing" : "dropped"}`,
+    },
+  ];
 
   return (
     <>
@@ -77,16 +99,22 @@ export default function DataTableRowActions({
               <Edit /> <span>Edit thread</span>
             </button>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <button
-              className="flex gap-2"
-              onClick={() => toggleThreadFinished({ thread })}
-              disabled={isToggling}
-            >
-              <SquareCheckBig /> Mark as{" "}
-              {thread.isFinished ? "ongoing" : "finished"}
-            </button>
-          </DropdownMenuItem>
+          {statusActions.map(
+            ({ show, drop, getIcon, getLabel }, i) =>
+              show(thread.status) && (
+                <DropdownMenuItem key={i}>
+                  <button
+                    className="flex gap-2"
+                    onClick={() => toggleThreadStatus({ thread, drop })}
+                    disabled={isToggling}
+                  >
+                    {createElement(getIcon(thread.status))}
+                    {getLabel(thread.status)}
+                  </button>
+                </DropdownMenuItem>
+              )
+          )}
+
           <DropdownMenuItem>
             <button
               className="flex gap-2"

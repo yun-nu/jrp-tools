@@ -22,6 +22,7 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
+import SelectWithText from "./SelectWithText";
 
 type ThreadFormProps = {
   thread?: Thread;
@@ -45,7 +46,7 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           type: "",
           blurb: "",
           url: "",
-          isFinished: false,
+          status: "ongoing",
           characterId: characterId,
           commentCount: 0,
           threadPartner: "",
@@ -105,15 +106,12 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           placeholder="Thread partner(s)"
         />
 
-        <CheckboxWithText
-          nameInSchema="isFinished"
-          fieldTitle="Mark this thread as finished"
-          description={`Threads are marked as ongoing by default. Check this option if ${
-            isEditAction
-              ? "you'd like to mark this thread as finished"
-              : "you're adding an already finished thread"
-          }.`}
+        <SelectWithText
+          fieldTitle="Thread status"
+          nameInSchema="status"
+          description="Thread status can also be changed from the action menu on the table."
         />
+
         <DialogFooter className="flex-col-reverse gap-4 pt-4">
           <DialogClose className="mr-auto border rounded px-4 py-2 text-sm sm:w-fit w-full bg-secondary hover:bg-accent/80 transition-colors">
             Cancel

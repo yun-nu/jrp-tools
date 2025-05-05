@@ -85,12 +85,43 @@ export async function deleteThread(
   };
 }
 
-export async function toggleThreadFinished(
+export async function toggleThreadStatus(
+  thread: ExistingThread,
+  drop: boolean
+): Promise<RequestResult> {
+  let statusToggledThread = thread;
+
+  if (drop) {
+    statusToggledThread = {
+      ...thread,
+      status: thread.status === "dropped" ? "ongoing" : "dropped",
+    };
+  } else {
+    statusToggledThread = {
+      ...thread,
+      status: thread.status === "ongoing" ? "finished" : "ongoing",
+    };
+  }
+
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from("threads")
+    .update(statusToggledThread)
+    .eq("id", thread.id);
+  if (error) throw new Error("Could not change thread status");
+
+  return {
+    success: "Thread status changed successfully",
+  };
+}
+
+export async function toggleThreadDropped(
   thread: ExistingThread
 ): Promise<RequestResult> {
   const statusToggledThread = {
     ...thread,
-    isFinished: !thread.isFinished,
+    status: thread.status === "dropped" ? "ongoing" : "dropped",
   };
 
   const supabase = createClient();
