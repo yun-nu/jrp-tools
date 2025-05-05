@@ -91,7 +91,10 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
 
         <InputWithLabel fieldTitle="Game Name" nameInSchema="gameName" />
 
-        <InputWithLabel fieldTitle="Journal" nameInSchema="journalName" />
+        <InputWithLabel
+          fieldTitle="Character Journal"
+          nameInSchema="journalName"
+        />
 
         <InputWithLabel
           fieldTitle="Journal Link"

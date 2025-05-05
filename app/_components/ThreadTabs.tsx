@@ -11,9 +11,8 @@ import {
 import { ExistingThread } from "@/app/_schemas/Thread";
 import { ExistingCharacter } from "../_schemas/Character";
 import ThreadDialog from "./ThreadDialog";
+import ThreadMenuOptions from "./ThreadMenuOptions";
 import { Separator } from "./ui/Separator";
-import { Button } from "./ui/Button";
-import { exportThreadsToCSV } from "../_utils/export";
 
 type ThreadTabsProps = {
   ongoingThreads: ExistingThread[];
@@ -36,18 +35,15 @@ export default function ThreadTabs({
 
   return (
     <div className="mt-8 flex flex-col items-center justify-center 2xl:max-w-[85%]  gap-y-8 w-full">
-      <Button
-        onClick={() =>
-          exportThreadsToCSV(
-            [...ongoingThreads, ...finishedThreads],
-            characterDisplayName
-          )
-        }
-      >
-        Export threads (CSV file)
-      </Button>
       {showTableActions && characterId && (
-        <ThreadDialog characterId={characterId} mode="add" />
+        <div className="flex w-full xs:flex-row sm:w-fit items-center gap-4">
+          <ThreadDialog characterId={characterId} mode="add" />
+          <ThreadMenuOptions
+            characterDisplayName={characterDisplayName}
+            ongoingThreads={ongoingThreads}
+            finishedThreads={finishedThreads}
+          />
+        </div>
       )}
 
       <Separator />

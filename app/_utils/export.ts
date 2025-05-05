@@ -3,36 +3,35 @@ import { ExistingThread } from "../_schemas/Thread";
 
 export function exportThreadsToCSV(
   threads: ExistingThread[],
+  status: "finished" | "ongoing",
   displayName: string
 ) {
-  // Character: ${displayName}\n
   const csvContent =
     "data:text/csv;charset=utf-8," +
-    //threads.map((row) => Object.values(row).join(",")).join("\n");
+    `Character: ${displayName} - ${
+      status === "finished" ? "Finished Threads" : "Ongoing threads"
+    }\n` +
     threads
-      .filter((row) => !row.isFinished)
+      .filter((row) => row.isFinished === (status === "finished"))
       .map((row) => {
         return `
         Date: ${String(row.date).split("T")[0]}
         Type: ${row.type}
         Blurb: ${row.blurb}
         Characters: ${row.threadPartner}
-        URL:${row.url} 
-        Used for AC: ${row.usedForAc ? "Yes" : "No"}\n`;
-      });
+        URL: ${row.url ? row.url : "N/A"} 
+        Used for AC: ${row.usedForAc ? "Yes" : "No"}\n\n`;
+      })
+      .join("");
 
   const fileName =
-    displayName + "-" + format(new Date(), "yyyy-MM-dd") + "-threads.csv";
+    displayName + `-${status}-threads-` + format(new Date(), "yyyy-MM-dd");
 
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
-  link.setAttribute("download", fileName);
+  link.setAttribute("download", fileName + ".csv");
 
-  document.body.appendChild(link); // Required for Firefox
+  document.body.appendChild(link); // Required for max cross browser compatibility
   link.click();
-
-  //console.log(csvContent);
-  console.log(encodedUri);
-  console.log(fileName);
 }
