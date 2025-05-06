@@ -12,6 +12,7 @@ export function exportThreadsToCSV(
     "data:text/csv;charset=utf-8," +
     `Character: ${displayName} - ${capitalizedStatus} threads\n` +
     threads
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .map((row) => {
         return `
         Date: ${String(row.date).split("T")[0]}
