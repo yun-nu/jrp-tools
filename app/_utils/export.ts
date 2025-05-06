@@ -18,8 +18,9 @@ export function exportThreadsToCSV(
         Type: ${row.type}
         Blurb: ${row.blurb}
         Characters: ${row.threadPartner}
-        URL: ${row.url ? row.url : "N/A"} 
+        Comments: ${row.commentCount}
         Used for AC: ${row.usedForAc ? "Yes" : "No"}
+        URL: ${row.url ? row.url : "N/A"} 
 
         ----------------------------------------------------------------\n`;
       })

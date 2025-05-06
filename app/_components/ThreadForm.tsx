@@ -105,11 +105,7 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
           placeholder="Thread partner(s)"
         />
 
-        <SelectWithText
-          fieldTitle="Thread status"
-          nameInSchema="status"
-          description="Thread status can also be changed from the action menu on the table."
-        />
+        <SelectWithText fieldTitle="Thread status" nameInSchema="status" />
 
         <DialogFooter className="flex-col-reverse gap-4 pt-4">
           <DialogClose className="mr-auto border rounded px-4 py-2 text-sm sm:w-fit w-full bg-secondary hover:bg-accent/80 transition-colors">

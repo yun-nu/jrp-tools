@@ -4,6 +4,36 @@ import { SiPlurk } from "react-icons/si";
 /* eslint-disable react/no-unescaped-entities */
 export const changelog = [
   {
+    number: "05",
+    date: "May 6th, 2025",
+    content: (
+      <>
+        <p>A small update for once!</p>
+        <ul className="mt-4 list-disc list-inside space-y-4">
+          <li>
+            <b>"Dropped" Tab:</b>
+            <p>
+              A "Dropped" tab was added to the threads menu to help distinguish
+              between dropped and finished threads. Thank you to plurk user
+              Atompunk for the suggestion!
+            </p>
+          </li>
+          <li>
+            <b>Export Option</b>
+            <p>
+              You can now export your threads in CSV format (plain text) — good
+              for light backups or personal records. The export option is
+              available in the thread tracker, and it downloads a CSV file
+              containing all threads matching the selected status (ongoing,
+              finished, or dropped).
+            </p>
+          </li>
+        </ul>
+        <p>As always, thank you for your continued support and feedback!</p>
+      </>
+    ),
+  },
+  {
     number: "04",
     date: "April 29th, 2025",
     content: (
