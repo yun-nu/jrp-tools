@@ -21,15 +21,15 @@ export const changelog = [
           <li>
             <b>Export Option</b>
             <p>
-              You can now export your threads in CSV format (plain text) — good
-              for light backups or personal records. The export option is
-              available in the thread tracker, and it downloads a CSV file
-              containing all threads matching the selected status (ongoing,
+              You can now export your threads in CSV format (plain text) —
+              designed as a lightweight backup option. The export button is
+              available in the thread tracker and will download a CSV file
+              containing all threads that match the selected status (ongoing,
               finished, or dropped).
             </p>
           </li>
         </ul>
-        <p>As always, thank you for your continued support and feedback!</p>
+        <p>As always, thanks for all the support and feedback!</p>
       </>
     ),
   },
