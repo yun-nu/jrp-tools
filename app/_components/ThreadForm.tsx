@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAddThread } from "../_hooks/threads/useAddThread";
 import { useEditThread } from "../_hooks/threads/useEditThread";
-import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import { ExistingCharacter } from "../_schemas/Character";
 import {
   ExistingThread,
@@ -15,14 +14,14 @@ import {
   newThreadSchema,
   Thread,
 } from "../_schemas/Thread";
-import CheckboxWithText from "./CheckboxWithText";
+import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 import { InputWithLabel } from "./InputWithLabel";
+import SelectWithText from "./SelectWithText";
 import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import SelectWithText from "./SelectWithText";
 
 type ThreadFormProps = {
   thread?: Thread;

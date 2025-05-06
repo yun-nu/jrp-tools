@@ -22,6 +22,12 @@ type ThreadTabsProps = {
   acLength: ExistingCharacter["acLength"];
 };
 
+const STATUS_LABELS = [
+  { value: "ongoing", label: "Ongoing" },
+  { value: "finished", label: "Finished" },
+  { value: "dropped", label: "Dropped" },
+];
+
 export default function ThreadTabs({
   threads,
   characterId,
@@ -29,15 +35,11 @@ export default function ThreadTabs({
   showTableActions,
   acLength,
 }: ThreadTabsProps) {
-  const ongoingThreads = (threads ?? []).filter(
-    (thread) => thread.status === "ongoing"
-  );
-  const finishedThreads = (threads ?? []).filter(
-    (thread) => thread.status === "finished"
-  );
-  const droppedThreads = (threads ?? []).filter(
-    (thread) => thread.status === "dropped"
-  );
+  const threadsByStatus = {
+    ongoing: threads.filter((thread) => thread.status === "ongoing"),
+    finished: threads.filter((thread) => thread.status === "finished"),
+    dropped: threads.filter((thread) => thread.status === "dropped"),
+  };
 
   const columns = threadsCols(showTableActions);
 
@@ -48,9 +50,9 @@ export default function ThreadTabs({
           <ThreadDialog characterId={characterId} mode="add" />
           <ThreadMenuOptions
             characterDisplayName={characterDisplayName}
-            ongoingThreads={ongoingThreads}
-            finishedThreads={finishedThreads}
-            droppedThreads={droppedThreads}
+            ongoingThreads={threadsByStatus.ongoing}
+            finishedThreads={threadsByStatus.finished}
+            droppedThreads={threadsByStatus.dropped}
           />
         </div>
       )}
@@ -59,40 +61,23 @@ export default function ThreadTabs({
 
       <Tabs defaultValue="ongoing" className="w-full">
         <TabsList className="grid md:max-w-[50%] m-auto grid-cols-3">
-          <TabsTrigger value="ongoing">
-            <h2>Ongoing</h2>
-          </TabsTrigger>
-          <TabsTrigger value="finished">
-            <h2>Finished</h2>
-          </TabsTrigger>
-          <TabsTrigger value="dropped">
-            <h2>Dropped</h2>
-          </TabsTrigger>
+          {STATUS_LABELS.map(({ value, label }) => (
+            <TabsTrigger key={value} value={value}>
+              <h2>{label}</h2>
+            </TabsTrigger>
+          ))}
         </TabsList>
-        <TabsContent value="ongoing">
-          <DataTable
-            columns={columns}
-            data={ongoingThreads}
-            showActions={showTableActions}
-            acLength={acLength}
-          />
-        </TabsContent>
-        <TabsContent value="finished">
-          <DataTable
-            columns={columns}
-            data={finishedThreads}
-            showActions={showTableActions}
-            acLength={acLength}
-          />
-        </TabsContent>
-        <TabsContent value="dropped">
-          <DataTable
-            columns={columns}
-            data={droppedThreads}
-            showActions={showTableActions}
-            acLength={acLength}
-          />
-        </TabsContent>
+
+        {STATUS_LABELS.map(({ value }) => (
+          <TabsContent value={value} key={value}>
+            <DataTable
+              columns={columns}
+              data={threadsByStatus[value as keyof typeof threadsByStatus]}
+              showActions={showTableActions}
+              acLength={acLength}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );

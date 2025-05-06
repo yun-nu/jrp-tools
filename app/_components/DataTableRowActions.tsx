@@ -3,7 +3,6 @@
 import {
   Copy,
   DropletOff,
-  Droplets,
   Edit,
   LinkIcon,
   MoreHorizontal,
