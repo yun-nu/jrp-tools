@@ -1,6 +1,6 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import { format, startOfDay } from "date-fns";
 import { ArrowUpDown, LinkIcon } from "lucide-react";
 import { ExistingThread } from "../_schemas/Thread";
@@ -9,6 +9,15 @@ import CommentCountActions from "./CommentCountActions";
 import DataTableRowActions from "./DataTableRowActions";
 import StyledLink from "./StyledLink";
 import { Button } from "./ui/Button";
+
+function minNumberFilter(
+  row: Row<ExistingThread>,
+  columnId: string,
+  filterValue: number
+) {
+  const value = Number(row.getValue(columnId));
+  return value >= filterValue;
+}
 
 export const threadsCols = (
   showActions: boolean
@@ -111,10 +120,7 @@ export const threadsCols = (
         </div>
       );
     },
-    filterFn: (row, columnId, filterValue) => {
-      const value = Number(row.getValue(columnId));
-      return value >= filterValue;
-    },
+    filterFn: minNumberFilter,
   },
   {
     meta: {
@@ -160,5 +166,9 @@ export const threadsCols = (
         </div>
       );
     },
+  },
+  {
+    accessorKey: "totalCommentCount",
+    filterFn: minNumberFilter,
   },
 ];

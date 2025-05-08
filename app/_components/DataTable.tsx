@@ -14,7 +14,6 @@ import {
 } from "@tanstack/react-table";
 import { CircleX } from "lucide-react";
 import { useState } from "react";
-import { DateRange } from "react-day-picker";
 import useLocalStorage from "../_hooks/useLocalStorage";
 import { ExistingCharacter } from "../_schemas/Character";
 import DataTableActivityOptions from "./DataTableActivityOptions";
@@ -55,6 +54,7 @@ export default function DataTable<TData, TValue>({
     actions: showActions,
     commentCount: showActions,
     usedForAc: showActions,
+    totalCommentCount: false,
   });
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -62,9 +62,6 @@ export default function DataTable<TData, TValue>({
     "highlightAcLength",
     false
   );
-
-  const [minComments, setMinComments] = useState(1);
-  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   const table = useReactTable({
     data,
@@ -188,10 +185,6 @@ export default function DataTable<TData, TValue>({
         {showActions && (
           <DataTableActivityOptions
             table={table}
-            dateRange={dateRange}
-            minComments={minComments}
-            setDateRange={setDateRange}
-            setMinComments={setMinComments}
             highlightAcLength={highlightAcLength}
             setHighlightAcLength={setHighlightAcLength}
           />

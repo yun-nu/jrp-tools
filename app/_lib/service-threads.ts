@@ -8,6 +8,7 @@ import {
 } from "../_schemas/Thread";
 import { RequestResult } from "../_utils/return";
 import { createClient } from "./supabase-client";
+import { da } from "date-fns/locale";
 
 export async function getThreads(
   characterId: ExistingCharacter["id"]
@@ -155,7 +156,27 @@ export async function duplicateThread(
   throw new Error("Could not duplicate thread");
 }
 
-export async function updateCommentCount(
+export async function updateCurrentCommentCount(
+  threadId: ExistingThread["id"],
+  updatedCount: ExistingThread["commentCount"]
+): Promise<RequestResult> {
+  if (updatedCount < 0) throw new Error("Comment count cannot be negative");
+
+  const supabase = createClient();
+
+  const { error } = await supabase.rpc("update_comment_counts", {
+    thread_id: threadId,
+    new_comment_count: updatedCount,
+  });
+
+  if (error) throw new Error("Could not update comment count");
+
+  return {
+    success: "Current month comment count updated successfully",
+  };
+}
+
+export async function updateTotalCommentCount(
   threadId: ExistingThread["id"],
   updatedCount: ExistingThread["commentCount"]
 ): Promise<RequestResult> {
@@ -165,13 +186,13 @@ export async function updateCommentCount(
 
   const { error } = await supabase
     .from("threads")
-    .update({ commentCount: updatedCount })
+    .update({ totalCommentCount: updatedCount })
     .eq("id", threadId);
 
   if (error) throw new Error("Could not update comment count");
 
   return {
-    success: "Comment count updated successfully",
+    success: "Total comment count updated successfully",
   };
 }
 

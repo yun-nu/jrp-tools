@@ -1,13 +1,13 @@
 "use client";
 
 import { Row } from "@tanstack/react-table";
-import { MinusCircle, PlusCircle } from "lucide-react";
-import { useState } from "react";
-import { useUpdateCommentCount } from "../_hooks/threads/useUpdateCommentCount";
+import { useEffect, useState } from "react";
+import { useUpdateCurrentCommentCount } from "../_hooks/threads/useUpdateCurrentCommentCount";
+import { useUpdateTotalCommentCount } from "../_hooks/threads/useUpdateTotalCommentCount";
 import { useNumberInput } from "../_hooks/useNumberImput";
 import { ExistingThread } from "../_schemas/Thread";
+import CounterWithButtons from "./CounterWithButtons";
 import { Button } from "./ui/Button";
-import { Input } from "./ui/Input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
 
 export default function CommentCountActions({
@@ -16,59 +16,85 @@ export default function CommentCountActions({
   row: Row<ExistingThread>;
 }) {
   const {
-    value: inputValue,
-    setValue: setInputValue,
-    number: count,
-    setNumber: setCount,
-    handleChange,
-  } = useNumberInput(row.getValue("commentCount") as number);
+    value: currentInputValue,
+    setValue: setCurrentInputValue,
+    number: currentCount,
+    setNumber: setCurrentCount,
+    handleChange: handleCurrentChange,
+  } = useNumberInput(row.getValue("commentCount"));
+
+  const {
+    value: totalInputValue,
+    setValue: setTotalInputValue,
+    number: totalCount,
+    setNumber: setTotalCount,
+    handleChange: handleTotalChange,
+  } = useNumberInput(row.getValue("totalCommentCount"));
+
   const [open, setOpen] = useState(false);
 
-  const { mutate: updateCommentCount } = useUpdateCommentCount();
+  useEffect(() => {
+    const previousTotal =
+      Number(row.getValue("totalCommentCount")) -
+      Number(row.getValue("commentCount"));
+    setTotalCount(currentCount + previousTotal);
+    setTotalInputValue(String(currentCount + previousTotal));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentCount]);
+
+  const { mutate: updateCommentCount } = useUpdateCurrentCommentCount();
+  const { mutate: updateTotalCommentCount } = useUpdateTotalCommentCount();
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
-    if (!open && count !== row.getValue("commentCount"))
+    if (!open && currentCount !== row.getValue("commentCount"))
       updateCommentCount({
         threadId: row.original.id,
-        updatedCount: count,
+        updatedCount: currentCount,
+      });
+    if (!open && totalCount !== row.original.totalCommentCount)
+      updateTotalCommentCount({
+        threadId: row.original.id,
+        updatedCount: totalCount,
       });
   };
 
   return (
     <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild className="w-12">
-        <Button variant="outline">{count}</Button>
+        <Button
+          variant="outline"
+          className="mx-auto h-fit w-20 flex flex-col gap-0.5 items-center justify-center"
+        >
+          {currentCount}
+          <span className="text-xs text-muted-foreground">
+            {" "}
+            Total: {totalCount}
+          </span>
+        </Button>
       </PopoverTrigger>
       <PopoverContent
         className="w-fit"
         onKeyDown={(e) => e.key === "Enter" && handleOpenChange(false)}
       >
         <div className="grid gap-4">
-          <div className="flex items-center gap-2">
-            <MinusCircle
-              className="h-4 cursor-pointer hover:text-primary transition-colors"
-              onClick={() => {
-                const newCount = Math.max(0, count - 1);
-                setCount(newCount);
-                setInputValue(String(newCount));
-              }}
-            />
-            <Input
-              type="number"
-              value={inputValue}
-              onChange={handleChange}
-              className="w-12 h-8 text-center"
-            />
-            <PlusCircle
-              className="h-4 cursor-pointer hover:text-primary transition-colors"
-              onClick={() => {
-                const newCount = count + 1;
-                setCount(newCount);
-                setInputValue(String(newCount));
-              }}
-            />
-          </div>
+          <CounterWithButtons
+            label="# Comments for current month"
+            value={currentCount}
+            setValue={setCurrentCount}
+            inputValue={currentInputValue}
+            setInputValue={setCurrentInputValue}
+            handleChange={handleCurrentChange}
+          />
+
+          <CounterWithButtons
+            label="# Total comments in the thread"
+            value={totalCount}
+            setValue={setTotalCount}
+            inputValue={totalInputValue}
+            setInputValue={setTotalInputValue}
+            handleChange={handleTotalChange}
+          />
         </div>
       </PopoverContent>
     </Popover>

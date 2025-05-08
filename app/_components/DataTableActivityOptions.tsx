@@ -1,42 +1,24 @@
 "use client";
 
 import { Table } from "@tanstack/react-table";
-import { CircleX } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
-import { DateRange } from "react-day-picker";
 import DataTableThreadsCalendarFilter from "./DataTableThreadsCalendarFilter";
-import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Label } from "./ui/Label";
 import { Switch } from "./ui/Switch";
 
 type DataTableActivityProps<TData> = {
   table: Table<TData>;
-  minComments: number;
-  setMinComments: Dispatch<SetStateAction<number>>;
-  dateRange: DateRange | undefined;
-  setDateRange: Dispatch<SetStateAction<DateRange | undefined>>;
   highlightAcLength: boolean;
   setHighlightAcLength: (newValue: boolean) => void;
 };
 
 export default function DataTableActivityOptions<TData>({
   table,
-  minComments,
-  setMinComments,
-  dateRange,
-  setDateRange,
   highlightAcLength,
   setHighlightAcLength,
 }: DataTableActivityProps<TData>) {
   return (
     <div className="flex flex-col gap-6 items-center sm:items-start">
-      <DataTableThreadsCalendarFilter
-        table={table}
-        minComments={minComments}
-        setMinComments={setMinComments}
-        dateRange={dateRange}
-        setDateRange={setDateRange}
-      />
+      <DataTableThreadsCalendarFilter table={table} />
 
       <div className="flex items-center space-x-2">
         <Switch

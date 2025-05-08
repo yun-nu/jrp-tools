@@ -3,38 +3,39 @@
 import { Table } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { CalendarIcon, CircleX } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useNumberInput } from "../_hooks/useNumberImput";
+import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
 import { Calendar } from "./ui/Calendar";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
-import { TooltipWrapperButton } from "./TooltipWrappers";
-
-type DataThreadCalendarFilterProps<TData> = {
-  table: Table<TData>;
-  minComments: number;
-  setMinComments: Dispatch<SetStateAction<number>>;
-  dateRange: DateRange | undefined;
-  setDateRange: Dispatch<SetStateAction<DateRange | undefined>>;
-};
 
 export default function DataTableThreadsCalendarFilter<TData>({
   table,
-  minComments,
-  setMinComments,
-  dateRange,
-  setDateRange,
-}: DataThreadCalendarFilterProps<TData>) {
+}: {
+  table: Table<TData>;
+}) {
   const [open, setOpen] = useState(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+
   const {
-    value: inputValue,
-    setValue: setInputValue,
-    number: count,
-    handleChange,
-  } = useNumberInput(minComments);
+    value: currentInputValue,
+    setValue: setCurrentInputValue,
+    number: currentCount,
+    setNumber: setCurrentCount,
+    handleChange: handleCurrentChange,
+  } = useNumberInput(undefined);
+
+  const {
+    value: totalInputValue,
+    setValue: setTotalInputValue,
+    number: totalCount,
+    setNumber: setTotalCount,
+    handleChange: handleTotalChange,
+  } = useNumberInput(undefined);
 
   const now = new Date();
   const initialSelectedState = {
@@ -49,12 +50,24 @@ export default function DataTableThreadsCalendarFilter<TData>({
   const handleDateRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);
 
-    if (inputValue === "") {
-      setMinComments(0);
+    if (currentInputValue === "" || totalInputValue === "") {
+      setCurrentCount(0);
+      setTotalCount(0);
       table.getColumn("commentCount")?.setFilterValue(undefined);
+      table.getColumn("totalCommentCount")?.setFilterValue(undefined);
     } else {
-      setMinComments(count);
-      table.getColumn("commentCount")?.setFilterValue(count);
+      setCurrentCount(currentCount);
+      // if (
+      //   range?.from?.getMonth() !== now.getMonth() ||
+      //   range?.to?.getMonth() !== now.getMonth()
+      // )
+
+      table.getColumn("commentCount")?.setFilterValue(currentCount);
+      table.getColumn("totalCommentCount")?.setFilterValue(totalCount);
+      // else {
+      // table.getColumn("commentCount")?.setFilterValue(currentCount);
+      // table.getColumn("totalCommentCount")?.setFilterValue(totalCount);
+      //}
     }
 
     if (range?.from && range?.to) {
@@ -68,6 +81,18 @@ export default function DataTableThreadsCalendarFilter<TData>({
     }
 
     setOpen(false);
+  };
+
+  const resetFilters = () => {
+    setDateRange(undefined);
+    setSelectedRange(initialSelectedState);
+    setCurrentInputValue("");
+    setCurrentCount(0);
+    setTotalInputValue("");
+    setTotalCount(0);
+    table.getColumn("commentCount")?.setFilterValue(undefined);
+    table.getColumn("totalCommentCount")?.setFilterValue(undefined);
+    table.getColumn("date")?.setFilterValue(undefined);
   };
 
   return (
@@ -103,8 +128,21 @@ export default function DataTableThreadsCalendarFilter<TData>({
             <Input
               id="min-comments"
               type="number"
-              value={inputValue}
-              onChange={handleChange}
+              value={currentInputValue}
+              onChange={handleCurrentChange}
+              className="w-16 h-8 text-center"
+              onKeyDown={(e) =>
+                e.key === "Enter" && handleDateRangeChange(selectedRange)
+              }
+            />
+          </div>
+          <div className="flex items-center justify-between gap-2">
+            <Label htmlFor="min-comments">Minimum # total comments: </Label>
+            <Input
+              id="min-comments"
+              type="number"
+              value={totalInputValue}
+              onChange={handleTotalChange}
               className="w-16 h-8 text-center"
               onKeyDown={(e) =>
                 e.key === "Enter" && handleDateRangeChange(selectedRange)
@@ -130,11 +168,7 @@ export default function DataTableThreadsCalendarFilter<TData>({
       <TooltipWrapperButton
         icon={CircleX}
         onClick={() => {
-          setDateRange(undefined);
-          setSelectedRange(initialSelectedState);
-          setInputValue("1");
-          table.getColumn("commentCount")?.setFilterValue(undefined);
-          table.getColumn("date")?.setFilterValue(undefined);
+          resetFilters();
         }}
         text="Reset activity range search"
       ></TooltipWrapperButton>

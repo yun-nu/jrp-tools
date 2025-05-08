@@ -37,6 +37,13 @@ const baseThreadSchema = z.object({
     .max(9999)
     .nonnegative()
     .default(0),
+  totalCommentCount: z.coerce
+    .number({ invalid_type_error: "Must be a valid number" })
+    .int()
+    .min(0)
+    .max(9999)
+    .nonnegative()
+    .default(0),
   threadPartner: z
     .string()
     .max(100, {
