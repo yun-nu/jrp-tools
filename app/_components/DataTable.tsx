@@ -63,6 +63,8 @@ export default function DataTable<TData, TValue>({
     false
   );
 
+  const [highlightIndices, setHighlightIndices] = useState<number[]>([]);
+
   const table = useReactTable({
     data,
     columns,
@@ -142,15 +144,15 @@ export default function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, i) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={
                     acLength &&
                     showActions &&
-                    parseInt(row.getValue("commentCount")) >= acLength &&
-                    highlightAcLength
+                    highlightAcLength &&
+                    highlightIndices?.includes(i)
                       ? "bg-green-700/30"
                       : ""
                   }
@@ -185,8 +187,10 @@ export default function DataTable<TData, TValue>({
         {showActions && (
           <DataTableActivityOptions
             table={table}
+            acLength={acLength}
             highlightAcLength={highlightAcLength}
             setHighlightAcLength={setHighlightAcLength}
+            setHighlightIndices={setHighlightIndices}
           />
         )}
 

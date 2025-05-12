@@ -57,17 +57,8 @@ export default function DataTableThreadsCalendarFilter<TData>({
       table.getColumn("totalCommentCount")?.setFilterValue(undefined);
     } else {
       setCurrentCount(currentCount);
-      // if (
-      //   range?.from?.getMonth() !== now.getMonth() ||
-      //   range?.to?.getMonth() !== now.getMonth()
-      // )
-
       table.getColumn("commentCount")?.setFilterValue(currentCount);
       table.getColumn("totalCommentCount")?.setFilterValue(totalCount);
-      // else {
-      // table.getColumn("commentCount")?.setFilterValue(currentCount);
-      // table.getColumn("totalCommentCount")?.setFilterValue(totalCount);
-      //}
     }
 
     if (range?.from && range?.to) {
@@ -87,9 +78,9 @@ export default function DataTableThreadsCalendarFilter<TData>({
     setDateRange(undefined);
     setSelectedRange(initialSelectedState);
     setCurrentInputValue("");
-    setCurrentCount(0);
+    setCurrentCount(undefined);
     setTotalInputValue("");
-    setTotalCount(0);
+    setTotalCount(undefined);
     table.getColumn("commentCount")?.setFilterValue(undefined);
     table.getColumn("totalCommentCount")?.setFilterValue(undefined);
     table.getColumn("date")?.setFilterValue(undefined);
