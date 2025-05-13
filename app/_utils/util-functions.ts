@@ -5,7 +5,6 @@ export function findAllSubsetsWithItemRange(
   maxItems: number
 ): number[][] {
   const results: number[][] = [];
-
   function dfs(i: number, total: number, count: number, path: number[]) {
     if (target === null) return [];
 

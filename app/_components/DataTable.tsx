@@ -35,6 +35,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   showActions?: boolean;
   acLength: ExistingCharacter["acLength"];
+  minThreadsAc?: ExistingCharacter["minThreadsAc"];
+  maxThreadsAc?: ExistingCharacter["maxThreadsAc"];
 }
 
 export default function DataTable<TData, TValue>({

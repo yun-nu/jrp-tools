@@ -81,6 +81,32 @@ const baseCharacterSchema = z.object({
       { message: "Must be a number between 1 and 300" }
     )
     .nullable(),
+  minThreadsAc: z
+    .union([
+      z
+        .string()
+        .trim()
+        .transform((val) => (val === "" ? null : Number(val))),
+      z.number(),
+    ])
+    .refine(
+      (val) => val === null || (Number.isInteger(val) && val >= 1 && val <= 10),
+      { message: "Must be a number between 1 and 10" }
+    )
+    .nullable(),
+  maxThreadsAc: z
+    .union([
+      z
+        .string()
+        .trim()
+        .transform((val) => (val === "" ? null : Number(val))),
+      z.number(),
+    ])
+    .refine(
+      (val) => val === null || (Number.isInteger(val) && val >= 1 && val <= 10),
+      { message: "Must be a number between 1 and 10" }
+    )
+    .nullable(),
 });
 
 export const newCharacterSchema = baseCharacterSchema.extend({

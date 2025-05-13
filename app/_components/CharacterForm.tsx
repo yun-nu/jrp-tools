@@ -20,6 +20,7 @@ import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
+import { ACLengthInput } from "./ACLengthInput";
 
 type CharacterFormProps = {
   setOpen: (open: boolean) => void;
@@ -49,6 +50,8 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
       isPublic: false,
       isActive: true,
       acLength: null,
+      minThreadsAc: null,
+      maxThreadsAc: null,
     },
   });
 
@@ -108,11 +111,19 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
           description="Must start with http:// or https://"
         />
 
-        <InputWithLabel
+        {/* <InputWithLabel
           fieldTitle="AC Length"
           nameInSchema="acLength"
           description="If provided, threads will be automatically be marked as AC length when the comment count is reached."
           type="number"
+          className="max-w-14"
+        /> */}
+
+        <ACLengthInput
+          fieldTitle="AC Length"
+          acInSchema="acLength"
+          minThreadsAc="minThreadsAc"
+          maxThreadsAc="maxThreadsAc"
         />
 
         <CheckboxWithText

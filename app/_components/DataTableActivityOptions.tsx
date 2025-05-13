@@ -3,22 +3,23 @@
 import { Table } from "@tanstack/react-table";
 import { ExistingCharacter } from "../_schemas/Character";
 import DataTableThreadsCalendarFilter from "./DataTableThreadsCalendarFilter";
-import SubsetHighlighter from "./SubsetHighlighter";
+import HighlighterOptions from "./HighlighterOptions";
 import { Label } from "./ui/Label";
 import { Switch } from "./ui/Switch";
+import { useCharacter } from "../_providers/CharacterProvider";
 
 type DataTableActivityProps<TData> = {
   table: Table<TData>;
-  acLength: ExistingCharacter["acLength"];
   highlightAcLength: boolean;
   setHighlightAcLength: (newValue: boolean) => void;
   setHighlightIndices: (indices: number[]) => void;
+  acLength: ExistingCharacter["acLength"];
 };
 
 export default function DataTableActivityOptions<TData>({
+  acLength,
   table,
   highlightAcLength,
-  acLength,
   setHighlightAcLength,
   setHighlightIndices,
 }: DataTableActivityProps<TData>) {
@@ -48,15 +49,7 @@ export default function DataTableActivityOptions<TData>({
             </Label>
           </div>
 
-          {/* /// FIX: temporary values for min/max */}
-
-          <SubsetHighlighter
-            nums={nums}
-            acLength={acLength}
-            minItems={1}
-            maxItems={3}
-            onChange={setHighlightIndices}
-          />
+          <HighlighterOptions nums={nums} onChange={setHighlightIndices} />
         </div>
       )}
     </div>

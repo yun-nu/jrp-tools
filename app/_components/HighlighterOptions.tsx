@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ExistingCharacter } from "../_schemas/Character";
+import { useCharacter } from "../_providers/CharacterProvider";
 import {
   findAllSubsetsWithItemRange,
   pickSubsetByFewestItemsAndMinimalSum,
@@ -8,19 +8,19 @@ import { Button } from "./ui/Button";
 
 interface SubsetHighlighterProps {
   nums: number[];
-  acLength: ExistingCharacter["acLength"];
-  minItems: number;
-  maxItems: number;
   onChange: (indices: number[]) => void;
 }
 
-export default function SubsetHighlighter({
+export default function HighlighterOptions({
   nums,
-  acLength,
-  minItems,
-  maxItems,
   onChange,
 }: SubsetHighlighterProps) {
+  const {
+    acLength,
+    minThreadsAc: minItems,
+    maxThreadsAc: maxItems,
+  } = useCharacter();
+
   const [subsetMode, setSubsetMode] = useState<"smallest" | "acLength">(
     "smallest"
   );

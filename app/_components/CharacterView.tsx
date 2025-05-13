@@ -1,6 +1,7 @@
 "use client";
 
 import { useThreads } from "../_hooks/threads/useThreads";
+import { CharacterProvider } from "../_providers/CharacterProvider";
 import { ExistingCharacter } from "../_schemas/Character";
 import CharacterHeader from "./CharacterHeader";
 import LoadingDots from "./LoadingDots";
@@ -28,13 +29,13 @@ export default function CharacterView({
     <section className="w-full h-full flex flex-col items-center">
       <CharacterHeader character={character} isPublicPage={isPublicPage} />
 
-      <ThreadTabs
-        threads={threads}
+      <CharacterProvider
+        character={character}
+        isPublicPage={isPublicPage}
         showTableActions={showTableActions}
-        characterDisplayName={character.displayName}
-        characterId={character.id}
-        acLength={character.acLength}
-      />
+      >
+        <ThreadTabs threads={threads} showTableActions={showTableActions} />
+      </CharacterProvider>
     </section>
   );
 }

@@ -9,17 +9,14 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import { ExistingThread } from "@/app/_schemas/Thread";
-import { ExistingCharacter } from "../_schemas/Character";
+import { useCharacter } from "../_providers/CharacterProvider";
 import ThreadDialog from "./ThreadDialog";
 import ThreadMenuOptions from "./ThreadMenuOptions";
 import { Separator } from "./ui/Separator";
 
 type ThreadTabsProps = {
   threads: ExistingThread[];
-  characterId?: ExistingCharacter["id"];
-  characterDisplayName: ExistingCharacter["displayName"];
   showTableActions: boolean;
-  acLength: ExistingCharacter["acLength"];
 };
 
 const STATUS_LABELS = [
@@ -31,11 +28,14 @@ const STATUS_LABELS = [
 
 export default function ThreadTabs({
   threads,
-  characterId,
-  characterDisplayName,
   showTableActions,
-  acLength,
 }: ThreadTabsProps) {
+  const {
+    id: characterId,
+    displayName: characterDisplayName,
+    acLength,
+  } = useCharacter();
+
   const threadsByStatus = {
     ongoing: threads.filter((thread) => thread.status === "ongoing"),
     finished: threads.filter((thread) => thread.status === "finished"),

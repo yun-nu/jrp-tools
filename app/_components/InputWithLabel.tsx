@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
+import { cn } from "../_utils/cn-utils";
 import {
   FormControl,
   FormDescription,
@@ -17,6 +18,7 @@ type Props = {
   description?: string;
   placeholder?: string;
   type?: "text" | "number";
+  className?: string;
 };
 
 export function InputWithLabel({
@@ -25,6 +27,7 @@ export function InputWithLabel({
   description,
   placeholder,
   type = "text",
+  className,
 }: Props) {
   const form = useFormContext();
 
@@ -42,7 +45,12 @@ export function InputWithLabel({
           ) : null}
 
           <div className="flex items-center gap-2 w-full max-w-xs">
-            <div className="w-full max-w-xs flex items-center rounded-md border">
+            <div
+              className={cn(
+                "w-full max-w-xs flex items-center rounded-md border",
+                className
+              )}
+            >
               <FormControl>
                 <Input
                   {...field}
