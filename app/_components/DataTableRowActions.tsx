@@ -46,7 +46,8 @@ export default function DataTableRowActions({
 
   const statusActions = [
     {
-      show: (status: ExistingThread["status"]) => status !== "dropped",
+      show: (status: ExistingThread["status"]) =>
+        status !== "dropped" && status !== "ooc",
       drop: false,
       getIcon: (status: ExistingThread["status"]) =>
         status === "ongoing" ? SquareCheckBig : SquarePlay,
@@ -54,7 +55,8 @@ export default function DataTableRowActions({
         `Mark as ${status === "ongoing" ? "finished" : "ongoing"}`,
     },
     {
-      show: (status: ExistingThread["status"]) => status !== "finished",
+      show: (status: ExistingThread["status"]) =>
+        status !== "finished" && status !== "ooc",
       drop: true,
       getIcon: (status: ExistingThread["status"]) =>
         status === "ongoing" ? DropletOff : SquarePlay,

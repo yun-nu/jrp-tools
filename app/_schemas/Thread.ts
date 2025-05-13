@@ -51,7 +51,7 @@ const baseThreadSchema = z.object({
     })
     .optional(),
   usedForAc: z.boolean().default(false),
-  status: z.enum(["ongoing", "finished", "dropped"]).default("ongoing"),
+  status: z.enum(["ongoing", "finished", "dropped", "ooc"]).default("ongoing"),
 });
 
 export const newThreadSchema = baseThreadSchema.extend({

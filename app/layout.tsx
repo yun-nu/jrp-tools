@@ -42,7 +42,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.className} antialiased h-screen`}
+        className={`${inter.className} antialiased h-dvh`}
         suppressHydrationWarning
       >
         <QueryProvider>

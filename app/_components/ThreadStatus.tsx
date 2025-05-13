@@ -20,7 +20,7 @@ type Props = {
   description?: string;
 };
 
-export default function SelectWithText({
+export default function ThreadStatus({
   fieldTitle,
   nameInSchema,
   description,
@@ -44,6 +44,7 @@ export default function SelectWithText({
               <SelectItem value="ongoing">Ongoing</SelectItem>
               <SelectItem value="finished">Finished</SelectItem>
               <SelectItem value="dropped">Dropped</SelectItem>
+              <SelectItem value="ooc">OOC</SelectItem>
             </SelectContent>
           </Select>
           <div className="space-y-1 leading-none">
