@@ -12,11 +12,12 @@ import { Calendar } from "./ui/Calendar";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
+import { ExistingThread } from "../_schemas/Thread";
 
-export default function DataTableThreadsCalendarFilter<TData>({
+export default function DataTableThreadsCalendarFilter({
   table,
 }: {
-  table: Table<TData>;
+  table: Table<ExistingThread>;
 }) {
   const [open, setOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -51,8 +52,8 @@ export default function DataTableThreadsCalendarFilter<TData>({
     setDateRange(range);
 
     if (currentInputValue === "" || totalInputValue === "") {
-      setCurrentCount(0);
-      setTotalCount(0);
+      setCurrentCount(undefined);
+      setTotalCount(undefined);
       table.getColumn("commentCount")?.setFilterValue(undefined);
       table.getColumn("totalCommentCount")?.setFilterValue(undefined);
     } else {
@@ -87,7 +88,7 @@ export default function DataTableThreadsCalendarFilter<TData>({
   };
 
   return (
-    <div className="w-full flex items-center justify-between gap-2 sm:gap-4">
+    <div className="w-full flex items-center gap-2 sm:gap-4">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

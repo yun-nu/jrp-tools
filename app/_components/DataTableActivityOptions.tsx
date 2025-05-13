@@ -2,32 +2,33 @@
 
 import { Table } from "@tanstack/react-table";
 import { ExistingCharacter } from "../_schemas/Character";
+import { ExistingThread } from "../_schemas/Thread";
 import DataTableThreadsCalendarFilter from "./DataTableThreadsCalendarFilter";
 import HighlighterOptions from "./HighlighterOptions";
 import { Label } from "./ui/Label";
 import { Switch } from "./ui/Switch";
 
-type DataTableActivityProps<TData> = {
-  table: Table<TData>;
+type DataTableActivityProps = {
+  table: Table<ExistingThread>;
   highlightAcLength: boolean;
   setHighlightAcLength: (newValue: boolean) => void;
   setHighlightIndices: (indices: number[]) => void;
   acLength: ExistingCharacter["acLength"];
 };
 
-export default function DataTableActivityOptions<TData>({
+export default function DataTableActivityOptions({
   acLength,
   table,
   highlightAcLength,
   setHighlightAcLength,
   setHighlightIndices,
-}: DataTableActivityProps<TData>) {
+}: DataTableActivityProps) {
   return (
-    <div className="flex flex-col gap-6 items-center sm:items-start">
+    <div className="flex flex-col gap-6 items-center sm:items-start w-full">
       <DataTableThreadsCalendarFilter table={table} />
 
       {acLength && (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col gap-4 p-4 border border-input rounded-md">
           <div className="flex items-center gap-2">
             <Switch
               className="h-4 w-9"

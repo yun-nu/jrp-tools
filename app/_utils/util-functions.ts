@@ -1,19 +1,31 @@
-export function findAllSubsetsWithItemRange(
-  nums: number[],
+import { ExistingThread } from "../_schemas/Thread";
+
+export function findThreadSubsetsByCommentRange(
+  threads: ExistingThread[],
   target: number | null,
   minItems: number,
   maxItems: number
-): number[][] {
-  const results: number[][] = [];
-  function dfs(i: number, total: number, count: number, path: number[]) {
-    if (target === null) return [];
+): ExistingThread[][] {
+  const results: ExistingThread[][] = [];
+
+  function dfs(
+    i: number,
+    total: number,
+    count: number,
+    path: ExistingThread[]
+  ) {
+    if (target === null) return;
 
     if (total >= target && count >= minItems && count <= maxItems) {
       results.push([...path]);
-      // Don't return here; keep searching for more
     }
-    if (i >= nums.length || count > maxItems) return;
-    dfs(i + 1, total + nums[i], count + 1, [...path, i]);
+
+    if (i >= threads.length || count > maxItems) return;
+
+    dfs(i + 1, total + threads[i].commentCount, count + 1, [
+      ...path,
+      threads[i],
+    ]);
     dfs(i + 1, total, count, path);
   }
 
@@ -21,20 +33,41 @@ export function findAllSubsetsWithItemRange(
   return results;
 }
 
-export function pickSubsetByFewestItemsAndMinimalSum(
-  nums: number[],
-  subsets: number[][]
-): number[] | null {
+export function pickBestThreadSubsetByFewestItemsAndCommentSum(
+  subsets: ExistingThread[][],
+  tiebreaker: "oldest" | "newest" = "oldest"
+): ExistingThread[] | null {
   if (subsets.length === 0) return null;
-  // Step 1: Find the minimum length among all subsets
+
   const minLength = Math.min(...subsets.map((s) => s.length));
-  // Step 2: Filter to only those with the minimum length
   const smallestSubsets = subsets.filter((s) => s.length === minLength);
-  // Step 3: Among those, pick the one with the minimal sum
-  return smallestSubsets.reduce((a, b) =>
-    b.reduce((sum, idx) => sum + nums[idx], 0) <
-    a.reduce((sum, idx) => sum + nums[idx], 0)
-      ? b
-      : a
+
+  const minSum = Math.min(...smallestSubsets.map(sumCommentCount));
+  const bestSumSubsets = smallestSubsets.filter(
+    (s) => sumCommentCount(s) === minSum
+  );
+
+  // Tiebreaker:
+  return bestSumSubsets.reduce((a, b) => {
+    const dateA = oldestDate(a);
+    const dateB = oldestDate(b);
+    return tiebreaker === "oldest"
+      ? dateA < dateB
+        ? a
+        : b
+      : dateA > dateB
+      ? a
+      : b;
+  });
+}
+
+function sumCommentCount(threads: ExistingThread[]): number {
+  return threads.reduce((sum, t) => sum + t.commentCount, 0);
+}
+
+function oldestDate(threads: ExistingThread[]): Date {
+  return threads.reduce(
+    (oldest, t) => (t.date < oldest ? t.date : oldest),
+    threads[0]?.date ?? new Date()
   );
 }

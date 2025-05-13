@@ -1,29 +1,30 @@
 import { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { useCharacter } from "../_providers/CharacterProvider";
+import { ExistingThread } from "../_schemas/Thread";
 import {
-  findAllSubsetsWithItemRange,
-  pickSubsetByFewestItemsAndMinimalSum,
+  findThreadSubsetsByCommentRange,
+  pickBestThreadSubsetByFewestItemsAndCommentSum,
 } from "../_utils/util-functions";
 import { Button } from "./ui/Button";
 
-interface SubsetHighlighterProps<TData> {
-  table: Table<TData>;
+interface SubsetHighlighterProps {
+  table: Table<ExistingThread>;
   onChange: (indices: number[]) => void;
 }
 
-export default function HighlighterOptions<TData>({
+export default function HighlighterOptions({
   table,
   onChange,
-}: SubsetHighlighterProps<TData>) {
+}: SubsetHighlighterProps) {
   const { acLength, minThreadsAc: min, maxThreadsAc: max } = useCharacter();
 
   const minThreadsAc = min ?? 1;
   const maxThreadsAc = max ?? 1;
 
-  const [subsetMode, setSubsetMode] = useState<"smallest" | "acLength">(
-    "smallest"
-  );
+  const [subsetMode, setSubsetMode] = useState<
+    "oldest" | "newest" | "acLength"
+  >("oldest");
 
   const tableRowsSnapshot = JSON.stringify(
     table.getRowModel().rows.map((row) => ({
@@ -35,60 +36,71 @@ export default function HighlighterOptions<TData>({
   useEffect(() => {
     const notUsedForAc = table
       .getRowModel()
-      .rows.map((row, i) => ({ row, i }))
-      .filter(({ row }) => !row.getValue("usedForAc"));
+      .rows.map((row, i) => ({
+        thread: row.original,
+        i,
+      }))
+      .filter(({ thread }) => !thread.usedForAc);
 
+    const threads = notUsedForAc.map(({ thread }) => thread);
     const indexMap = notUsedForAc.map(({ i }) => i);
-    const nums = notUsedForAc.map(({ row }) =>
-      row.getValue("commentCount")
-    ) as number[];
 
-    if (!nums.length || acLength == null) {
+    if (!threads.length || acLength == null) {
       onChange([]);
       return;
     }
 
-    const allSubsets = findAllSubsetsWithItemRange(
-      nums,
+    const allSubsets = findThreadSubsetsByCommentRange(
+      threads as ExistingThread[],
       acLength,
       minThreadsAc,
       maxThreadsAc
     );
 
-    let pickedSubset: number[] = [];
-    if (subsetMode === "smallest") {
+    let pickedSubset: typeof threads = [];
+    if (subsetMode === "oldest") {
       pickedSubset =
-        pickSubsetByFewestItemsAndMinimalSum(nums, allSubsets) ?? [];
-    } else if (subsetMode === "acLength") {
-      if (acLength !== null) {
-        pickedSubset = nums
-          .map((value, idx) => (value >= acLength ? idx : null))
-          .filter((idx): idx is number => idx !== null);
-      } else {
-        pickedSubset = [];
-      }
+        pickBestThreadSubsetByFewestItemsAndCommentSum(allSubsets) ?? [];
+    }
+    if (subsetMode === "newest") {
+      pickedSubset =
+        pickBestThreadSubsetByFewestItemsAndCommentSum(allSubsets, "newest") ??
+        [];
+    }
+    if (subsetMode === "acLength") {
+      pickedSubset = threads.filter((t) => t.commentCount >= acLength);
     }
 
-    const highlightIndices = pickedSubset.map((i) => indexMap[i]);
+    const highlightIndices = pickedSubset
+      .map((thread) => threads.findIndex((t) => t.id === thread.id))
+      .map((i) => indexMap[i]);
+
     onChange(highlightIndices);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tableRowsSnapshot, subsetMode]);
 
   return (
-    <div className="flex justify-between gap-4">
+    <div className="flex gap-4">
       <Button
-        variant={subsetMode === "smallest" ? "default" : "outline"}
+        variant={subsetMode === "oldest" ? "default" : "outline"}
         size="sm"
-        onClick={() => setSubsetMode("smallest")}
+        onClick={() => setSubsetMode("oldest")}
       >
-        Smallest sum
+        Oldest
+      </Button>
+      <Button
+        variant={subsetMode === "newest" ? "default" : "outline"}
+        size="sm"
+        onClick={() => setSubsetMode("newest")}
+      >
+        Newest
       </Button>
       <Button
         variant={subsetMode === "acLength" ? "default" : "outline"}
         size="sm"
         onClick={() => setSubsetMode("acLength")}
       >
-        AC Length
+        {acLength} comments
       </Button>
     </div>
   );

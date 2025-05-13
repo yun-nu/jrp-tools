@@ -73,18 +73,13 @@ export default function CharacterInfo({
             </div>
           )}
 
-          {!isPublicPage && (
-            <div className="flex-col sm:flex-row flex justify-between gap-2">
-              {acLink && (
-                <a
-                  href={acLink ? acLink : "#"}
-                  className="flex items-center gap-2 underline underline-offset-4"
-                >
-                  <LuGoal /> AC page
-                </a>
-              )}
-              {acLength && <span>AC Length: {acLength} comments</span>}
-            </div>
+          {!isPublicPage && acLink && (
+            <a
+              href={acLink ? acLink : "#"}
+              className="flex items-center gap-2 underline underline-offset-4"
+            >
+              <LuGoal /> AC page
+            </a>
           )}
         </div>
       </div>

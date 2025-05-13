@@ -16,6 +16,7 @@ import { CircleX } from "lucide-react";
 import { useState } from "react";
 import useLocalStorage from "../_hooks/useLocalStorage";
 import { ExistingCharacter } from "../_schemas/Character";
+import { ExistingThread } from "../_schemas/Thread";
 import DataTableActivityOptions from "./DataTableActivityOptions";
 import DataTableViewOptions from "./DataTableViewOptions";
 import { TooltipWrapperButton } from "./TooltipWrappers";
@@ -31,7 +32,7 @@ import {
 } from "./ui/Table";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+  columns: ColumnDef<ExistingThread, TValue>[];
   data: TData[];
   showActions?: boolean;
   acLength: ExistingCharacter["acLength"];
@@ -39,12 +40,12 @@ interface DataTableProps<TData, TValue> {
   maxThreadsAc?: ExistingCharacter["maxThreadsAc"];
 }
 
-export default function DataTable<TData, TValue>({
+export default function DataTable({
   columns,
   data,
   showActions = false,
   acLength,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<ExistingThread, any>) {
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "date",
