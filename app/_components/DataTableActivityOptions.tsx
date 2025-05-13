@@ -6,7 +6,6 @@ import DataTableThreadsCalendarFilter from "./DataTableThreadsCalendarFilter";
 import HighlighterOptions from "./HighlighterOptions";
 import { Label } from "./ui/Label";
 import { Switch } from "./ui/Switch";
-import { useCharacter } from "../_providers/CharacterProvider";
 
 type DataTableActivityProps<TData> = {
   table: Table<TData>;
@@ -23,10 +22,6 @@ export default function DataTableActivityOptions<TData>({
   setHighlightAcLength,
   setHighlightIndices,
 }: DataTableActivityProps<TData>) {
-  const nums = table
-    .getRowModel()
-    .rows.map((row) => row.getValue("commentCount")) as number[];
-
   return (
     <div className="flex flex-col gap-6 items-center sm:items-start">
       <DataTableThreadsCalendarFilter table={table} />
@@ -49,7 +44,7 @@ export default function DataTableActivityOptions<TData>({
             </Label>
           </div>
 
-          <HighlighterOptions nums={nums} onChange={setHighlightIndices} />
+          <HighlighterOptions table={table} onChange={setHighlightIndices} />
         </div>
       )}
     </div>
