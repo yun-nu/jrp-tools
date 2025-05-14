@@ -1,5 +1,6 @@
 import { Table } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useLocalStorage from "../_hooks/useLocalStorage";
 import { useCharacter } from "../_providers/CharacterProvider";
 import { ExistingThread } from "../_schemas/Thread";
 import {
@@ -22,15 +23,21 @@ export default function HighlighterOptions({
   const minThreadsAc = min ?? 1;
   const maxThreadsAc = max ?? 1;
 
-  const [subsetMode, setSubsetMode] = useState<
+  const [subsetMode, setSubsetMode] = useLocalStorage<
     "oldest" | "newest" | "acLength"
-  >("oldest");
+  >("subsetMode", "oldest");
+
+  const hasUsedForAcColumn = table
+    .getAllColumns()
+    .some((col) => col.id === "usedForAc");
 
   const tableRowsSnapshot = JSON.stringify(
-    table.getRowModel().rows.map((row) => ({
-      commentCount: row.getValue("commentCount"),
-      usedForAc: row.getValue("usedForAc"),
-    }))
+    table.getRowModel().rows.map((row) => {
+      const commentCount = row.getValue("commentCount");
+
+      if (!hasUsedForAcColumn) return { commentCount };
+      return { commentCount, usedForAc: row.getValue("usedForAc") };
+    })
   );
 
   useEffect(() => {

@@ -11,9 +11,10 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
+import { ExistingThread } from "../_schemas/Thread";
 
-type DataTableViewOptionsProps<TData> = {
-  table: Table<TData>;
+type DataTableViewOptionsProps = {
+  table: Table<ExistingThread>;
 };
 
 type CustomColumnMeta = {
@@ -28,9 +29,9 @@ declare module "@tanstack/table-core" {
   > extends CustomColumnMeta {}
 }
 
-export default function DataTableViewOptions<TData>({
+export default function DataTableViewOptions({
   table,
-}: DataTableViewOptionsProps<TData>) {
+}: DataTableViewOptionsProps) {
   const tableColumns = table
     .getAllColumns()
     .filter((column) => column.columnDef.meta?.showColumn);

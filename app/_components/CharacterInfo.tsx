@@ -24,7 +24,6 @@ export default function CharacterInfo({
     journalLink,
     isPublic,
     icon,
-    acLength,
   } = character || {};
 
   return (
