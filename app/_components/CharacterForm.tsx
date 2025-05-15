@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useAddCharacter } from "../_hooks/characters/useAddCharacter";
 import { useEditCharacter } from "../_hooks/characters/useEditCharacter";
-import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import {
   Character,
   ExistingCharacter,
@@ -13,14 +12,15 @@ import {
   NewCharacter,
   newCharacterSchema,
 } from "../_schemas/Character";
+import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 
+import { ACLengthInput } from "./ACLengthInput";
 import CheckboxWithText from "./CheckboxWithText";
 import { InputWithLabel } from "./InputWithLabel";
 import TextareaWithLabel from "./TextareaWithLabel";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
-import { ACLengthInput } from "./ACLengthInput";
 
 type CharacterFormProps = {
   setOpen: (open: boolean) => void;
@@ -39,19 +39,7 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
   const form = useForm<Omit<NewCharacter, "userId">>({
     resolver: zodResolver(characterSchema.omit({ userId: true })),
     defaultValues: character ?? {
-      displayName: "",
-      characterName: "",
       blurb: "",
-      acLink: "",
-      gameName: "",
-      journalLink: "",
-      journalName: "",
-      icon: "",
-      isPublic: false,
-      isActive: true,
-      acLength: null,
-      minThreadsAc: null,
-      maxThreadsAc: null,
     },
   });
 
@@ -110,14 +98,6 @@ export function CharacterForm({ setOpen, character }: CharacterFormProps) {
           nameInSchema="acLink"
           description="Must start with http:// or https://"
         />
-
-        {/* <InputWithLabel
-          fieldTitle="AC Length"
-          nameInSchema="acLength"
-          description="If provided, threads will be automatically be marked as AC length when the comment count is reached."
-          type="number"
-          className="max-w-14"
-        /> */}
 
         <ACLengthInput
           fieldTitle="AC Length"

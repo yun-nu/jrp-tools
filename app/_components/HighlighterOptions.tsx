@@ -28,19 +28,6 @@ export default function HighlighterOptions({
   >("subsetMode", "oldest");
 
   // Check if the table has the usedForAc column (guard against runtime error for OOC tab)
-  // const hasUsedForAcColumn = table
-  //   .getAllColumns()
-  //   .some((col) => col.id === "usedForAc");
-
-  // const tableRowsSnapshot = JSON.stringify(
-  //   table.getRowModel().rows.map((row) => {
-  //     const commentCount = row.getValue("commentCount");
-
-  //     if (!hasUsedForAcColumn) return { commentCount };
-  //     return { commentCount, usedForAc: row.getValue("usedForAc") };
-  //   })
-  // );
-
   const checkColumns = ["usedForAc", "commentCount"];
 
   const tableRowsSnapshot = JSON.stringify(

@@ -14,14 +14,16 @@ const baseCharacterSchema = z.object({
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Only letters, numbers, and underscores are allowed."
-    ),
+    )
+    .default(""),
   characterName: z
     .string()
     .min(1, { message: "Must be 1 or more characters long" })
     .max(FORM_NAMES_MAX_LENGTH, {
       message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
     })
-    .trim(),
+    .trim()
+    .default(""),
   icon: z
     .union([
       z.string().url({ message: "Must be a valid image URL" }).nullish(),
@@ -33,16 +35,21 @@ const baseCharacterSchema = z.object({
     .max(FORM_BLURB_MAX_LENGTH, {
       message: generateMaxMessage(FORM_BLURB_MAX_LENGTH),
     })
-    .optional(),
+    .optional()
+    .default(""),
   gameName: z
     .string()
     .max(FORM_NAMES_MAX_LENGTH, {
       message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
     })
-    .optional(),
-  journalName: z.string().max(FORM_NAMES_MAX_LENGTH, {
-    message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
-  }),
+    .optional()
+    .default(""),
+  journalName: z
+    .string()
+    .max(FORM_NAMES_MAX_LENGTH, {
+      message: generateMaxMessage(FORM_NAMES_MAX_LENGTH),
+    })
+    .default(""),
   journalLink: z
     .union([
       z
@@ -53,7 +60,8 @@ const baseCharacterSchema = z.object({
         .nullish(),
       z.literal(""),
     ])
-    .transform((val) => val?.replace(/\s+/g, "")),
+    .transform((val) => val?.replace(/\s+/g, ""))
+    .default(""),
   acLink: z
     .union([
       z
@@ -65,8 +73,8 @@ const baseCharacterSchema = z.object({
       z.literal(""),
     ])
     .transform((val) => val?.replace(/\s+/g, "")),
-  isPublic: z.boolean(),
-  isActive: z.boolean(),
+  isPublic: z.boolean().default(false),
+  isActive: z.boolean().default(true),
   acLength: z
     .union([
       z
@@ -80,7 +88,8 @@ const baseCharacterSchema = z.object({
         val === null || (Number.isInteger(val) && val >= 1 && val <= 300),
       { message: "Must be a number between 1 and 300" }
     )
-    .nullable(),
+    .nullable()
+    .default(null),
   minThreadsAc: z
     .union([
       z
@@ -93,7 +102,8 @@ const baseCharacterSchema = z.object({
       (val) => val === null || (Number.isInteger(val) && val >= 1 && val <= 10),
       { message: "Must be a number between 1 and 10" }
     )
-    .nullable(),
+    .nullable()
+    .default(null),
   maxThreadsAc: z
     .union([
       z
@@ -106,7 +116,8 @@ const baseCharacterSchema = z.object({
       (val) => val === null || (Number.isInteger(val) && val >= 1 && val <= 10),
       { message: "Must be a number between 1 and 10" }
     )
-    .nullable(),
+    .nullable()
+    .default(null),
 });
 
 export const newCharacterSchema = baseCharacterSchema.extend({

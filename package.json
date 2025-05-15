@@ -53,6 +53,9 @@
     "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },
+  "overrides": {
+    "@radix-ui/react-focus-scope": "1.1.1"
+  },
   "devDependencies": {
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
