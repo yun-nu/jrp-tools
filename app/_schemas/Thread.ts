@@ -19,17 +19,20 @@ const baseThreadSchema = z.object({
         .nullish(),
       z.literal(""),
     ])
-    .transform((val) => val?.replace(/\s+/g, "")),
+    .transform((val) => val?.replace(/\s+/g, ""))
+    .default(""),
   type: z
     .string()
     .max(30, { message: generateMaxMessage(30) })
-    .optional(),
+    .optional()
+    .default(""),
   blurb: z
     .string()
     .max(FORM_BLURB_MAX_LENGTH, {
       message: generateMaxMessage(FORM_BLURB_MAX_LENGTH),
     })
-    .optional(),
+    .optional()
+    .default(""),
   commentCount: z.coerce
     .number({ invalid_type_error: "Must be a valid number" })
     .int()
@@ -49,7 +52,8 @@ const baseThreadSchema = z.object({
     .max(100, {
       message: generateMaxMessage(100),
     })
-    .optional(),
+    .optional()
+    .default(""),
   usedForAc: z.boolean().default(false),
   status: z.enum(["ongoing", "finished", "dropped", "ooc"]).default("ongoing"),
 });

@@ -152,8 +152,8 @@ export default function DataTable({
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className={
-                    acLength &&
                     showActions &&
+                    acLength &&
                     highlightAcLength &&
                     highlightIndices?.includes(i)
                       ? "bg-green-700/30"

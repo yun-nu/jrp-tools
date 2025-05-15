@@ -6,13 +6,13 @@ import { CalendarIcon, CircleX } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { useNumberInput } from "../_hooks/useNumberImput";
+import { ExistingThread } from "../_schemas/Thread";
 import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
 import { Calendar } from "./ui/Calendar";
 import { Input } from "./ui/Input";
 import { Label } from "./ui/Label";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/Popover";
-import { ExistingThread } from "../_schemas/Thread";
 
 export default function DataTableThreadsCalendarFilter({
   table,
@@ -114,7 +114,7 @@ export default function DataTableThreadsCalendarFilter({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-4" align="start">
+        <PopoverContent className="w-auto p-4 grid gap-y-4" align="start">
           <div className="flex items-center justify-between gap-2">
             <Label htmlFor="min-comments">Minimum # comments: </Label>
             <Input

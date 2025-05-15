@@ -33,12 +33,15 @@ export default function CommentCountActions({
 
   const [open, setOpen] = useState(false);
 
+  const safeCurrentCount = currentCount ?? 0;
+  const safeTotalCount = totalCount ?? 0;
+
   useEffect(() => {
     const previousTotal =
       Number(row.getValue("totalCommentCount")) -
       Number(row.getValue("commentCount"));
-    setTotalCount(currentCount + previousTotal);
-    setTotalInputValue(String(currentCount + previousTotal));
+    setTotalCount(safeCurrentCount + previousTotal);
+    setTotalInputValue(String(safeCurrentCount + previousTotal));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentCount]);
 
@@ -50,12 +53,12 @@ export default function CommentCountActions({
     if (!open && currentCount !== row.getValue("commentCount"))
       updateCommentCount({
         threadId: row.original.id,
-        updatedCount: currentCount,
+        updatedCount: safeCurrentCount,
       });
     if (!open && totalCount !== row.original.totalCommentCount)
       updateTotalCommentCount({
         threadId: row.original.id,
-        updatedCount: totalCount,
+        updatedCount: safeTotalCount,
       });
   };
 
@@ -80,7 +83,7 @@ export default function CommentCountActions({
         <div className="grid gap-4">
           <CounterWithButtons
             label="# Comments for current month"
-            value={currentCount}
+            value={safeCurrentCount}
             setValue={setCurrentCount}
             inputValue={currentInputValue}
             setInputValue={setCurrentInputValue}
@@ -89,7 +92,7 @@ export default function CommentCountActions({
 
           <CounterWithButtons
             label="# Total comments in the thread"
-            value={totalCount}
+            value={safeTotalCount}
             setValue={setTotalCount}
             inputValue={totalInputValue}
             setInputValue={setTotalInputValue}

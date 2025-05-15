@@ -34,7 +34,10 @@ export default function ThreadStatus({
       render={({ field }) => (
         <FormItem>
           <FormLabel>{fieldTitle}</FormLabel>
-          <Select defaultValue={field.value} onValueChange={field.onChange}>
+          <Select
+            defaultValue={field.value ?? "ongoing"}
+            onValueChange={field.onChange}
+          >
             <FormControl>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Status" />

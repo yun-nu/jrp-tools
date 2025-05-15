@@ -49,7 +49,10 @@ export default function ThreadTabs({
       return columns.filter(
         (col) =>
           "id" in col || // "actions" column uses id
-          ("accessorKey" in col && col.accessorKey !== "usedForAc")
+          ("accessorKey" in col &&
+            col.accessorKey !== "usedForAc" &&
+            "accessorKey" in col &&
+            col.accessorKey !== "commentCount")
       );
     }
 

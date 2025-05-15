@@ -3,6 +3,7 @@ import "@tanstack/table-core";
 import { RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import useLocalStorage from "../_hooks/useLocalStorage";
+import { ExistingThread } from "../_schemas/Thread";
 import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
 import {
@@ -11,9 +12,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/DropdownMenu";
-import { ExistingThread } from "../_schemas/Thread";
 
-type DataTableViewOptionsProps = {
+type DataTableViewOptionsProps<CustomColumnMeta> = {
   table: Table<ExistingThread>;
 };
 
@@ -22,6 +22,7 @@ type CustomColumnMeta = {
   showColumn?: boolean;
 };
 
+// Local augmentation for custom column meta
 declare module "@tanstack/table-core" {
   interface ColumnMeta<
     TData extends import("@tanstack/table-core").RowData,
@@ -31,7 +32,7 @@ declare module "@tanstack/table-core" {
 
 export default function DataTableViewOptions({
   table,
-}: DataTableViewOptionsProps) {
+}: DataTableViewOptionsProps<CustomColumnMeta>) {
   const tableColumns = table
     .getAllColumns()
     .filter((column) => column.columnDef.meta?.showColumn);

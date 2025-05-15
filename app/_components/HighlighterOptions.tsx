@@ -27,16 +27,31 @@ export default function HighlighterOptions({
     "oldest" | "newest" | "acLength"
   >("subsetMode", "oldest");
 
-  const hasUsedForAcColumn = table
-    .getAllColumns()
-    .some((col) => col.id === "usedForAc");
+  // Check if the table has the usedForAc column (guard against runtime error for OOC tab)
+  // const hasUsedForAcColumn = table
+  //   .getAllColumns()
+  //   .some((col) => col.id === "usedForAc");
+
+  // const tableRowsSnapshot = JSON.stringify(
+  //   table.getRowModel().rows.map((row) => {
+  //     const commentCount = row.getValue("commentCount");
+
+  //     if (!hasUsedForAcColumn) return { commentCount };
+  //     return { commentCount, usedForAc: row.getValue("usedForAc") };
+  //   })
+  // );
+
+  const checkColumns = ["usedForAc", "commentCount"];
 
   const tableRowsSnapshot = JSON.stringify(
     table.getRowModel().rows.map((row) => {
-      const commentCount = row.getValue("commentCount");
-
-      if (!hasUsedForAcColumn) return { commentCount };
-      return { commentCount, usedForAc: row.getValue("usedForAc") };
+      const snapshot: Record<string, unknown> = {};
+      table.getAllColumns().forEach((col) => {
+        if (!checkColumns.includes(col.id)) {
+          snapshot[col.id] = row.getValue(col.id);
+        }
+      });
+      return snapshot;
     })
   );
 

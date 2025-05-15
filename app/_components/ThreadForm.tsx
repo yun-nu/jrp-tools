@@ -42,19 +42,19 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
       ? { ...thread, date: toDate(thread.date) }
       : {
           date: new Date(),
-          type: "",
-          blurb: "",
-          url: "",
-          status: "ongoing",
           characterId: characterId,
-          commentCount: 0,
-          threadPartner: "",
-          usedForAc: false,
+          blurb: "",
         },
   });
+  const status = form.watch("status");
 
   const onSubmit = () => {
     const values = form.getValues();
+
+    // Force commentCount to 0 if thread status is/changes to "ooc"
+    if (values.status === "ooc") {
+      values.commentCount = 0;
+    }
 
     if (isEditAction && isExistingThread(thread))
       editThread({ thread: values as ExistingThread });
@@ -93,9 +93,18 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
         />
 
         <InputWithLabel
-          fieldTitle="Comment count"
+          fieldTitle="Current month comment count"
           nameInSchema="commentCount"
           placeholder="0"
+          disabled={status === "ooc"}
+          type="number"
+        />
+
+        <InputWithLabel
+          fieldTitle="Total comment count"
+          nameInSchema="totalCommentCount"
+          placeholder="0"
+          disabled={status === "ooc"}
           type="number"
         />
 

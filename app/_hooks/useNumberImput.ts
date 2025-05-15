@@ -8,9 +8,7 @@ export function useNumberInput(initial = undefined) {
     const val = e.target.value;
     setValue(val);
 
-    if (val === "") {
-      return;
-    }
+    if (val === "") return;
 
     const parsed = parseInt(val, 10);
     if (!isNaN(parsed) && parsed >= 0) setNumber(parsed);

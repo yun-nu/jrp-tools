@@ -37,7 +37,13 @@ export async function addThread(threadData: NewThread): Promise<RequestResult> {
 
   const { error } = await supabase
     .from("threads")
-    .insert(parsedThreadData)
+    .insert({
+      ...parsedThreadData,
+      totalCommentCount:
+        parsedThreadData.totalCommentCount < parsedThreadData.commentCount
+          ? parsedThreadData.commentCount
+          : parsedThreadData.totalCommentCount,
+    })
     .select();
 
   if (error) throw new Error("Could not add new thread");
@@ -62,7 +68,13 @@ export async function editThread(
 
   const { error } = await supabase
     .from("threads")
-    .update(parsedThreadData)
+    .update({
+      ...parsedThreadData,
+      totalCommentCount:
+        parsedThreadData.totalCommentCount < parsedThreadData.commentCount
+          ? parsedThreadData.commentCount
+          : parsedThreadData.totalCommentCount,
+    })
     .eq("id", parsedThreadData.id);
 
   if (error) throw new Error("Could not edit thread");

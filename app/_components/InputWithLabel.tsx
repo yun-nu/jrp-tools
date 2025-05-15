@@ -19,6 +19,7 @@ type Props = {
   placeholder?: string;
   type?: "text" | "number";
   className?: string;
+  disabled?: boolean;
 };
 
 export function InputWithLabel({
@@ -28,6 +29,7 @@ export function InputWithLabel({
   placeholder,
   type = "text",
   className,
+  disabled,
 }: Props) {
   const form = useFormContext();
 
@@ -60,6 +62,7 @@ export function InputWithLabel({
                   value={field.value ?? ""}
                   onChange={(e) => field.onChange(e.target.value)}
                   type={type}
+                  disabled={disabled}
                 />
               </FormControl>
             </div>
