@@ -8,6 +8,7 @@ import {
   pickBestThreadSubsetByFewestItemsAndCommentSum,
 } from "../_utils/util-functions";
 import { Button } from "./ui/Button";
+import { subMonths, isSameMonth } from "date-fns";
 
 interface SubsetHighlighterProps {
   table: Table<ExistingThread>;
@@ -27,22 +28,12 @@ export default function HighlighterOptions({
     "oldest" | "newest" | "acLength"
   >("subsetMode", "oldest");
 
-  // Check if the table has the usedForAc column (guard against runtime error for OOC tab)
-  const checkColumns = ["usedForAc", "commentCount"];
-
   const tableRowsSnapshot = JSON.stringify(
-    table.getRowModel().rows.map((row) => {
-      const snapshot: Record<string, unknown> = {};
-      table.getAllColumns().forEach((col) => {
-        if (!checkColumns.includes(col.id)) {
-          snapshot[col.id] = row.getValue(col.id);
-        }
-      });
-      return snapshot;
-    })
+    table.getRowModel().rows.map((row) => row.original)
   );
 
   useEffect(() => {
+    // Filter threads that are not used for AC...
     const notUsedForAc = table
       .getRowModel()
       .rows.map((row, i) => ({
@@ -51,8 +42,23 @@ export default function HighlighterOptions({
       }))
       .filter(({ thread }) => !thread.usedForAc);
 
-    const threads = notUsedForAc.map(({ thread }) => thread);
-    const indexMap = notUsedForAc.map(({ i }) => i);
+    const now = new Date();
+    const prevMonth = subMonths(now, 1);
+
+    // ... and are from the current or previous month
+    const threads = notUsedForAc
+      .map(({ thread }) => thread)
+      .filter((t) => {
+        const d = new Date(t.date);
+        return isSameMonth(d, now) || isSameMonth(d, prevMonth);
+      });
+
+    // Get the indices of the threads that are not used for AC
+    const indexMap = notUsedForAc
+      .map(({ i }, idx) =>
+        threads.includes(notUsedForAc[idx].thread) ? i : null
+      )
+      .filter((i) => i !== null) as number[];
 
     if (!threads.length || acLength == null) {
       onChange([]);

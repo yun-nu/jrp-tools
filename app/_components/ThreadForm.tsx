@@ -51,10 +51,11 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
   const onSubmit = () => {
     const values = form.getValues();
 
-    // commentCount + totalCommentCount becomes 0 if thread status is changed to "ooc"
+    // Reset commentCount/totalCommentCount and usedForAc if status is changed to "ooc"
     if (values.status === "ooc") {
       values.commentCount = 0;
       values.totalCommentCount = 0;
+      values.usedForAc = false;
     }
 
     if (isEditAction && isExistingThread(thread))
