@@ -5,7 +5,11 @@ export function useNumberInput(initial = undefined) {
   const [number, setNumber] = useState<number | undefined>(initial);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
+    let val = e.target.value;
+
+    if (val.startsWith("-")) val = val.replace("-", "");
+    if (val.startsWith("0") && val.length > 1) val = val.replace(/^0+/, "");
+
     setValue(val);
 
     if (val === "") return;

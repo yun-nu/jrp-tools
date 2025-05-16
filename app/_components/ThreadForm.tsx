@@ -17,8 +17,8 @@ import {
 import { FORM_BLURB_MAX_LENGTH } from "../_utils/consts";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 import { InputWithLabel } from "./InputWithLabel";
-import ThreadStatus from "./ThreadStatus";
 import TextareaWithLabel from "./TextareaWithLabel";
+import ThreadStatus from "./ThreadStatus";
 import { Button } from "./ui/Button";
 import { DialogClose, DialogFooter } from "./ui/Dialog";
 import { Form } from "./ui/Form";
@@ -51,9 +51,10 @@ export function ThreadForm({ thread, characterId, setOpen }: ThreadFormProps) {
   const onSubmit = () => {
     const values = form.getValues();
 
-    // Force commentCount to 0 if thread status is/changes to "ooc"
+    // commentCount + totalCommentCount becomes 0 if thread status is changed to "ooc"
     if (values.status === "ooc") {
       values.commentCount = 0;
+      values.totalCommentCount = 0;
     }
 
     if (isEditAction && isExistingThread(thread))

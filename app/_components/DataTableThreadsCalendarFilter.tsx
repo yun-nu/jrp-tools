@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { CalendarIcon, CircleX } from "lucide-react";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { useNumberInput } from "../_hooks/useNumberImput";
+import { useNumberInput } from "../_hooks/useNumberInput";
 import { ExistingThread } from "../_schemas/Thread";
 import { TooltipWrapperButton } from "./TooltipWrappers";
 import { Button } from "./ui/Button";
@@ -21,6 +21,15 @@ export default function DataTableThreadsCalendarFilter({
 }) {
   const [open, setOpen] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+
+  const now = new Date();
+  const initialSelectedState = {
+    from: new Date(now.getFullYear(), now.getMonth(), 1),
+    to: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+  };
+  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
+    initialSelectedState
+  );
 
   const {
     value: currentInputValue,
@@ -38,15 +47,20 @@ export default function DataTableThreadsCalendarFilter({
     handleChange: handleTotalChange,
   } = useNumberInput(undefined);
 
-  const now = new Date();
-  const initialSelectedState = {
-    from: new Date(now.getFullYear(), now.getMonth(), 1),
-    to: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-  };
-
-  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(
-    initialSelectedState
-  );
+  const commentFilters = [
+    {
+      label: "Minimum # comments:",
+      id: "min-comments",
+      value: currentInputValue,
+      onChange: handleCurrentChange,
+    },
+    {
+      label: "Minimum # total comments:",
+      id: "min-total-comments",
+      value: totalInputValue,
+      onChange: handleTotalChange,
+    },
+  ];
 
   const handleDateRangeChange = (range: DateRange | undefined) => {
     setDateRange(range);
@@ -115,32 +129,24 @@ export default function DataTableThreadsCalendarFilter({
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-4 grid gap-y-4" align="start">
-          <div className="flex items-center justify-between gap-2">
-            <Label htmlFor="min-comments">Minimum # comments: </Label>
-            <Input
-              id="min-comments"
-              type="number"
-              value={currentInputValue}
-              onChange={handleCurrentChange}
-              className="w-16 h-8 text-center"
-              onKeyDown={(e) =>
-                e.key === "Enter" && handleDateRangeChange(selectedRange)
-              }
-            />
-          </div>
-          <div className="flex items-center justify-between gap-2">
-            <Label htmlFor="min-comments">Minimum # total comments: </Label>
-            <Input
-              id="min-comments"
-              type="number"
-              value={totalInputValue}
-              onChange={handleTotalChange}
-              className="w-16 h-8 text-center"
-              onKeyDown={(e) =>
-                e.key === "Enter" && handleDateRangeChange(selectedRange)
-              }
-            />
-          </div>
+          {commentFilters.map((filter) => (
+            <div
+              className="flex items-center justify-between gap-2"
+              key={filter.id}
+            >
+              <Label htmlFor={filter.id}>{filter.label}</Label>
+              <Input
+                id={filter.id}
+                type="number"
+                value={filter.value}
+                onChange={filter.onChange}
+                className="w-16 h-8 text-center"
+                onKeyDown={(e) =>
+                  e.key === "Enter" && handleDateRangeChange(selectedRange)
+                }
+              />
+            </div>
+          ))}
           <Calendar
             mode="range"
             defaultMonth={selectedRange?.from}

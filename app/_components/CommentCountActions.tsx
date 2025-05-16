@@ -1,10 +1,11 @@
 "use client";
 
 import { Row } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useUpdateCurrentCommentCount } from "../_hooks/threads/useUpdateCurrentCommentCount";
 import { useUpdateTotalCommentCount } from "../_hooks/threads/useUpdateTotalCommentCount";
-import { useNumberInput } from "../_hooks/useNumberImput";
+import { useNumberInput } from "../_hooks/useNumberInput";
+import { toast } from "../_hooks/useToast";
 import { ExistingThread } from "../_schemas/Thread";
 import CounterWithButtons from "./CounterWithButtons";
 import { Button } from "./ui/Button";
@@ -15,6 +16,8 @@ export default function CommentCountActions({
 }: {
   row: Row<ExistingThread>;
 }) {
+  const [open, setOpen] = useState(false);
+
   const {
     value: currentInputValue,
     setValue: setCurrentInputValue,
@@ -31,36 +34,60 @@ export default function CommentCountActions({
     handleChange: handleTotalChange,
   } = useNumberInput(row.getValue("totalCommentCount"));
 
-  const [open, setOpen] = useState(false);
-
   const safeCurrentCount = currentCount ?? 0;
   const safeTotalCount = totalCount ?? 0;
 
-  useEffect(() => {
-    const previousTotal =
-      Number(row.getValue("totalCommentCount")) -
-      Number(row.getValue("commentCount"));
-    setTotalCount(safeCurrentCount + previousTotal);
-    setTotalInputValue(String(safeCurrentCount + previousTotal));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentCount]);
+  const originalCurrentCount = useRef<number>(row.getValue("commentCount"));
+  const originalTotalCount = useRef<number>(row.getValue("totalCommentCount"));
 
   const { mutate: updateCommentCount } = useUpdateCurrentCommentCount();
   const { mutate: updateTotalCommentCount } = useUpdateTotalCommentCount();
 
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
-    if (!open && currentCount !== row.getValue("commentCount"))
-      updateCommentCount({
-        threadId: row.original.id,
-        updatedCount: safeCurrentCount,
-      });
-    if (!open && totalCount !== row.original.totalCommentCount)
-      updateTotalCommentCount({
-        threadId: row.original.id,
-        updatedCount: safeTotalCount,
-      });
+    if (open) {
+      originalCurrentCount.current = row.getValue("commentCount");
+      originalTotalCount.current = row.getValue("totalCommentCount");
+    }
+
+    if (!open) {
+      const currentChanged = safeCurrentCount !== originalCurrentCount.current;
+      const totalChanged = safeTotalCount !== originalTotalCount.current;
+
+      if (safeCurrentCount > safeTotalCount) {
+        toast({
+          description: "Total count cannot be smaller than current count",
+          variant: "alert",
+        });
+        return;
+      }
+
+      if (currentChanged && totalChanged) {
+        updateCommentCount({
+          threadId: row.original.id,
+          updatedCount: safeCurrentCount,
+        });
+      } else if (totalChanged) {
+        updateTotalCommentCount({
+          threadId: row.original.id,
+          updatedCount: safeTotalCount,
+        });
+      }
+    }
   };
+
+  useEffect(() => {
+    const previousTotal =
+      Number(row.getValue("totalCommentCount")) -
+      Number(row.getValue("commentCount"));
+
+    let newTotal = safeCurrentCount + previousTotal;
+    if (newTotal < 0) newTotal = 0;
+
+    setTotalCount(newTotal);
+    setTotalInputValue(String(newTotal));
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentCount]);
 
   return (
     <Popover open={open} onOpenChange={handleOpenChange}>
