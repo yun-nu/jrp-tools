@@ -9,6 +9,7 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/Tabs";
 import { ExistingThread } from "@/app/_schemas/Thread";
+import { useState } from "react";
 import { useCharacter } from "../_providers/CharacterProvider";
 import ThreadDialog from "./ThreadDialog";
 import ThreadMenuOptions from "./ThreadMenuOptions";
@@ -35,6 +36,8 @@ export default function ThreadTabs({
     displayName: characterDisplayName,
     acLength,
   } = useCharacter();
+
+  const [activeTab, setActiveTab] = useState("ongoing");
 
   const threadsByStatus = {
     ongoing: threads.filter((thread) => thread.status === "ongoing"),
@@ -76,7 +79,11 @@ export default function ThreadTabs({
 
       <Separator />
 
-      <Tabs defaultValue="ongoing" className="w-full">
+      <Tabs
+        defaultValue="ongoing"
+        className="w-full"
+        onValueChange={setActiveTab}
+      >
         <TabsList className="grid md:max-w-[70%] m-auto grid-cols-2 grid-rows-2 xs:grid-cols-4 xs:grid-rows-1 h-fit xs:h-10">
           {STATUS_LABELS.map(({ value, label }) => (
             <TabsTrigger key={value} value={value}>
@@ -92,6 +99,7 @@ export default function ThreadTabs({
               data={threadsByStatus[value as keyof typeof threadsByStatus]}
               showActions={showTableActions}
               acLength={acLength}
+              activeTab={activeTab}
             />
           </TabsContent>
         ))}

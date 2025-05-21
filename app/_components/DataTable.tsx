@@ -38,6 +38,7 @@ interface DataTableProps<TData, TValue> {
   acLength: ExistingCharacter["acLength"];
   minThreadsAc?: ExistingCharacter["minThreadsAc"];
   maxThreadsAc?: ExistingCharacter["maxThreadsAc"];
+  activeTab: string;
 }
 
 export default function DataTable({
@@ -45,6 +46,7 @@ export default function DataTable({
   data,
   showActions = false,
   acLength,
+  activeTab,
 }: DataTableProps<ExistingThread, any>) {
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -187,7 +189,7 @@ export default function DataTable({
         </Table>
       </div>
       <div className="flex items-center sm:items-start justify-between gap-6 py-6 flex-col-reverse sm:flex-row">
-        {showActions && (
+        {showActions && activeTab !== "ooc" && (
           <DataTableActivityOptions
             table={table}
             acLength={acLength}
