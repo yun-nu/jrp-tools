@@ -4,6 +4,149 @@ import { SiPlurk } from "react-icons/si";
 /* eslint-disable react/no-unescaped-entities */
 export const changelog = [
   {
+    number: "06",
+    date: "May 21th, 2025",
+    content: (
+      <>
+        <p>
+          This update is a bit of a brain teaser... and honestly, it might click
+          better once you try it out for yourself. That said, here's a breakdown
+          of what's new, what's changed, and what to keep in mind — including
+          yet another apology from me for accidentally resetting the comment
+          counts on ongoing threads during testing (lesson learned... 😅).
+        </p>
+        <ul className="mt-4 list-disc list-inside space-y-4">
+          <li>
+            <b>OOC Tab</b>
+            <p>
+              A new tab has been added specifically for OOC threads, like
+              plotting posts and other out-of-character content. It should help
+              keep things tidy and separate from your main threads! Thanks to
+              plurk user icqt for the suggestion!
+            </p>
+          </li>
+        </ul>
+        <p>
+          Following lain's suggestion about keeping separate counts for each
+          month (and after a lot of consideration) I've decided to go with just
+          two types of counts:
+        </p>
+        <ul className="mt-4 list-disc list-inside space-y-4">
+          <li>
+            <b>Current count</b>
+            <ul className="ml-4 space-y-2">
+              <li>
+                - This tracks the number of comments for the current month.
+              </li>
+              <li>
+                <span className="text-red-500 font-semibold">
+                  - It automatically resets in the database on the 1st of each
+                  month at midnight UTC.
+                </span>
+              </li>
+              <li>
+                - Updating the current month count will also update the total
+                comment count automatically.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <b>Total count</b>
+            <ul className="ml-4 space-y-2">
+              <li>
+                - This works just like the original count, and tracks the
+                overall total number of comments.
+              </li>
+              <li>
+                - The total comment count won't change when the month rolls over
+                — unless you update the current month count, which updates both.{" "}
+              </li>
+              <li>
+                - You can also update the total count separately without
+                affecting the current month count.
+              </li>
+            </ul>
+          </li>
+          <p>
+            Both the current month and total counts are shown right on the
+            button, so you can quickly see and compare them at a glance. To
+            update either count, just click the button as usual. The modal will
+            pop up for editing.
+          </p>
+        </ul>
+        <p>
+          And now, a quick look at changes to existing features, plus some new
+          additions:
+        </p>
+        <ul className="mt-4 list-disc list-inside space-y-4">
+          <li>
+            <b>Activity Range Filter</b>
+            <p>
+              {" "}
+              To match the updated counting system, the activity range filter
+              can now search using:
+            </p>
+            <ul className="ml-4 space-y-2">
+              <li>- Only the current month's count</li>
+              <li>- Only the total count</li>
+              <li>- Or a combination of both!</li>
+            </ul>
+          </li>
+
+          <li>
+            <b>AC Highlighter</b>
+            <ul className="ml-4 space-y-2">
+              <li>
+                - Highlighting now only uses the current month's comment count.
+              </li>
+              <li>
+                - If you check the "Used for AC" box on a thread, that thread
+                will be excluded from highlighting.
+              </li>
+              <li>
+                - New Highlight options:
+                <ul className="ml-4 space-y-2">
+                  <li>
+                    Choose Oldest or Newest match — both always based on finding
+                    the smallest sum, using the AC Length and optional min/max
+                    values set on the character page.
+                  </li>
+                  <li>
+                    If min and max aren't set, defaults to highlighting single
+                    threads that match AC length. If set, the app searches all
+                    threads in the current tab to find the first combination
+                    within the min/max range that meets or exceeds the target
+                    sum, then highlights those threads.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                - Highlight by timeframe:
+                <br />
+                <ul className="ml-4 space-y-2">
+                  <li>
+                    The Timeframe option lets you highlight threads from the
+                    past few months. Here's how it works:
+                  </li>
+                  <li>0 = Only highlights threads from the current month</li>
+                  <li>1 = Includes current month + last month</li>
+                  <li>2 = Includes current month + the past 2 months</li>
+                  <li>...and so on!</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          And that's about it! This one was a bit of a head-scratcher to build
+          and explain, so if anything feels confusing or weird, feel free to
+          poke me. Otherwise, go wild testing things out and thanks again for
+          the awesome ideas that helped shape it!
+        </p>
+      </>
+    ),
+  },
+  {
     number: "05",
     date: "May 6th, 2025",
     content: (
@@ -11,7 +154,7 @@ export const changelog = [
         <p>A small update for once!</p>
         <ul className="mt-4 list-disc list-inside space-y-4">
           <li>
-            <b>"Dropped" Tab:</b>
+            <b>Dropped Tab:</b>
             <p>
               A "Dropped" tab was added to the threads menu to help distinguish
               between dropped and finished threads. Thank you to plurk user
