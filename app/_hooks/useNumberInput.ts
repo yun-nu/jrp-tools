@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 
-export function useNumberInput(initial = undefined) {
+export function useNumberInput(initial?: number) {
   const [value, setValue] = useState(String(initial) ?? "");
   const [number, setNumber] = useState<number | undefined>(initial);
 
@@ -23,5 +23,10 @@ export function useNumberInput(initial = undefined) {
     setValue(String(num));
   };
 
-  return { value, number, setValue, setNumber: setBoth, handleChange };
+  const reset = () => {
+    setValue("");
+    setNumber(undefined);
+  };
+
+  return { value, number, setValue, setNumber: setBoth, handleChange, reset };
 }
