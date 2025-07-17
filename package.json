@@ -1,6 +1,6 @@
 {
   "name": "jrp-tools",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "description": "Lightweight thread tracker for Journal-Based Roleplay",
   "author": "Yunnu (https://yunnu.dev)",

@@ -28,7 +28,7 @@ export default function CheckboxWithText({
 }: Props) {
   const form = useFormContext();
   const maxDate = "2028-01-01";
-  const minDate = "2023-01-01";
+  const minDate = "2015-01-01";
 
   return (
     <FormField

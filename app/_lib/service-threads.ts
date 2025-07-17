@@ -8,7 +8,6 @@ import {
 } from "../_schemas/Thread";
 import { RequestResult } from "../_utils/return";
 import { createClient } from "./supabase-client";
-import { da } from "date-fns/locale";
 
 export async function getThreads(
   characterId: ExistingCharacter["id"]

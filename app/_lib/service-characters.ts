@@ -23,22 +23,6 @@ export async function getCharacters(
   return characters;
 }
 
-export async function getCharacter(
-  displayName: ExistingCharacter["displayName"]
-): Promise<ExistingCharacter | Error> {
-  const supabase = createClient();
-
-  const { data: character, error } = await supabase
-    .from("characters")
-    .select("*")
-    .eq("displayName", displayName)
-    .single();
-
-  if (error) throw new Error("Could not fetch character data.");
-
-  return character;
-}
-
 export async function addCharacter(
   characterData: Omit<NewCharacter, "userId">
 ): Promise<RequestResult> {
