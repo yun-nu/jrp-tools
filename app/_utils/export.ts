@@ -8,24 +8,26 @@ export function exportThreadsToCSV(
 ) {
   const capitalizedStatus = status.charAt(0).toUpperCase() + status.slice(1);
 
-  const csvContent =
-    "data:text/csv;charset=utf-8," +
-    `Character: ${displayName} - ${capitalizedStatus} threads\n` +
-    threads
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .map((row) => {
-        return `
-        Date: ${String(row.date).split("T")[0]}
-        Type: ${row.type}
-        Blurb: ${row.blurb}
-        Characters: ${row.threadPartner}
-        Comments: ${row.commentCount}
-        Used for AC: ${row.usedForAc ? "Yes" : "No"}
-        URL: ${row.url ? row.url : "N/A"} 
+  const header = `Character: ${displayName} - ${capitalizedStatus} threads\n\n`;
 
-        ----------------------------------------------------------------\n`;
-      })
-      .join("");
+  const threadData = threads
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map((row) => {
+      return [
+        `Date: ${String(row.date).split("T")[0]}`,
+        `Type: ${row.type}`,
+        `Blurb: ${row.blurb}`,
+        `Characters: ${row.threadPartner}`,
+        `Comments: ${row.commentCount}`,
+        `Used for AC: ${row.usedForAc ? "Yes" : "No"}`,
+        `URL: ${row.url ? row.url : "N/A"}`,
+        "",
+        "----------------------------------------------------------------",
+      ].join("\n");
+    })
+    .join("\n\n");
+
+  const csvContent = "data:text/csv;charset=utf-8," + header + threadData;
 
   const fileName =
     displayName + `-${status}-threads-` + format(new Date(), "yyyy-MM-dd");
@@ -35,6 +37,6 @@ export function exportThreadsToCSV(
   link.setAttribute("href", encodedUri);
   link.setAttribute("download", fileName + ".csv");
 
-  document.body.appendChild(link); // Required for max cross browser compatibility
+  document.body.appendChild(link);
   link.click();
 }
