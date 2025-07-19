@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ExistingThread } from "../_schemas/Thread";
 
-export function exportThreadsToCSV(
+export function exportThreadsToTxt(
   threads: ExistingThread[],
   status: ExistingThread["status"],
   displayName: string
@@ -27,16 +27,23 @@ export function exportThreadsToCSV(
     })
     .join("\n\n");
 
-  const csvContent = "data:text/csv;charset=utf-8," + header + threadData;
+  const fullText = header + threadData;
+
+  const blob = new Blob([fullText], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
 
   const fileName =
-    displayName + `-${status}-threads-` + format(new Date(), "yyyy-MM-dd");
+    displayName +
+    `-${status}-threads-` +
+    format(new Date(), "yyyy-MM-dd") +
+    ".txt";
 
-  const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", fileName + ".csv");
-
+  link.href = url;
+  link.download = fileName;
   document.body.appendChild(link);
   link.click();
+
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
