@@ -1,6 +1,6 @@
 {
   "name": "jrp-tools",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "description": "Lightweight thread tracker for Journal-Based Roleplay",
   "author": "Yunnu (https://yunnu.dev)",
@@ -39,7 +39,7 @@
     "embla-carousel-react": "^8.5.2",
     "i": "^0.3.7",
     "lucide-react": "^0.474.0",
-    "next": "^15.1.5",
+    "next": "^15.1.11",
     "next-themes": "^0.4.6",
     "nodemailer": "^6.10.0",
     "react": "^18",
